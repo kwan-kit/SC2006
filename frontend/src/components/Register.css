@@ -1,0 +1,123 @@
+.register-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 0;
+  background-color: black; /* Ensuring the background is black */
+}
+
+/* White box around the form */
+.register-form-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.side-image {
+  width: 20%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+.left {
+  margin-right: 0;
+}
+
+.right {
+  margin-left: 0;
+}
+
+/* Adjust input fields */
+form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Button styles */
+form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 20px;
+}
+
+form button:hover,
+.register-form-box button:hover,
+.login-form-box button:hover {
+  background-color: #0056b3;
+}
+
+/* Label styles */
+label {
+  display: inline-block; /* Keep inline layout but allow wrapping */
+  width: 100%; /* Ensure the label takes up the full width of the form */
+  font-size: 0.9rem;
+  color: black; /* Ensure the text is black */
+  margin: 15px 0;
+  word-wrap: break-word; /* Enable the text to wrap to the next line if it exceeds container width */
+}
+
+label input[type="checkbox"] {
+  margin-right: 10px; /* Add space between checkbox and text */
+  vertical-align: middle; /* Vertically align checkbox with the text */
+}
+
+/* Link styles */
+a {
+  color: #007BFF;
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #66B2FF; 
+}
+
+/* Lora title styling */
+.lora-title {
+  font-family: 'Lora', serif;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-style: italic; 
+}
+
+.divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+/* Back to login text below the white box */
+.back-to-login-text {
+  text-align: center;
+  color: white; /* Set the entire text color to white */
+}
+
+.back-to-login-link {
+  color: white; /* Make the "Login" link white initially */
+  text-decoration: underline; /* Remove underline by default */
+}
+
+.back-to-login-link:hover {
+  color: #66B2FF; /* Turn the "Login" link to light blue on hover */
+  text-decoration: underline; /* Add underline on hover */
+}

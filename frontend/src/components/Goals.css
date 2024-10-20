@@ -1,0 +1,83 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Hiragino Kaku Gothic Std', sans-serif;
+}
+
+.background {
+    width: 1440px;
+    height: 1024px;
+    position: relative;
+    background-image: url('https://via.placeholder.com/1440x1024');
+}
+
+.goal-text {
+    width: 359px;
+    height: 29px;
+    position: absolute;
+    left: 544px;
+    top: 358px;
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 22px;
+}
+
+.button {
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    background-color: black;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: gray;
+}
+
+.logo-text {
+    position: absolute;
+    left: 24px;
+    top: 32px;
+    width: auto;
+    height: auto;
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    font-family: 'Inter';
+    font-weight: 900;
+    line-height: 48px;
+    word-wrap: break-word;
+    font-style: italic;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 1210px;
+    top: 36px;
+    background-color: white;
+    border-radius: 9999px;
+}
+
+.username {
+    position: absolute;
+    left: 1260px;
+    top: 40px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 31.20px;
+    color: white;
+    text-align: center;
+}

@@ -1,0 +1,92 @@
+.verification-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adjusts space between images and form */
+  height: 100vh;
+  width: 100vw; /* Ensure full width usage */
+  background-color: black;
+  overflow: hidden; /* Prevents any overflow */
+}
+
+.side-image {
+  width: 30%;
+  height: 100vh;
+  opacity: 0.4;
+  object-fit: cover; /* Ensures the images maintain their aspect ratio */
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+/* Wrapper for form and title */
+.verification-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  position: relative;
+  padding: 0; /* Remove any padding */
+  margin: 0; /* Remove any margin */
+}
+
+/* Italicized "HELTH" title, placed above the white box */
+.lora-title {
+  font-family: 'Lora', serif;
+  font-weight: bold;
+  color: black;
+  font-size: 24px;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+/* White box for the form */
+.verification-form-box {
+  background-color: white;
+  padding: 30px; /* Reduce padding */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px; /* Set a max-width to control the box size */
+  text-align: center;
+}
+
+/* Input fields */
+label {
+  display: block;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  text-decoration: none; 
+}
+
+button:hover {
+  background-color: #0056b3;
+  text-decoration: none; 
+}
