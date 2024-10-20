@@ -1,0 +1,63 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;  /* Reduce padding for a thinner header */
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .logo h1 {
+    font-size: 32px;  /* Reduce font size for the logo */
+    font-weight: bold;
+    font-style: italic;  /* Italicize the logo */
+    letter-spacing: 1.5px;
+    color: white;
+  }
+  
+  .nav {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;  /* Evenly space the navigation items */
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;  /* Reduce gap between nav items */
+  }
+  
+  .nav-links li {
+    display: inline;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;  /* Reduce font size for the nav links */
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #007AFF; /* Highlight color when hovering */
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-icon {
+    width: 30px;  /* Reduce size of the profile icon */
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 5px;
+  }
+  
+  .username {
+    font-size: 14px;  /* Reduce font size for the username */
+  }

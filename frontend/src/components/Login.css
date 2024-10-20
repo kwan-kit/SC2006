@@ -1,0 +1,143 @@
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 0;
+  background-color: black;
+}
+
+/* Wrapper to group the form and sign-up text together */
+.login-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* White box around the form */
+.login-form-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 100%; /* Keep this */
+  width: 300px; /* Increase the width, adjust the value as needed */
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+/* Side images */
+.side-image {
+  width: 20%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+.left {
+  margin-right: 0;
+}
+
+.right {
+  margin-left: 0;
+}
+
+/* Input field labels */
+form label {
+  display: block;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 5px;
+  color: black; /* Set text color to black */
+}
+
+/* Input fields */
+form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black; /* Ensure text in input fields is black */
+}
+
+/* Button styles */
+form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Forgot password link */
+.forgot-password-button {
+  background: none; /* Remove any background */
+  color: #007BFF; /* Default text color */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer on hover */
+  margin-top: 20px; /* Spacing above the link */
+  text-decoration: underline; /* Underline text */
+  padding: 0; /* No padding */
+  outline: none; /* Remove outline */
+  font-size: 0.78rem; /* Adjust font size to match other buttons */
+  line-height: 1.5; /* Ensure line height is consistent */
+}
+
+.forgot-password-button:hover {
+  color: #66B2FF; /* Change text color on hover */
+  text-decoration: underline; /* Keep underline on hover */
+  background: none; /* Ensure no background appears */
+  box-shadow: none; /* Ensure no box shadow appears */
+}
+
+/* Optional: Add focus styles for accessibility */
+.forgot-password-button:focus {
+  outline: none; /* No outline on focus */
+}
+
+/* Divider between form and sign-up text */
+.divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+/* Sign-up text below the white box */
+.sign-up-text {
+  text-align: center;
+  color: white;
+}
+
+.sign-up-link {
+  color: #007BFF;
+  text-decoration: underline;
+}
+
+.sign-up-link:hover {
+  color: #66B2FF;
+  text-decoration: underline;
+}
+
+/* Lora title styling */
+.lora-title {
+  font-family: 'Lora', serif;
+  font-weight: bold;
+  font-size: 2rem;
+  font-style: italic; 
+  margin-bottom: 20px;
+  color: rgb(0, 0, 0);
+}
