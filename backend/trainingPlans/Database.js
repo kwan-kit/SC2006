@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 class Database {
     constructor(collectionName, dbName) {
-        const uri = 'mongodb+srv://rahul:Password123@cluster0.6l81s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+        const uri = process.env.MONGODB_URI;
         this.client = new MongoClient(uri);
         this.collectionName = collectionName;
         this.dbName = dbName;
