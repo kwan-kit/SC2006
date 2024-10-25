@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 // Create connections
-const userCredentialsConnection = mongoose.createConnection(process.env.MONGODB_URI, {
+const userCredentialsConnection = mongoose.createConnection(process.env.MONGODB_USERCREDENTIAL_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const userInfoConnection = mongoose.createConnection(process.env.MONGODB_URI, {
+const userInfoConnection = mongoose.createConnection(process.env.MONGODB_USERINFO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const runTrainingConnection = mongoose.createConnection(process.env.MONGODB_URI, {
+const runTrainingConnection = mongoose.createConnection(process.env.MONGODB_TRAINING_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
