@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Ensure Link is imported correctly
-import './Login.css'; // Import CSS for the login page styling
+import { Link } from 'react-router-dom'; 
+import './Login.css'; 
+
 
 const Login = () => {
   return (
@@ -42,6 +43,7 @@ const Login = () => {
 
       {/* Right-side image */}
       <img src="/weights.jpeg" className="side-image right" alt="right-side" />
+
     </div>
   );
 };

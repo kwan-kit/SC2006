@@ -54,6 +54,11 @@
   width: 100%;
   max-width: 400px; /* Set a max-width to control the box size */
   text-align: center;
+  margin: 0 auto;
+}
+
+.verification-form-box label {
+  color: black; /* Force the label text to be black */
 }
 
 /* Input fields */
@@ -62,26 +67,30 @@ label {
   font-weight: bold;
   text-align: left;
   margin-bottom: 5px;
+  color: black;
 }
 
 input[type="text"] {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 /* Buttons */
 button {
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   margin-top: 10px;
   border: none;
   background-color: #007bff;
   color: white;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 30px;
   font-size: 16px;
   text-decoration: none; 
 }

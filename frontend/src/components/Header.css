@@ -1,63 +1,127 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;  /* Reduce padding for a thinner header */
-    background-color: #111;
-    color: white;
-    font-family: Arial, sans-serif;
-  }
-  
-  .logo h1 {
-    font-size: 32px;  /* Reduce font size for the logo */
-    font-weight: bold;
-    font-style: italic;  /* Italicize the logo */
-    letter-spacing: 1.5px;
-    color: white;
-  }
-  
-  .nav {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;  /* Evenly space the navigation items */
-  }
-  
-  .nav-links {
-    list-style-type: none;
-    display: flex;
-    gap: 20px;  /* Reduce gap between nav items */
-  }
-  
-  .nav-links li {
-    display: inline;
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;  /* Reduce font size for the nav links */
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links a:hover {
-    color: #007AFF; /* Highlight color when hovering */
-  }
-  
-  .profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .profile-icon {
-    width: 30px;  /* Reduce size of the profile icon */
-    height: 30px;
-    border-radius: 50%;
-    background-color: #fff;
-    padding: 5px;
-  }
-  
-  .username {
-    font-size: 14px;  /* Reduce font size for the username */
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.logo h1 {
+  font-size: 32px;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 1.5px;
+  color: white;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  display: inline;
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #007AFF;
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  position: relative;
+}
+
+.arrow {
+  margin-left: 5px;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg); /* Rotate the arrow when dropdown is open */
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 5px); /* Position directly below Key Features */
+  left: 0;
+  background-color: #222;
+  padding: 1px 0; /* Reduce vertical padding for tighter spacing */
+  border-radius: 10px; /* Make the dropdown rounded */
+  border: 1px solid white; /* Add white border/outline */
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.dropdown-content li {
+  padding: 1px 8px; 
+  text-align: left;
+}
+
+.dropdown-content li a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content li a:hover {
+  background-color: #333;
+}
+
+/* Divider between dropdown items */
+.dropdown-divider {
+  border: none;
+  height: 1px;
+  background-color: white; /* White line between dropdown items */
+  margin: 0;
+}
+
+/* Profile Section */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.username {
+  font-size: 14px;
+}

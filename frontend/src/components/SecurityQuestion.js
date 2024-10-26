@@ -10,8 +10,8 @@ const SecurityQuestion = () => {
 
       {/* White box enclosing the form */}
       <div className="verification-form-wrapper">
-        <h2 className="lora-title">HELTH</h2>
         <div className="verification-form-box">
+        <h2 className="lora-title">HELTH</h2>
           <label>Security Question: What is your pet's name?</label>
           <input type="text" placeholder="Enter your answer" required />
           
