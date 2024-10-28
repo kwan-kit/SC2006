@@ -16,6 +16,7 @@
   margin: 0 auto;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .side-image {
@@ -104,20 +105,26 @@ a:hover {
   border: none;
   border-top: 1px solid #ccc;
   margin: 20px 0;
+  box-sizing: border-box;
 }
 
 /* Back to login text below the white box */
 .back-to-login-text {
   text-align: center;
-  color: white; /* Set the entire text color to white */
+  color: #ccc; /* Set the entire text color to white */
 }
 
 .back-to-login-link {
-  color: white; /* Make the "Login" link white initially */
+  color: #007BFF; /* Make the "Login" link white initially */
   text-decoration: underline; /* Remove underline by default */
 }
 
 .back-to-login-link:hover {
   color: #66B2FF; /* Turn the "Login" link to light blue on hover */
   text-decoration: underline; /* Add underline on hover */
+}
+
+.register-form-box label:last-of-type {
+  font-size: 0.8rem; /* Adjust the font size as needed */
+  color: black; /* Ensure the text color is black */
 }

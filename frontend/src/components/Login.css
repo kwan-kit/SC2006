@@ -7,7 +7,6 @@
   background-color: black;
 }
 
-/* Wrapper to group the form and sign-up text together */
 .login-form-wrapper {
   display: flex;
   flex-direction: column;
@@ -16,19 +15,17 @@
   margin: 0 auto;
 }
 
-/* White box around the form */
 .login-form-box {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 100%; /* Keep this */
-  width: 300px; /* Increase the width, adjust the value as needed */
+  max-width: 100%; 
+  width: 300px;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   color: black;
 }
 
-/* Side images */
 .side-image {
   width: 20%;
   height: 100%;
@@ -44,16 +41,14 @@
   margin-left: 0;
 }
 
-/* Input field labels */
 form label {
   display: block;
   font-weight: bold;
   text-align: left;
   margin-bottom: 5px;
-  color: black; /* Set text color to black */
+  color: black; 
 }
 
-/* Input fields */
 form input {
   display: block;
   width: 100%;
@@ -63,10 +58,9 @@ form input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  color: black; /* Ensure text in input fields is black */
+  color: black; 
 }
 
-/* Button styles */
 form button {
   display: block;
   width: 100%;
@@ -82,7 +76,6 @@ form button:hover {
   background-color: #0056b3;
 }
 
-/* Forgot password link */
 .forgot-password-button {
   background: none; /* Remove any background */
   color: #007BFF; /* Default text color */
@@ -103,12 +96,10 @@ form button:hover {
   box-shadow: none; /* Ensure no box shadow appears */
 }
 
-/* Optional: Add focus styles for accessibility */
 .forgot-password-button:focus {
   outline: none; /* No outline on focus */
 }
 
-/* Divider between form and sign-up text */
 .divider {
   width: 100%;
   border: none;
@@ -116,7 +107,6 @@ form button:hover {
   margin: 20px 0;
 }
 
-/* Sign-up text below the white box */
 .sign-up-text {
   text-align: center;
   color: white;
@@ -132,7 +122,6 @@ form button:hover {
   text-decoration: underline;
 }
 
-/* Lora title styling */
 .lora-title {
   font-family: 'Lora', serif;
   font-weight: bold;
@@ -140,4 +129,4 @@ form button:hover {
   font-style: italic; 
   margin-bottom: 20px;
   color: rgb(0, 0, 0);
-}
+} 

@@ -6,6 +6,9 @@
     justify-content: space-between;
     align-items: flex-start;
     font-family: Arial, sans-serif;
+    width: 100%;
+    position: relative; /* Ensures it doesn't overlap */
+    z-index: 1000;
   }
   
   .footer-logo {

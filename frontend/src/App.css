@@ -36,3 +36,72 @@
     transform: rotate(360deg);
   }
 }
+
+/* Add the global layout styles below this point */
+
+/* Ensure the body takes up the full height and width */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  box-sizing: border-box;
+}
+
+/* Make the main container fill the viewport */
+.main-container {
+  display: flex;
+  flex-direction: column; /* Vertically stack elements */
+  justify-content: space-between; /* Space between header, content, footer */
+  width: 100vw; /* Full width of viewport */
+  min-height: 100vh; /* At least the height of the viewport */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Example for a full-width section */
+.full-width-section {
+  width: 100vw; /* Make sure it spans the entire width */
+  height: 100vh; /* Take full viewport height for large sections */
+  background-color: #f0f0f0; /* Add any background color */
+}
+
+/* Flexbox for centering content */
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure it fills the height of the section */
+}
+
+/* Responsive Typography */
+h1 {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem); /* Font size scales with viewport width */
+  color: #333;
+}
+
+p {
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1rem); /* Responsive paragraph size */
+  color: #666;
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 1024px) {
+  /* Adjust styles for smaller screens, like tablets */
+  h1 {
+    font-size: 4vw;
+  }
+  p {
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Adjust for mobile screens */
+  h1 {
+    font-size: 5vw;
+  }
+  p {
+    font-size: 2.5vw;
+  }
+}
