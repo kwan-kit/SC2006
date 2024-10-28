@@ -1,0 +1,91 @@
+/* GymCard styling */
+.gym-card {
+    background-color: #111;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 300px; /* Limit the width for a neat look */
+}
+
+/* Make the gym image wider */
+.gym-image {
+    width: 300px; /* Wider image */
+    height: 200px; /* Taller image */
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Animation for gym image loading */
+.gym-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #ddd, #eee, #ddd);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 15px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+/* Style for the gym title */
+.gym-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the buttons and percentage */
+.gym-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Make the footer fill the card */
+}
+
+.gym-percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.gym-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100px;
+    text-align: center; /* Center the text inside buttons */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.gym-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Hover effect for the gym card */
+.gym-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 123, 255, 0.5);
+}

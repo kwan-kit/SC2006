@@ -1,0 +1,147 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #000;
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.header:hover {
+  background-color: #111;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.logo-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 2px;
+  color: white;
+  margin: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+  text-decoration: none; /* Ensure no underline */
+  border: none; /* Remove any border */
+}
+
+.logo-text:hover {
+  color: #007bff; /* Change the hover color */
+  transform: scale(1.1);
+}
+
+/* Reset default link styles */
+.logo a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Ensure text color is inherited */
+}
+
+.logo a:visited,
+.logo a:hover,
+.logo a:active {
+  text-decoration: none; /* Ensure underline is removed on all link states */
+  color: inherit; /* Retain color on hover and active states */
+}
+
+
+.nav {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 50px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.nav-links li:hover {
+  transform: scale(1.1);
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #007bff;
+}
+
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.profile:hover {
+  transform: scale(1.05);
+}
+
+.profile-icon {
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: border 0.3s ease;
+}
+
+.profile:hover .profile-icon {
+  border: 2px solid #007bff;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #222;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.logout-button {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.logout-button:hover {
+  color: #007bff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.username {
+  font-size: 1.2rem;
+  color: white;
+  margin-right: 10px;
+}

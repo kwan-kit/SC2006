@@ -1,0 +1,96 @@
+/* General container for the overview */
+.overview-container {
+    background-color: #111;
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .overview-header {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  /* Overview card section */
+  .overview-cards {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+  }
+  
+  /* Pie Chart Section */
+  .overview-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s ease;
+  }
+  
+  .overview-chart:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Pie chart container */
+  .pie-chart-container {
+    position: relative;
+    width: 130px; /* Make the donut smaller */
+    height: 130px;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+  }
+  
+  /* Centering text inside the donut chart */
+  .donut-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Ensures perfect centering */
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  /* Metrics styling */
+  .overview-metric {
+    text-align: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+    padding: 10px;
+
+  }
+  
+  .overview-metric:hover {
+    transform: scale(1.20);
+    color: #00bfff;
+    text-shadow: 0 0 30px #007bff;
+  }
+  
+  /* Metric text styling */
+  .metric-hover {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Metric description */
+  .overview-description {
+    font-size: 1rem;
+    margin-top: 5px;
+    color: #888;
+  }
+  
+  /* Title for each card */
+  .overview-title {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+  }
+  

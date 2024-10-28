@@ -1,0 +1,90 @@
+/* Weekly Program styles */
+
+.weekly-program {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #111;
+  border-radius: 20px; /* Increased border-radius */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Add subtle box shadow for aesthetics */
+}
+
+h2 {
+  text-align: center;
+  font-size: 26px;
+  color: white;
+}
+
+/* Style for the program lists */
+.program-list {
+  list-style: none;
+  padding: 0;
+}
+
+.program-item {
+  font-size: 20px; /* Increased font size */
+  color: white;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-family: 'Arial', sans-serif; /* Set a nice font */
+  font-weight: 500; /* Make the text slightly bold */
+  line-height: 1.5; /* Improve text spacing */
+}
+
+.program-item:hover {
+  color: #007bff;
+  transform: scale(1.05);
+}
+
+.program-item.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* Progress Box Container */
+.progress-box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background-color: #333;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 40px; /* Shifted closer to the text */
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.2); /* Initial subtle glow */
+}
+
+.progress-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.6); /* Stronger glow on hover */
+}
+
+/* Inner Progress Fill */
+.progress-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(135deg, #00d2ff, #007bff);
+  transition: height 1.2s ease;
+  z-index: 1;
+  border-radius: 12px;
+}
+
+/* Progress Percentage Text */
+.progress-box span {
+  z-index: 2;
+  position: relative;
+  font-size: 28px; /* Larger font size for percentage */
+  font-weight: bold;
+}
