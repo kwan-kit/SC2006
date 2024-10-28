@@ -27,7 +27,7 @@ function App() {
         <Route path="/verification" element={<Verification />} />
         <Route path="/goals" element={<Goals />} />
         <Route path="/running" element={<RunningGoals />} />
-        <Route path="/hybrid" element={<HybridGoals />} /
+        <Route path="/hybrid" element={<HybridGoals />} />
       </Routes>
 
       {/* Footer will appear on every page */}
