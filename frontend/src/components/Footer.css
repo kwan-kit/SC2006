@@ -1,58 +1,67 @@
+/* Footer Styles */
 .footer {
-    background-color: #111;
-    color: white;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: Arial, sans-serif;
-    width: 100%;
-    position: relative; /* Ensures it doesn't overlap */
-    z-index: 1000;
-  }
-  
-  .footer-logo {
-    flex: 1;
-  }
-  
-  .footer-logo h1 {
-    font-size: 48px;
-    font-weight: bold;
-    font-style: italic;
-  }
-  
-  .footer-logo p {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #aaa;
-  }
-  
-  .footer-links {
-    display: flex;
-    flex: 3;
-    justify-content: space-around;
-  }
-  
-  .footer-column h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .footer-column ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .footer-column ul li {
-    margin-bottom: 8px;
-  }
-  
-  .footer-column ul li a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-column ul li a:hover {
-    color: #ffcc00;  /* Highlight color when hovered */
-  }
+  background: linear-gradient(to right, #111, #222); /* Background gradient */
+  color: white;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
+  transition: background 0.5s ease;
+}
+
+
+/* Footer Logo */
+.footer-logo h1 {
+  font-size: 48px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.footer-logo p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Footer Links */
+.footer-links {
+  display: flex;
+  flex: 3;
+  justify-content: space-around;
+}
+
+.footer-column h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 8px;
+}
+
+.footer-column ul li a {
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #00bfff; /* Light blue highlight */
+  transform: scale(1.1); /* Slight scale on hover */
+}
+
+.footer-column ul li a i {
+  margin-right: 8px; /* Space between icon and text */
+  transition: transform 0.3s ease;
+}
+
+.footer-column ul li a:hover i {
+  transform: rotate(10deg); /* Icon rotation on hover */
+}

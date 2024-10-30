@@ -1,0 +1,210 @@
+/* General Styles for HTML and Body */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Hiragino Kaku Gothic Std', sans-serif;
+  overflow: auto; /* Allow scrolling on the body */
+}
+
+/* App Container to Ensure Full Height and Scrollability */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of the viewport */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 20px;
+  flex-wrap: wrap; /* Allow items to wrap if space is tight */
+  height: auto; /* Allow height to adapt to content */
+}
+
+/* Main Content Layout */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 70%; /* You can adjust this width based on your layout needs */
+  flex: 1; /* Allow it to grow */
+}
+
+/* Progress Section Cards */
+.progress-section {
+  background-color: #111;
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px; /* Add margin below progress sections */
+}
+
+.progress-section h2,
+.progress-section .week-number {
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.overview-header {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.week-number {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.progress-bar-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #222;
+  border-radius: 3px;
+  position: relative;
+}
+
+.progress-bar-filled {
+  width: 60%; /* Adjust percentage as needed */
+  height: 100%;
+  background-color: #007BFF;
+  border-radius: 3px;
+}
+
+.progress-bar-labels {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 0.9rem;
+  margin-top: -10px;
+}
+
+/* Progress Cards Styling */
+.progress-cards {
+  display: flex;
+  justify-content: space-around; /* Space evenly */
+  align-items: center;
+  width: 100%; /* Let it fill the available space */
+  gap: 20px; /* Space between each card */
+  padding-top: 20px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+/* Individual Progress Card Styling */
+.progress-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px; /* Adjusted margin for better layout */
+  background-color: #1c1c1c; /* Consistent background color */
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Snapshot Section */
+.snapshot-section {
+  background-color: #111;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  height: auto; /* Adjust height as needed to fit the design */
+  text-align: center;
+}
+
+.snapshot-cards-wrapper {
+  max-height: 300px; /* Example height, adjust to fit your design */
+  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  padding-right: 10px; /* Add padding to avoid cutting off the scrollbar */
+}
+
+/* Customizing the Scrollbar */
+.snapshot-cards-wrapper::-webkit-scrollbar {
+  width: 8px; /* Adjust the width as needed */
+}
+
+.snapshot-cards-wrapper::-webkit-scrollbar-track {
+  background: #222; /* Background color of the scrollbar track */
+  border-radius: 10px; /* To add rounded corners */
+}
+
+.snapshot-cards-wrapper::-webkit-scrollbar-thumb {
+  background-color: #555; /* Color of the scrolling thumb */
+  border-radius: 10px; /* To add rounded corners to the thumb */
+}
+
+/* Add a Hover Effect to the Scrollbar Thumb */
+.snapshot-cards-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #888; /* Darken the thumb color on hover */
+}
+
+/* Snapshot Cards */
+.snapshot-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.snapshot-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #303030;
+  border-radius: 20px;
+  width: 400px; /* Adjust width as needed */
+  margin-bottom: 10px; /* Add spacing between cards */
+}
+
+.snapshot-image {
+  width: 180px; /* Updated size */
+  height: 180px;
+  border-radius: 20px; /* Adjust border-radius for rounded corners */
+  margin-right: 20px; /* Space between image and text */
+}
+
+.snapshot-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.snapshot-details h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.snapshot-details p {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+.snapshot-details .stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Additional Styles */
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}

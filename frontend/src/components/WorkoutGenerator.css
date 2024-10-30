@@ -1,0 +1,55 @@
+/* Workout Generator Layout */
+.workout-generator-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.body-diagram img {
+  width: 1000px;
+  height: 800px;
+}
+
+.workout-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.workout-types, .muscle-groups {
+  background-color: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Two columns for checkbox layout */
+.workout-types ul, .muscle-groups ul {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns layout */
+  gap: 10px;
+}
+
+.workout-types li, .muscle-groups li {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.generate-button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './styleRunning.css';
 
 const RunningGoals = () => {
@@ -112,8 +112,9 @@ const RunningGoals = () => {
               <option>35 mins</option>
             </select>
           </div>
-
-          <button type="submit" className="submit-button">Done, Let’s Go!</button>
+          <Link to="/Dashboard">
+            <button type="submit" className="submit-button">Done, Let’s Go!</button>
+          </Link>
         </form>
       </div>
     </div>
