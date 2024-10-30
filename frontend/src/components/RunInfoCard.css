@@ -1,0 +1,65 @@
+/* Map Placeholder Style */
+.map-placeholder {
+    width: 120px;
+    height: 120px;
+    background-color: #333;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Glow on Map */
+.map-placeholder:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7); /* Blue glow */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Shimmer Loading Effect */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.map-placeholder.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+/* Card Info Styling */
+.run-info-card {
+    display: flex;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.run-info-card:hover {
+    transform: translateY(-5px); /* Lift on hover */
+}
+
+.run-info-text {
+    margin-left: 20px;
+    color: #fff;
+}
+
+.run-info-text h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #007BFF;
+}
+
+.run-info-text p {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    font-weight: bold;
+}

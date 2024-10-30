@@ -1,127 +1,173 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #111;
+  background: linear-gradient(to right, #000, #222); /* Gradient background */
   color: white;
-  font-family: Arial, sans-serif;
+  padding: 20px 5%; /* Padding for content inside the header */
+  display: flex;
+  justify-content: space-between; /* Space between logo, nav, and profile */
+  align-items: center; /* Center items vertically */
+  font-family: Arial, sans-serif; /* Font family */
+  transition: background 0.5s ease; /* Smooth transition for background */
+  width: 100vw; /* Set to 100vw for full width of viewport */
+  overflow: hidden; /* Prevent overflow */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  position: relative; /* Position relative to keep it in the flow */
+  box-sizing: border-box; /* Include padding and border in element's total width */
 }
 
-.logo h1 {
-  font-size: 32px;
+.header:hover {
+  background-color: #111; /* Change on hover */
+}
+
+.logo {
+  cursor: pointer;
+  flex: 0 0 auto; /* Prevent the logo from growing or shrinking */
+  display: flex; /* Use flex to center logo text if needed */
+  align-items: center; /* Center logo content vertically */
+}
+
+.logo-text {
+  font-size: 2.5rem; /* Adjust size for visibility */
   font-weight: bold;
   font-style: italic;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   color: white;
+  margin: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+  text-decoration: none; /* Ensure no underline */
+}
+
+.logo-text:hover {
+  color: #007bff; /* Change the hover color */
+  transform: scale(1.1);
+}
+
+/* Reset default link styles */
+.logo a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Ensure text color is inherited */
+}
+
+.logo a:visited,
+.logo a:hover,
+.logo a:active {
+  text-decoration: none; /* Ensure underline is removed on all link states */
+  color: inherit; /* Retain color on hover and active states */
 }
 
 .nav {
-  flex: 1;
   display: flex;
-  justify-content: space-around;
+  flex-grow: 2; /* Allow the nav section to take more space */
+  justify-content: center; /* Center nav links */
 }
 
 .nav-links {
-  list-style-type: none;
   display: flex;
-  gap: 20px;
+  gap: 50px; /* Space between links */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
-  display: inline;
-  position: relative;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: white;
-  font-size: 18px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #007AFF;
-}
-
-/* Dropdown Menu */
-.dropdown {
-  position: relative;
-  cursor: pointer;
-}
-
-.dropdown-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: white;
-  position: relative;
-}
-
-.arrow {
-  margin-left: 5px;
-  font-size: 12px;
+  font-size: 1.5rem;
+  font-weight: bold;
   transition: transform 0.3s ease;
 }
 
-.arrow.open {
-  transform: rotate(180deg); /* Rotate the arrow when dropdown is open */
+.nav-links li:hover {
+  transform: scale(1.1);
 }
 
-.dropdown-content {
-  position: absolute;
-  top: calc(100% + 5px); /* Position directly below Key Features */
-  left: 0;
-  background-color: #222;
-  padding: 1px 0; /* Reduce vertical padding for tighter spacing */
-  border-radius: 10px; /* Make the dropdown rounded */
-  border: 1px solid white; /* Add white border/outline */
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
-
-.dropdown-content li {
-  padding: 1px 8px; 
-  text-align: left;
-}
-
-.dropdown-content li a {
-  text-decoration: none;
+.nav-links li a {
   color: white;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.dropdown-content li a:hover {
-  background-color: #333;
+.nav-links li a:hover {
+  color: #00bfff; /* Light blue highlight like footer */
 }
 
-/* Divider between dropdown items */
-.dropdown-divider {
-  border: none;
-  height: 1px;
-  background-color: white; /* White line between dropdown items */
-  margin: 0;
-}
-
-/* Profile Section */
 .profile {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  flex: 0 0 auto; /* Prevent the profile section from growing or shrinking */
+}
+
+.profile:hover {
+  transform: scale(1.05);
 }
 
 .profile-icon {
-  width: 30px;
-  height: 30px;
   border-radius: 50%;
-  background-color: #fff;
-  padding: 5px;
+  margin-right: 10px;
+  transition: border 0.3s ease;
+}
+
+.profile:hover .profile-icon {
+  border: 2px solid #007bff;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #222;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.logout-button {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.logout-button:hover {
+  color: #00bfff; /* Light blue highlight like footer */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .username {
-  font-size: 14px;
+  font-size: 1.2rem;
+  color: white;
+  margin-right: 10px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 5%; /* More padding on smaller screens */
+  }
+
+  .nav-links {
+    gap: 20px; /* Adjust gap for smaller screens */
+  }
+
+  .nav-links li {
+    font-size: 1.2rem; /* Slightly smaller text */
+  }
+
+  .logo-text {
+    font-size: 2rem; /* Smaller logo text */
+  }
 }

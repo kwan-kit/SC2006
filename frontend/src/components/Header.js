@@ -1,71 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';  
-import './Header.css';  
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './Header.css';
 
 const Header = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const navigate = useNavigate(); // Hook to handle navigation
 
-  // Function to toggle the dropdown menu on click
   const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+    setDropdownVisible(!dropdownVisible);
   };
 
-  // Function to close the dropdown when clicking outside
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownOpen(false);
-    }
-  };
-
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  // Function to close the dropdown when an option is selected
-  const handleOptionClick = () => {
-    setDropdownOpen(false);
+  const handleLogout = () => {
+    // Hide the dropdown
+    setDropdownVisible(false);
+    // Navigate to the "logged out" page
+    navigate('/logout');
   };
 
   return (
     <header className="header">
       <div className="logo">
-        <h1>HELTH</h1>
+        <Link to="/LandingPage">
+          <h1 className="logo-text">HELTH</h1>
+        </Link>
       </div>
       <nav className="nav">
         <ul className="nav-links">
-          
-          {/* Key Features with Dropdown */}
-          <li className="dropdown" ref={dropdownRef}>
-            <span className="dropdown-title" onClick={toggleDropdown}>
-              Key Features
-              {/* Arrow to indicate dropdown */}
-              <span className={`arrow ${isDropdownOpen ? 'open' : ''}`}>^</span>
-            </span>
-            {isDropdownOpen && (
-              <ul className="dropdown-content">
-                <li onClick={handleOptionClick}>
-                  <Link to="/running-plan">Running Plan</Link>
-                </li>
-                <hr className="dropdown-divider" />
-                <li onClick={handleOptionClick}>
-                  <Link to="/hybrid-plan">Hybrid Plan</Link>
-                </li>
-              </ul>
-            )}
-          </li>
-          
-          {/* Settings Link */}
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          <li><Link to="/training">Training</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
       </nav>
-      <div className="profile">
-        <img src="https://via.placeholder.com/40" alt="Profile" className="profile-icon" />
+      <div className="profile" onClick={toggleDropdown}>
+        <img className="profile-icon" src="https://via.placeholder.com/40" alt="User Profile" />
         <span className="username">John Smith</span>
+        {dropdownVisible && (
+          <div className="profile-dropdown">
+            <button onClick={handleLogout} className="logout-button">Log Out</button>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -1,3 +1,4 @@
+/* General Styles for HTML and Body */
 html, body {
     height: 100%;
     margin: 0;
@@ -6,97 +7,53 @@ html, body {
     font-family: 'Hiragino Kaku Gothic Std', sans-serif;
 }
 
+/* Background Section */
 .background {
-    width: 1440px;
-    height: 1024px;
+    width: 100%;
+    height: 100%;
     position: relative;
-    background-image: url('https://via.placeholder.com/1440x1024');
+    background-color: white;
+    background-size: cover; /* Cover the entire background */
 }
 
+/* Container for Form and Content */
 .container {
-    height: 50%; /* Full height of the viewport */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center content horizontally */
     justify-content: center; /* Center content vertically */
-    background-image: url('https://via.placeholder.com/1440x1024');
-    background-size: cover; /* Cover the entire background */
-    position: relative;
+    height: 100%; /* Full height of the viewport */
 }
 
-.header {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 1440px;
-    height: 112px;
-    background-color: black;
-    font-size: 26px;
-    font-weight: 900;
-    line-height: 112px;
-    color: white;
-    text-align: center;
-}
-
-.logo-text {
-    position: absolute;
-    left: 24px; /* Distance from the left */
-    top: 32px; /* Distance from the top */
-    width: auto; /* Change width to auto or set a specific width */
-    height: auto; /* Change height to auto or set a specific height */
-    text-align: center; /* Center text within the width */
-    color: white; /* Text color */
-    font-size: 40px; /* Font size with units */
-    font-family: 'Inter'; /* Font family */
-    font-weight: 900; /* Font weight */
-    line-height: 48px; /* Line height with units */
-    word-wrap: break-word; /* Allow word wrapping */
-    font-style: italic;
-}
-
-
-.profile-image {
-    width: 42px;
-    height: 42px;
-    position: absolute;
-    left: 1210px;
-    top: 36px;
-    background-color: white;
-    border-radius: 9999px;
-}
-.username {
-    position: absolute;
-    left: 1260px;
-    top: 40px;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 31.20px;
-    color: white;
-    text-align: center;
-}
-
-.content {
-    text-align: center;
-}
-
+/* Goal Form Styling */
 .goal-form {
     width: 636px;
     background: black; 
     border-radius: 10px;
     padding: 20px; /* Padding for the form */
-    margin-top: 100px; /* Margin to separate from the header */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Add some shadow for better visibility */
 }
 
-.form-group {
-    margin-bottom: 15px; /* Space between form groups */
+/* Form Title Styling */
+.form-title {
+    color: white;
+    text-align: center; /* Center the title */
+    margin-bottom: 20px; /* Space below the title */
 }
 
+/* Label Styling */
 label {
     color: white;
     font-size: 17px;
     font-weight: 400;
 }
 
+/* Form Group Spacing */
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+/* Select Element Styling */
 .select {
     width: 100%; /* Full width of the parent */
     height: 48px; /* Adjust height */
@@ -107,6 +64,7 @@ label {
     font-size: 16px;
 }
 
+/* Submit Button Styling */
 .submit-button {
     background-color: rgb(71, 67, 67); /* Button background */
     color: white; /* Button text color */
@@ -118,6 +76,22 @@ label {
     margin-top: 10px; /* Space above the button */
 }
 
+/* Submit Button Hover Effect */
 .submit-button:hover {
     background-color: gray; /* Change color on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .goal-form {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+
+    .form-title {
+        font-size: 1.5rem; /* Adjust title size for smaller screens */
+    }
+
+    label {
+        font-size: 16px; /* Adjust label size for smaller screens */
+    }
 }
