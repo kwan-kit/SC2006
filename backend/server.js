@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const parkConnectorRoutes = require('./routes/listofconnectors');
 const calculatedistanceRouter = require('./routes/calculatedistance');
 const geolocationRouter = require('./routes/getGeolocation');
 const closestPointRouter = require('./routes/closestPoint');
@@ -22,21 +23,22 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true
 })
 
-app.use((req, res, next) => {
-  req.body.targetDistance = 5; // 5 km arbitrary target distance
-  next();
-});
+// app.use((req, res, next) => {
+//   req.body.targetDistance = 5; // 5 km arbitrary target distance
+//   next();
+// });
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Training Plan API is running' });
-});
+// app.get('/', (req, res) => {
+//   res.json({ message: 'Training Plan API is running' });
+// });
 
 //app.use('/api/parks', parks);
 //app.use('/api/calculate-distances', calculatedistanceRouter);
 // app.use('/api/geolocation', geolocationRouter);
 // app.use('/api/closest-point', closestPointRouter);
-app.use('/training', createTrainingPlan);
-app.use('/save', saveTrainingPlan)
+// app.use('/training', createTrainingPlan);
+// app.use('/save', saveTrainingPlan)
+app.use('/api', parkConnectorRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
