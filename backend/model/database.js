@@ -18,6 +18,11 @@ const runTrainingConnection = mongoose.createConnection(process.env.MONGODB_TRAI
   useUnifiedTopology: true,
 });
 
+const gymDataConnection = mongoose.createConnection(process.env.MONGODB_GYMDATA_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 // Schemas
 const userCredentialsSchema = new mongoose.Schema({
   username: { 
@@ -39,13 +44,24 @@ const trainingPlanSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+const gymSchema = new mongoose.Schema({
+  name: String,
+  postalCode: Number,
+  coordinates: {
+      latitude: mongoose.Types.Decimal128,
+      longitude: mongoose.Types.Decimal128
+  }
+});
+
 // Models
 const UserCredentials = userCredentialsConnection.model('UserCredentials', userCredentialsSchema, 'UserCredentials');
 const HealthData = userInfoConnection.model('HealthData', healthDataSchema, 'HealthData');
 const TrainingPlan = runTrainingConnection.model('WeeklyTrainingPlan', trainingPlanSchema, 'WeeklyTrainingPlan');
+const GymData = gymDataConnection.model('GymData',gymSchema,'GymDetails')
 
 module.exports = {
   UserCredentials,
   HealthData,
-  TrainingPlan
+  TrainingPlan,
+  GymData
 };
