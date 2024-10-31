@@ -21,7 +21,7 @@ const Register = () => {
   return (
     <div className="register-container">
       {/* Left-side image */}
-      <img src="/woman.png" className="side-image left" alt="left-side" />
+      <img src="/running3.png" className="side-image left" alt="left-side" />
 
       {/* White box around the form */}
       <div className="register-form-wrapper">

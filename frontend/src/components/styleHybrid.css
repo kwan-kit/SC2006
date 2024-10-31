@@ -2,122 +2,101 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent scrolling */
     font-family: 'Hiragino Kaku Gothic Std', sans-serif;
 }
 
 .background {
-    width: 1440px;
-    height: 1024px;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
     position: relative;
     background-image: url('https://via.placeholder.com/1440x1024');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .container {
-    height: 50%; /* Full height of the viewport */
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    justify-content: center; /* Center content vertically */
-    background-image: url('https://via.placeholder.com/1440x1024');
-    background-size: cover; /* Cover the entire background */
-    position: relative;
-}
-
-.header {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 1440px;
-    height: 112px;
-    background-color: black;
-    font-size: 26px;
-    font-weight: 900;
-    line-height: 112px;
-    color: white;
-    text-align: center;
-}
-
-.logo-text {
-    position: absolute;
-    left: 24px; /* Distance from the left */
-    top: 32px; /* Distance from the top */
-    width: auto; /* Change width to auto or set a specific width */
-    height: auto; /* Change height to auto or set a specific height */
-    text-align: center; /* Center text within the width */
-    color: white; /* Text color */
-    font-size: 40px; /* Font size with units */
-    font-family: 'Inter'; /* Font family */
-    font-weight: 900; /* Font weight */
-    line-height: 48px; /* Line height with units */
-    word-wrap: break-word; /* Allow word wrapping */
-    font-style: italic;
-}
-
-
-.profile-image {
-    width: 42px;
-    height: 42px;
-    position: absolute;
-    left: 1210px;
-    top: 36px;
-    background-color: white;
-    border-radius: 9999px;
-}
-.username {
-    position: absolute;
-    left: 1260px;
-    top: 40px;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 31.20px;
-    color: white;
-    text-align: center;
-}
-
-.content {
-    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
 .goal-form {
-    width: 636px;
+    width: 90%;
+    max-width: 600px;
     background: black; 
     border-radius: 10px;
-    padding: 20px; /* Padding for the form */
-    margin-top: 100px; /* Margin to separate from the header */
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.form-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.goal-form label {
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 .form-group {
-    margin-bottom: 15px; /* Space between form groups */
-}
-
-label {
-    color: white;
-    font-size: 17px;
-    font-weight: 400;
+    margin-bottom: 1rem;
 }
 
 .select {
-    width: 100%; /* Full width of the parent */
-    height: 48px; /* Adjust height */
-    background: white; 
-    border: 1px solid gray; 
+    width: 100%;
+    height: 3rem;
+    background: white;
+    border: 1px solid gray;
     border-radius: 5px;
-    padding: 10px; /* Padding inside select */
-    font-size: 16px;
+    padding: 0.75rem;
+    font-size: 1rem;
 }
 
 .submit-button {
-    background-color: rgb(71, 67, 67); /* Button background */
-    color: white; /* Button text color */
-    font-size: 16px; /* Button font size */
-    padding: 10px 20px; /* Button padding */
+    background-color: rgb(71, 67, 67);
+    color: white;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px; /* Space above the button */
+    margin-top: 1rem;
+    width: 100%;
 }
 
 .submit-button:hover {
-    background-color: gray; /* Change color on hover */
+    background-color: gray;
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+    .goal-form {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .form-title {
+        font-size: 1.2rem;
+    }
+
+    .select {
+        height: 2.5rem;
+        font-size: 0.9rem;
+    }
+
+    .submit-button {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+    }
 }

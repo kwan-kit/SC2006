@@ -52,7 +52,17 @@ const RunningGoals = () => {
   };
 
   return (
-    <div className="background">
+    <div
+      className="background"
+      style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/gymRopes.jpeg'})`,
+        position: 'relative',
+      }}
+    >
+      {/* Overlay for background opacity */}
+      <div className="overlay"></div>
+
+      {/* Main content container */}
       <div className="container">
         <form className="goal-form" onSubmit={handleSubmit}>
           <h2 className="form-title">Set Your Running Goals</h2>
