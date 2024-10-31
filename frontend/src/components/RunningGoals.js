@@ -53,19 +53,14 @@ const RunningGoals = () => {
 
   return (
     <div
-      className="background"
-      style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL + '/gymRopes.jpeg'})`,
-        position: 'relative',
-      }}
+      className="background-container"
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/gymRopes.jpeg'})` }}
     >
-      {/* Overlay for background opacity */}
       <div className="overlay"></div>
-
-      {/* Main content container */}
       <div className="container">
         <form className="goal-form" onSubmit={handleSubmit}>
           <h2 className="form-title">Set Your Running Goals</h2>
+          {/* Form fields */}
           <div className="form-group">
             <label htmlFor="activity-level">Level of Activity</label>
             <select
@@ -122,7 +117,6 @@ const RunningGoals = () => {
               <option>35 mins</option>
             </select>
           </div>
-
           <button type="submit" className="submit-button">Done, Let’s Go!</button>
         </form>
       </div>

@@ -1,3 +1,4 @@
+/* RunningGoals CSS (similar to Goals.css) */
 html, body {
     height: 100%;
     margin: 0;
@@ -5,7 +6,7 @@ html, body {
     font-family: 'Hiragino Kaku Gothic Std', sans-serif;
 }
 
-.background {
+.background-container {
     width: 100vw;
     height: 100vh;
     position: relative;
@@ -14,6 +15,7 @@ html, body {
     background-repeat: no-repeat;
 }
 
+/* Overlay to dim the background image without affecting form elements */
 .overlay {
     position: absolute;
     top: 0;
@@ -24,7 +26,10 @@ html, body {
     z-index: 1;
 }
 
+/* Form container with content above overlay */
 .container {
+    position: relative;
+    z-index: 2; /* Ensure content is above overlay */
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -32,10 +37,8 @@ html, body {
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
-    z-index: 2; /* Ensure container sits above the overlay */
 }
 
-/* Form styling */
 .goal-form {
     width: 90%;
     max-width: 600px;
@@ -43,72 +46,4 @@ html, body {
     border-radius: 10px;
     padding: 2rem;
     box-sizing: border-box;
-}
-
-.form-title {
-    color: white;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-}
-
-/* Form input styles */
-.goal-form label {
-    color: white;
-    font-size: 1rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.select {
-    width: 100%;
-    height: 3rem;
-    background: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 0.75rem;
-    font-size: 1rem;
-}
-
-.submit-button {
-    background-color: rgb(71, 67, 67);
-    color: white;
-    font-size: 1.1rem;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.submit-button:hover {
-    background-color: gray;
-}
-
-/* Media Queries for smaller screens */
-@media (max-width: 768px) {
-    .goal-form {
-        width: 100%;
-        padding: 1.5rem;
-    }
-
-    .form-title {
-        font-size: 1.2rem;
-    }
-
-    .select {
-        height: 2.5rem;
-        font-size: 0.9rem;
-    }
-
-    .submit-button {
-        font-size: 1rem;
-        padding: 0.75rem 1.5rem;
-    }
 }

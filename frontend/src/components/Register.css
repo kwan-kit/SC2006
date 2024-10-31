@@ -12,8 +12,8 @@
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
-  width: 90%; /* Ensure the form box is responsive */
+  max-width: 5000px;
+  width: 98%; /* Ensure the form box is responsive */
   margin: 0 auto; /* Center the white box */
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);

@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './styleHybrid.css'; 
+import { useNavigate } from 'react-router-dom';
+import './styleHybrid.css';
 
 const HybridGoals = () => {
-  const navigate = useNavigate(); // Use useNavigate for redirecting
+  const navigate = useNavigate();
   const [activityLevel, setActivityLevel] = useState('Select');
   const [goalDistance, setGoalDistance] = useState('Select');
   const [trainingPeriod, setTrainingPeriod] = useState('Select');
   const [goalTiming, setGoalTiming] = useState('Select');
   const [workoutDuration, setWorkoutDuration] = useState('Select');
 
-  // Function to handle form submission
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
-    // Check if all fields are filled
     if (
       activityLevel === 'Select' ||
       goalDistance === 'Select' ||
@@ -46,7 +44,7 @@ const HybridGoals = () => {
 
       if (response.ok) {
         alert('Form submitted successfully! Let’s Go!');
-        navigate('/goals'); // Navigate back to goals page after successful submission
+        navigate('/goals');
       } else {
         alert('An error occurred while submitting the form.');
       }
@@ -57,12 +55,14 @@ const HybridGoals = () => {
   };
 
   return (
-    <div className="background">
-      {/* Goal Form */}
+    <div
+      className="background-container"
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/gymRopes.jpeg'})` }}
+    >
+      <div className="overlay"></div>
       <div className="container">
         <form className="goal-form" onSubmit={handleSubmit}>
-          <h2 className="form-title">Set Your Running Goals</h2>
-          
+          <h2 className="form-title">Set Your Hybrid Goals</h2>
           <div className="form-group">
             <label htmlFor="activity-level">Level of Activity</label>
             <select
@@ -77,7 +77,6 @@ const HybridGoals = () => {
               <option>Advanced</option>
             </select>
           </div>
-          
           <div className="form-group">
             <label htmlFor="goal-distance">Goal Distance</label>
             <select
@@ -92,7 +91,6 @@ const HybridGoals = () => {
               <option>10 km</option>
             </select>
           </div>
-          
           <div className="form-group">
             <label htmlFor="training-period">Training Period</label>
             <select
@@ -107,7 +105,6 @@ const HybridGoals = () => {
               <option>12 weeks</option>
             </select>
           </div>
-          
           <div className="form-group">
             <label htmlFor="goal-timing">Goal Timing</label>
             <select
@@ -122,7 +119,6 @@ const HybridGoals = () => {
               <option>35 mins</option>
             </select>
           </div>
-
           <div className="form-group">
             <label htmlFor="workout-duration">Workout Duration (for Gym)</label>
             <select
@@ -137,7 +133,6 @@ const HybridGoals = () => {
               <option>35 mins</option>
             </select>
           </div>
-
           <button type="submit" className="submit-button">Done, Let’s Go!</button>
         </form>
       </div>

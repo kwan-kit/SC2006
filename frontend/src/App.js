@@ -10,6 +10,7 @@ import RunningGoals from './components/RunningGoals';
 import HybridGoals from './components/HybridGoals';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Terms from './components/Terms';
 import './App.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/goals" element={<Goals />} />
           <Route path="/running" element={<RunningGoals />} />
           <Route path="/hybrid" element={<HybridGoals />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </div>
 
