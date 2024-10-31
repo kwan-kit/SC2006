@@ -1,33 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Training.css';
 import GymCard from './GymCard';
 import RouteCard from './RouteCard';
+import axios from 'axios';
 
 const Training = () => {
   const [searchTerm, setSearchTerm] = useState(''); // State for search bar input
   const [filterType, setFilterType] = useState('all'); // Default state is to show all
+  const [gymData, setGymData] = useState([]); // State for gym data
+  const [routeData, setRouteData] = useState([]); // State for park data
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
-  const routeData = [
-    { name: 'Clementi - Holland Village' },
-    { name: 'Jurong East - Buona Vista' },
-    { name: 'Nanyang Walk Loop' },
-    { name: 'Jurong Park Connector' },
-    { name: 'West Coast Connector' },
-    { name: 'East Coast Connector' },
-  ];
+  // Fetch nearest parks on component mount
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      try {
+        const userLocation = { latitude: 1.3521, longitude: 103.8198 }; // Replace with actual user location data
+        const response = await axios.post('/park', userLocation);
+        
+        setRouteData(response.data.closestParks); // Set fetched data to closestParks
+      } catch (error) {
+        console.error('Error fetching park connectors:', error);
+        setError('Error fetching park data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const gymData = [
-    { name: 'Jurong Lake Gardens ActiveSG Gym', progress: 85 },
-    { name: 'Clementi ActiveSG Gym', progress: 70 },
-    { name: 'ActiveSG Hockey Village', progress: 65 },
-    { name: 'Bukit Batok ActiveSG Gym', progress: 50,},
-    { name: 'Bukit Gombak ActiveSG Gym', progress: 60,},
-    { name: 'Choa Chu Kang ActiveSG Gym', progress: 40,},
-  ];
+    fetchRoutes();
+  }, []);
+
+  // Fetch gym data from the backend
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const latitude = 1.3521; 
+        const longitude = 103.8198;
+
+        const response = await axios.post('/gym', { latitude, longitude });
+        setGymData(response.data); // Set gym data from response
+      } catch (err) {
+        console.error('Fetch error:', err);
+        setError('Error fetching gym data');
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Filter function for search
   const filteredRoutes = routeData.filter((route) =>
-    route.name.toLowerCase().includes(searchTerm.toLowerCase())
+    route.name.toLowerCase().includes(searchTerm.toLowerCase()) // Change this to route.name
   );
 
   const filteredGyms = gymData.filter((gym) =>
@@ -37,7 +61,6 @@ const Training = () => {
   // Determine what to display based on filter type
   const displayRoutes = filterType === 'route' || filterType === 'all';
   const displayGyms = filterType === 'gym' || filterType === 'all';
-
   const noResults = filteredRoutes.length === 0 && filteredGyms.length === 0;
 
   return (
@@ -85,10 +108,10 @@ const Training = () => {
           {/* Display Routes */}
           {displayRoutes && filteredRoutes.length > 0 && (
             <div className="recommendations">
-              <h2>Recommended Route</h2>
+              <h2>Recommended Routes</h2>
               <div className="route-cards">
                 {filteredRoutes.map((route, index) => (
-                  <RouteCard key={index} name={route.name} />
+                  <RouteCard key={index} name={route.name} parkLink = {route.googleMapsLink} />
                 ))}
               </div>
             </div>

@@ -16,7 +16,6 @@ const GymCard = ({ name, progress }) => {
       </div>
       <h1 className="gym-title">{name}</h1>
       <div className="gym-footer">
-        <span className="gym-percentage">{progress}%</span>
         {/* Fix the button click handler */}
         <button onClick={handleNavigate} className="gym-button">Start</button>
       </div>

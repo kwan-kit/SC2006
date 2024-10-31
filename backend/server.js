@@ -28,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // app.use('/training', createTrainingPlan);
 // app.use('/save', saveTrainingPlan)
-app.use('/gym', gymList);
+app.use('/gym',gymList);
 app.use('/park',parkList);
 
 app.listen(process.env.PORT, () => {

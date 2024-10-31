@@ -64,7 +64,8 @@
     border-radius: 8px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 45%; /* Adjust width for spacing */
+    flex: 1; /* Allow buttons to grow equally */
+    margin: 0 5px; /* Add some margin between buttons */
     text-align: center; /* Ensure text is centered */
   }
   

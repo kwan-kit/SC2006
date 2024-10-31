@@ -85,12 +85,6 @@ const haversineDistance = (coords1, coords2) => {
     return R * c; // Distance in kilometers
 };
 
-// Endpoint to extract unique park connector names and their first coordinates
-// router.get('/', (req, res) => {
-//     loadParkConnectors(); // Load park connectors from GeoJSON file
-//     res.json({ parkConnectors });
-// });
-
 // Endpoint to get the 10 nearest parks based on user coordinates
 router.post('/', (req, res) => {
     const { latitude, longitude } = req.body;
@@ -102,14 +96,17 @@ router.post('/', (req, res) => {
     const userCoords = [longitude, latitude]; // User's coordinates in [lng, lat] format
     const distances = parkConnectors.map(park => {
         const distance = haversineDistance(userCoords, park.firstCoordinate);
-        return { parkName: park.parkName, distance, firstCoordinate: park.firstCoordinate };
+        const [lng, lat] = park.firstCoordinate; // Destructure the firstCoordinate
+        // Create the Google Maps link
+        const googleMapsLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+        return { name: park.parkName, distance, firstCoordinate: park.firstCoordinate, googleMapsLink };
     });
 
     // Sort by distance and get the top 10 closest parks
     const closestParks = distances.sort((a, b) => a.distance - b.distance).slice(0, 10);
 
     // Send the response as JSON
-    res.json({ nearestParks: closestParks });
+    res.json({ closestParks });
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ import './RouteCard.css'; // Import the styles
 import { useNavigate } from 'react-router-dom';
 
 
-const RouteCard = ({ name }) => {
+const RouteCard = ({ name, parkLink }) => {
   const navigate = useNavigate(); // Hook to handle navigation
 
   const handleNavigate = () => {
@@ -18,7 +18,9 @@ const RouteCard = ({ name }) => {
       </div>
       <h3>{name}</h3>
       <div className="route-card-footer">
-        <button className="route-button">Route</button>
+        <a href={parkLink} target="_blank" rel="noopener noreferrer"> {/* Google Maps link */}
+          <button className="route-button">Route</button>
+        </a>
         <button onClick={handleNavigate} className="view-button">View</button>
       </div>
     </div>
