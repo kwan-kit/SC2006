@@ -1,0 +1,154 @@
+/* Training container styling */
+.training-container {
+  padding: 20px;
+}
+
+/* Search bar and filter buttons container */
+.search-filter {
+  display: flex;
+  justify-content: flex-start; /* Align to the left */
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 60px; /* Add spacing between the search bar and the buttons */
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 250px; /* Adjusted to be less wide */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px;
+  border: 10px solid #111;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+/* Filter button styles */
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-buttons button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid #ccc;
+  background-color: #111;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-buttons button.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.filter-buttons button:hover {
+  background-color: #0056b3;
+}
+
+/* Horizontal scroll for route and gym cards */
+.route-cards, .gym-cards {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;  /* Enable horizontal scrolling */
+  padding-bottom: 10px;
+}
+
+.route-cards::-webkit-scrollbar, .gym-cards::-webkit-scrollbar {
+  height: 10px; /* Scrollbar height for horizontal scroll */
+}
+
+.route-cards::-webkit-scrollbar-track, .gym-cards::-webkit-scrollbar-track {
+  background-color: #1c1c1c;
+  border-radius: 5px;
+}
+
+.route-cards::-webkit-scrollbar-thumb, .gym-cards::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+.route-cards::-webkit-scrollbar-thumb:hover, .gym-cards::-webkit-scrollbar-thumb:hover {
+  background-color: #007bff;
+}
+
+/* Card Styling for Routes and Gyms */
+.route-card, .gym-card {
+  background-color: #000;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 280px;
+  border: 2px solid #000;
+}
+
+/* Image Styling */
+.route-card img, .gym-card img {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+}
+
+button {
+  padding: 5px 15px;
+  border: none;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #007bff;
+}
+
+/* No Results Message */
+.no-results {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.no-results p {
+  color: #ff4f4f;
+  font-size: 1.5rem;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.recommendations h2, .gyms h2 {
+  color: #111;
+  text-align: left;
+}

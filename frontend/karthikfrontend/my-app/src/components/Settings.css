@@ -1,0 +1,80 @@
+/* Settings container */
+.settings-container {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+
+/* Profile section styling */
+.profile-section {
+  background-color: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.profile-picture img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.edit-button {
+  background-color: white;
+  border: none;
+  color: #007BFF;
+  cursor: pointer;
+  font-size: 1.5rem;
+  align-items: center;
+}
+
+.edit-plan-button {
+  background-color: white;
+  border: none;
+  color: #007BFF;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+
+
+/* Past activities styling */
+.past-activities {
+  grid-column: 1 / 3;
+  margin-top: 20px;
+}
+
+.activities-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.activity-card {
+  min-width: 250px;
+  background-color: #222;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.activity-card img {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.activity-info {
+  flex-grow: 1;
+  font-size: 1.1rem;
+}
+
+.activity-info p {
+  margin: 5px 0;
+  font-weight: bold;
+}

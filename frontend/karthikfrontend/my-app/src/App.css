@@ -1,0 +1,73 @@
+/* Basic layout and grid for the dashboard */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 20px;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+/* Progress Section */
+.progress-section {
+  background-color: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.progress-data {
+  display: flex;
+  justify-content: space-around;
+}
+
+.circle {
+  text-align: center;
+}
+
+/* Weekly Snapshot */
+.weekly-snapshot {
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.snapshot-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.snapshot-item img {
+  border-radius: 5px;
+}
+
+/* Next Week Program */
+.next-week-program {
+  background-color: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
