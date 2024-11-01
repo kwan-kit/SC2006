@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import './YourProgress.css';
 import { Line } from 'react-chartjs-2';
 import {
@@ -15,6 +15,78 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const YourProgress = () => {
+  const [username, setUsername] = useState(null);
+  const [trainingPlan, setTrainingPlan] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentWeek, setCurrentWeek] = useState(() => Number(localStorage.getItem('currentWeek')) || 1);
+
+  useEffect(() => {
+    const fetchTrainingPlan = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/training/plan`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch training plan');
+        }
+        const data = await response.json();
+        setUsername(data.username);
+        setTrainingPlan(data);
+        const storedWeek = localStorage.getItem('currentWeek') || 1;
+        setCurrentWeek(Number(storedWeek));
+        if (data.startDate) {
+          calculateCurrentWeek(data.startDate);
+        }
+      } catch (error) {
+        console.error('Error fetching training plan:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrainingPlan();
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const storedWeek = Number(localStorage.getItem('currentWeek'));
+      if (storedWeek !== currentWeek) {
+        setCurrentWeek(storedWeek);
+      }
+    }, 500); // Check every 0.5 seconds
+
+    return () => clearInterval(intervalId);
+  }, [currentWeek]);
+
+  const calculateCurrentWeek = (startDate) => {
+    if (!startDate) return;
+    const start = new Date(startDate);
+    const now = new Date();
+    const diffTime = Math.abs(now - start);
+    const diffWeeks = Math.ceil(diffTime / (7 * 24 * 60 * 60 * 1000));
+    const weekNumber = Math.min(diffWeeks, trainingPlan?.schedule.length);
+    setCurrentWeek(weekNumber);
+  };
+
+  const totalNumberOfRuns = useMemo(() => {
+    if (!trainingPlan?.schedule) return 0;
+    return trainingPlan.schedule.reduce((total, week) => {
+      return total + week.daySchedules.filter(run => run.runTitle !== "Rest").length;
+    }, 0);
+  }, [trainingPlan]);
+
+  const completedRuns = useMemo(() => {
+    if (!trainingPlan?.schedule) return 0;
+    return trainingPlan.schedule.slice(0, currentWeek).reduce((total, week) => {
+      return total + week.daySchedules.filter(run => run.runTitle !== "Rest").length;
+    }, 0);
+  }, [trainingPlan, currentWeek]);
+
+  const progressPercentage = useMemo(() => {
+    if (!trainingPlan?.schedule) return 0;
+    return (currentWeek / trainingPlan.schedule.length) * 100;
+  }, [currentWeek, trainingPlan]);
+
   const paceData = useMemo(() => ({
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
@@ -42,33 +114,35 @@ const YourProgress = () => {
     },
   }), []);
 
-
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!trainingPlan) return <p>No training plan found</p>;
 
   return (
     <div className="progress-section">
       <h2>Your Progress</h2>
-      <p className="week-number">Week 7 of 12</p>
+      <p className="week-number">Week {currentWeek} of {trainingPlan.schedule.length}</p>
 
       <div className="progress-bar-container">
         <div className="progress-bar">
-          <div className="progress-bar-filled"></div>
+          <div 
+            className="progress-bar-filled" 
+            style={{ width: `${progressPercentage}%` }}
+          ></div>
         </div>
 
-        {/* Progress bar labels */}
         <div className="progress-bar-labels">
-            <span> Week 1</span>
-            <span> Week 12</span>
+          <span>Week 1</span>
+          <span>Week {trainingPlan.schedule.length}</span>
         </div>
       </div>
 
       <div className="progress-cards">
-        {/* Total Number of Runs */}
         <div className="progress-card interactive-card">
           <h3>Total Number of Runs</h3>
-          <p className="metric-number">12</p>
+          <p className="metric-number">{completedRuns}/{totalNumberOfRuns}</p>
         </div>
 
-        {/* Pace Trends */}
         <div className="progress-card interactive-card">
           <h3>Pace Trends (km/min)</h3>
           <div className="chart-container">
@@ -76,16 +150,16 @@ const YourProgress = () => {
           </div>
         </div>
 
-        {/* Calories Burned this Week */}
         <div className="progress-card interactive-card">
           <h3>Calories Burned this Week</h3>
           <p className="metric-number">3000 kcal</p>
         </div>
 
-        {/* Total Distance Ran this Week */}
         <div className="progress-card interactive-card">
           <h3>Total Distance Ran this Week (km)</h3>
-          <p className="metric-number distance-number">24 km</p>
+          <p className="metric-number distance-number">
+            {trainingPlan.schedule[currentWeek - 1]?.weeklyDistance || 0} km
+          </p>
         </div>
       </div>
     </div>
