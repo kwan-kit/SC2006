@@ -1,12 +1,30 @@
+
+/* Base header styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background-color: #000;
-  color: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   transition: background-color 0.3s ease;
+  color: white;
+
+}
+
+/* Transparent header for LandingPage */
+.header-transparent {
+  position: absolute; /* Make it overlay on top of the content */
+  background-color: transparent !important; /* Ensure transparency is applied */
+  box-shadow: none; /* Optional: remove shadow on transparent header */
+}
+
+/* Black header for other pages */
+.header-black {
+  background-color: black;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .header:hover {
@@ -23,7 +41,7 @@
   font-style: italic;
   letter-spacing: 2px;
   color: white;
-  margin: 0;
+  margin: 10px;
   transition: color 0.3s ease, transform 0.3s ease;
   text-decoration: none; /* Ensure no underline */
   border: none; /* Remove any border */

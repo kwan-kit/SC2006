@@ -1,93 +1,130 @@
+/* Main container styling */
 .workout-tracking-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  background-color: #161b22;
-  color: white;
+  gap: 10px;
+  padding: 10px;
+  background-color: white; /* Page background */
+  color: #111;
   font-family: Arial, sans-serif;
 }
 
+/* Workout card styling */
 .workout-card {
   display: flex;
-  background-color: #222831;
-  border-radius: 10px;
+  background-color: #111; /* Card background */
+  border-radius: 20px;
   padding: 20px;
-  align-items: center;
-  gap: 30px;
+  align-items: flex-start;
+  gap: 0px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Placeholder image styling */
 .left-section {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 }
 
 .image-placeholder {
-  width: 800px;
-  height: 400px;
+  width: 100%; /* Image placeholder to occupy full width of left section */
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 2 / 1; /* Ensures a 800 x 400 aspect ratio */
   background-color: #e0e0e0;
   color: #555;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  font-size: 24px;
+  border-radius: 15px;
+  font-size: 18px;
 }
 
+/* Right section styling */
 .right-section {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
-.description {
-  margin-bottom: 20px;
-}
-
+/* Workout title styling */
 .workout-title {
   color: #007bff;
   font-size: 24px;
   margin-bottom: 10px;
-}
-
-.steps {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.steps li {
-  margin: 5px 0;
-}
-
-.workout-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-label {
   font-weight: bold;
 }
 
-input[type="number"] {
-  padding: 8px;
-  border-radius: 5px;
+/* Description steps */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.steps li {
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+/* Input field styling */
+.workout-inputs label {
+  font-weight: bold;
+  color: #e0e6ed;
+}
+
+.workout-inputs input[type="number"] {
+  padding: 10px;
+  border-radius: 8px;
   border: 1px solid #444;
   background-color: #2c2f33;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100px;
 }
 
-input[type="checkbox"] {
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
-.complete-checkbox label {
+/* Toggle button for completed */
+.complete-toggle .toggle-button {
+  background-color: #2c2f33;
   color: #007bff;
+  border: 1px solid #007bff;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.complete-toggle .toggle-button.completed {
+  background-color: #007bff;
+  color: white;
+}
+
+/* End session button styling */
+.end-session-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.end-session-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+.end-session-button:active {
+  transform: translateY(0);
 }
