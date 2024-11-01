@@ -61,11 +61,6 @@
     width: 100%; /* Make the footer fill the card */
 }
 
-.gym-percentage {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
 .gym-button {
     background-color: #007bff;
     color: white;

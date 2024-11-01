@@ -38,12 +38,21 @@ const loadParkConnectors = () => {
         const geojsonData = JSON.parse(fs.readFileSync(geojsonFilePath, 'utf8'));
         const uniqueParks = new Map(); // Use a Map to track unique parks
 
+        // Helper function to normalize park names
+        const normalizeName = (name) => {
+        return name
+          .toLowerCase()
+          .replace(/\b(to|-)\b/g, '-') // Replace "to" and "-" with a single "-"
+          .replace(/\s+/g, ' ') // Remove extra spaces
+          .trim();
+        };
+
         // Extract park connector names and first coordinates
         geojsonData.features.forEach(feature => {
             const { parkName, firstCoordinate } = extractParkInfo(feature);
             if (parkName && firstCoordinate) {
                 // Normalize the park name to eliminate duplicates based on spaces
-                const normalizedParkName = parkName.toLowerCase().replace(/\s+/g, ' ').trim(); // Normalize
+                const normalizedParkName = normalizeName(parkName);
 
                 if (!uniqueParks.has(normalizedParkName)) { // Check for unique park names
                     uniqueParks.set(normalizedParkName, {

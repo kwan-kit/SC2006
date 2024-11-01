@@ -1,0 +1,96 @@
+const express = require('express');
+const axios = require('axios');
+// const {RunReport} = require('../model/database');
+
+const router = express.Router();
+
+//let accessToken = 40773adda3035aae781bfa8634c354ae65452278;
+let refreshToken = process.env.STRAVA_REFRESH_TOKEN;
+let tokenExpiry = null;
+
+const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID;
+const STRAVA_CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET;
+let accessToken = process.env.STRAVA_ACCESS_TOKEN;
+
+//Refresh token if necessary
+const refreshAccessToken = async () => {
+  if (!accessToken || Date.now() >= tokenExpiry) {
+    const response = await axios.post('https://www.strava.com/oauth/token', null, {
+      params: {
+        client_id: STRAVA_CLIENT_ID,
+        client_secret: STRAVA_CLIENT_SECRET,
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      },
+    });
+    accessToken = response.access_token;
+    tokenExpiry = Date.now() + response.data.expires_in * 1000;
+    refreshToken = response.data.refresh_token; // update if needed
+    console.log('Access Token refreshed:', accessToken);
+  }
+};
+
+// Route to exchange the authorization code for access and refresh tokens
+router.post('/', async (req, res) => {
+    console.log('step1');
+    const { code } = req.body; // Get the authorization code from the request
+    console.log('Request Body:', req.body);
+    console.log('Received code from frontend:', code); // Log the received code
+
+    // try {
+    //   const response = await axios.post('https://www.strava.com/api/v3/oauth/token', null, {
+    //     params: {
+    //       client_id: STRAVA_CLIENT_ID,
+    //       client_secret: STRAVA_CLIENT_SECRET,
+    //       code: code,
+    //       grant_type: 'authorization_code', // Specify grant type
+    //     },
+    //   });
+  
+    //   // Extract tokens from response
+    //   accessToken = response.data.access_token;
+    //   refreshToken = response.data.refresh_token; // Store the new refresh token if provided
+    //   tokenExpiry = Date.now() + response.data.expires_in * 1000;
+  
+    //   console.log('Access Token:', accessToken);
+    //   console.log('Refresh Token:', refreshToken);
+      
+    // } catch (error) {
+    //   console.error('Error exchanging code for tokens:', error.response ? error.response.data : error.message);
+    //   res.status(500).json({ error: 'Failed to obtain tokens' });
+    // }
+  });
+
+// Fetch Strava data and save to DB
+// router.get('/', async (req, res) => {
+//   try {
+//     //await refreshAccessToken(); // Ensure token is valid
+//     console.log(accessToken);
+//     const response = await axios.get('https://www.strava.com/api/v3/athlete/activities', {
+//       params: { access_token: `${accessToken}` }
+//     });
+
+// //     // Example: Save the first run in the database
+// //     const run = new RunReport({
+// //       name: response.data[0].name,
+// //       distance: response.data[0].distance,
+// //       movingTime: response.data[0].moving_time,
+// //       startDate: response.data[0].start_date,
+// //     });
+// //     await run.save();
+
+//     // Print the first run's details to the console
+//     console.log("Strava Run Data:", {
+//         name: response.data[0].name,
+//         distance: response.data[0].distance,
+//         movingTime: response.data[0].moving_time,
+//         startDate: response.data[0].start_date,
+//       });
+
+//     res.json({ message: 'Run data saved', run });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Error fetching Strava data' });
+//  }
+// });
+
+module.exports = router;

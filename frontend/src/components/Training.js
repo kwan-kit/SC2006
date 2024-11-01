@@ -12,37 +12,48 @@ const Training = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
-  // Fetch nearest parks on component mount
-  useEffect(() => {
-    const fetchRoutes = async () => {
-      try {
-        const userLocation = { latitude: 1.3521, longitude: 103.8198 }; // Replace with actual user location data
-        const response = await axios.post('/park', userLocation);
-        
-        setRouteData(response.data.closestParks); // Set fetched data to closestParks
-      } catch (error) {
-        console.error('Error fetching park connectors:', error);
-        setError('Error fetching park data');
-      } finally {
-        setLoading(false);
+  // Function to get user geolocation
+  const getUserLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            resolve({ latitude, longitude });
+          },
+          (error) => {
+            console.error('Geolocation error:', error);
+            setError('Error getting user location');
+            reject(error);
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+      } else {
+        console.error('Geolocation not supported by this browser');
+        setError('Geolocation not supported');
+        reject(new Error('Geolocation not supported'));
       }
-    };
+    });
+  };
 
-    fetchRoutes();
-  }, []);
-
-  // Fetch gym data from the backend
+  // Fetch nearest parks and gyms on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const latitude = 1.3521; 
-        const longitude = 103.8198;
+        const userLocation = await getUserLocation(); // Get user location
 
-        const response = await axios.post('/gym', { latitude, longitude });
-        setGymData(response.data); // Set gym data from response
+        // Fetch parks using user location
+        const routeResponse = await axios.post('/park', userLocation);
+        setRouteData(routeResponse.data.closestParks);
+
+        // Fetch gyms using user location
+        const gymResponse = await axios.post('/gym', userLocation);
+        setGymData(gymResponse.data);
       } catch (err) {
         console.error('Fetch error:', err);
-        setError('Error fetching gym data');
+        setError('Error fetching data');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -51,7 +62,7 @@ const Training = () => {
 
   // Filter function for search
   const filteredRoutes = routeData.filter((route) =>
-    route.name.toLowerCase().includes(searchTerm.toLowerCase()) // Change this to route.name
+    route.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredGyms = gymData.filter((gym) =>
@@ -111,7 +122,7 @@ const Training = () => {
               <h2>Recommended Routes</h2>
               <div className="route-cards">
                 {filteredRoutes.map((route, index) => (
-                  <RouteCard key={index} name={route.name} parkLink = {route.googleMapsLink} />
+                  <RouteCard key={index} name={route.name} parkLink={route.googleMapsLink} />
                 ))}
               </div>
             </div>

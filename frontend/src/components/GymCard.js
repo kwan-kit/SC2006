@@ -2,7 +2,7 @@ import React from 'react';
 import './GymCard.css';
 import { useNavigate } from 'react-router-dom';
 
-const GymCard = ({ name, progress }) => {
+const GymCard = ({ name }) => {
   const navigate = useNavigate(); // Hook to handle navigation
 
   const handleNavigate = () => {

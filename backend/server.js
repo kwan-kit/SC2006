@@ -6,6 +6,7 @@ const saveTrainingPlan = require('./routes/saveTrainingPlan');
 const createTrainingPlan = require('./routes/createTrainingPlan');
 const gymList = require('./routes/gymList');
 const parkList = require('./routes/parkList');
+const strava = require('./routes/stravaConnect');
 
 const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
@@ -30,6 +31,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 // app.use('/save', saveTrainingPlan)
 app.use('/gym',gymList);
 app.use('/park',parkList);
+app.use('/strava',strava);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);

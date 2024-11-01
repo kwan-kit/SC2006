@@ -5,6 +5,7 @@ const geolib = require('geolib');
 
 router.post('/', async (req, res) => {
     const { latitude, longitude } = req.body;
+    console.log(latitude,longitude);
 
     if (!latitude || !longitude) {
         return res.status(400).json({ message: 'Coordinates are required' });
