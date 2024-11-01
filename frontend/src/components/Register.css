@@ -12,11 +12,10 @@
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
-  margin: 0 auto;
+  max-width: 100%;
+  width: 300px; /* Ensure the form box is responsive */
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .side-image {
@@ -65,19 +64,17 @@ form button:hover,
   background-color: #0056b3;
 }
 
-/* Label styles */
-label {
-  display: inline-block; /* Keep inline layout but allow wrapping */
-  width: 100%; /* Ensure the label takes up the full width of the form */
+.checkbox-label {
+  display: flex;
+  align-items: center; /* Aligns text vertically with checkbox */
   font-size: 0.9rem;
-  color: black; /* Ensure the text is black */
+  color: black;
   margin: 15px 0;
-  word-wrap: break-word; /* Enable the text to wrap to the next line if it exceeds container width */
+  white-space: nowrap; /* Prevents line breaks */
 }
 
-label input[type="checkbox"] {
-  margin-right: 10px; /* Add space between checkbox and text */
-  vertical-align: middle; /* Vertically align checkbox with the text */
+.checkbox-label input[type="checkbox"] {
+  margin-right: 10px; /* Space between checkbox and text */
 }
 
 /* Link styles */
@@ -101,10 +98,9 @@ a:hover {
 }
 
 .divider {
-  width: 100%;
-  border: none;
+  width: 80%; /* Adjust width relative to the form box */
   border-top: 1px solid #ccc;
-  margin: 20px 0;
+  margin: 20px auto; /* Auto margin for centering */
   box-sizing: border-box;
 }
 
@@ -126,5 +122,16 @@ a:hover {
 
 .register-form-box label:last-of-type {
   font-size: 0.8rem; /* Adjust the font size as needed */
-  color: black; /* Ensure the text color is black */
+  color: white; 
+}
+
+.security-question-select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }

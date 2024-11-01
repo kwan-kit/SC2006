@@ -124,12 +124,12 @@ html, body {
   color: white;
   padding: 10px;
   border-radius: 20px;
-  height: auto; /* Adjust height as needed to fit the design */
+  height: 100%; /* Fill the height of the viewport */
   text-align: center;
 }
 
 .snapshot-cards-wrapper {
-  max-height: 300px; /* Example height, adjust to fit your design */
+  max-height: 100%; /* Example height, adjust to fit your design */
   overflow-y: auto; /* Allow vertical scrolling */
   overflow-x: hidden; /* Disable horizontal scrolling */
   padding-right: 10px; /* Add padding to avoid cutting off the scrollbar */

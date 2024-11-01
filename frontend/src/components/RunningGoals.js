@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styleRunning.css';
 
 const RunningGoals = () => {
@@ -9,9 +9,42 @@ const RunningGoals = () => {
   const [trainingPeriod, setTrainingPeriod] = useState('Select');
   const [goalTiming, setGoalTiming] = useState('Select');
 
-  const handleSubmit = async (event) => {
+  // Memoized options for Goal Timing based on the provided data
+  const timingOptions = useMemo(() => ({
+    Novice: {
+      '5 km': ['35 mins', '30 mins'],
+      '8 km': ['55 mins', '50 mins'],
+      '10 km': ['70 mins', '65 mins'],
+    },
+    Intermediate: {
+      '5 km': ['30 mins', '25 mins'],
+      '8 km': ['50 mins', '45 mins'],
+      '10 km': ['65 mins', '60 mins'],
+    },
+    Advanced: {
+      '5 km': ['25 mins', '20 mins'],
+      '8 km': ['45 mins', '40 mins'],
+      '10 km': ['60 mins', '55 mins'],
+    },
+  }), []); // No dependencies, will remain constant
+
+  const [availableTimingOptions, setAvailableTimingOptions] = useState([]);
+
+  useEffect(() => {
+    if (activityLevel !== 'Select' && goalDistance !== 'Select') {
+      const timings = timingOptions[activityLevel][goalDistance];
+      setAvailableTimingOptions(timings || []);
+      setGoalTiming('Select'); // Reset goal timing when changing selections
+    } else {
+      setAvailableTimingOptions([]);
+      setGoalTiming('Select'); // Reset goal timing if selections are not valid
+    }
+  }, [activityLevel, goalDistance, timingOptions]); // No longer causes a warning
+
+  const handleSubmit = (event) => {
     event.preventDefault();
 
+    // Check for valid selections
     if (
       activityLevel === 'Select' ||
       goalDistance === 'Select' ||
@@ -22,6 +55,7 @@ const RunningGoals = () => {
       return;
     }
 
+    // Create the training plan object
     const trainingPlan = {
       activityLevel,
       goalDistance,
@@ -30,29 +64,21 @@ const RunningGoals = () => {
       createdAt: new Date(),
     };
 
-    try {
-      const response = await fetch('http://localhost:5000/api/server', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(trainingPlan),
-      });
+    // Log the training plan for debugging (optional)
+    console.log('Training Plan Submitted:', trainingPlan);
 
-      if (response.ok) {
-        alert('Form submitted successfully! Let’s Go!');
-        navigate('/goals');
-      } else {
-        alert('An error occurred while submitting the form.');
-      }
-    } catch (error) {
-      console.error('Error inserting document:', error);
-      alert('An error occurred while submitting the form.');
-    }
+    // Navigate to the Dashboard
+    navigate('/Dashboard');
   };
 
   return (
-    <div className="background">
+    <div
+      className="background"
+      style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/goalsBG.jpeg'})`,
+        position: 'relative',
+      }}
+    >
       <div className="container">
         <form className="goal-form" onSubmit={handleSubmit}>
           <h2 className="form-title">Set Your Running Goals</h2>
@@ -107,14 +133,15 @@ const RunningGoals = () => {
               onChange={(e) => setGoalTiming(e.target.value)}
             >
               <option>Select</option>
-              <option>25 mins</option>
-              <option>30 mins</option>
-              <option>35 mins</option>
+              {availableTimingOptions.map((timing) => (
+                <option key={timing} value={timing}>
+                  {timing}
+                </option>
+              ))}
             </select>
           </div>
-          <Link to="/Dashboard">
-            <button type="submit" className="submit-button">Done, Let’s Go!</button>
-          </Link>
+
+          <button type="submit" className="submit-button">Done, Let’s Go!</button>
         </form>
       </div>
     </div>
