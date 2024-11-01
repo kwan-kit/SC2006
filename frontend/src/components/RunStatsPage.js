@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import './RunStatsPage.css';
-const axios = require('axios');
+import axios from 'axios';
 
 const RunStatsPage = () => {
   const [rating, setRating] = useState(1);
@@ -8,6 +8,7 @@ const RunStatsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasData, setHasData] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
   const [stats, setStats] = useState({
     date: 'NIL',
     time: 'NIL',
@@ -27,11 +28,12 @@ const RunStatsPage = () => {
     // Check if there's a code in the URL parameters after redirect
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get('code');
+    console.log(code);
 
     if (code) {
       // Simulate an API call to fetch data based on the authorization code
-      setIsLoading(true);
-      // axios.post('/strava', { code });
+      setIsLoading(true);     
+      axios.post('/strava', { code });
 
       // Here you can call your backend API to get the access token and fetch the data
       // For now, we will just simulate the response
@@ -119,7 +121,7 @@ const RunStatsPage = () => {
   const retrieveData = () => {
     const clientId = 138949;
     const redirectUri = 'http://localhost:3000/RunStatsPage'; // Page to redirect back to after authorization
-    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=activity:read`;
+    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=activity:read_all`;
     
     window.location.href = stravaAuthUrl;
     setIsLoading(true);
