@@ -30,28 +30,30 @@ const RunStatsPage = () => {
     const code = queryParams.get('code');
     console.log(code);
 
-    if (code) {
-      // Simulate an API call to fetch data based on the authorization code
-      setIsLoading(true);     
-      axios.post('/strava', { code });
-
-      // Here you can call your backend API to get the access token and fetch the data
-      // For now, we will just simulate the response
-      setTimeout(() => {
+    const fetchStravaData = async () =>{
+      if (code) {
+        // API call to fetch data based on the authorization code
+        setIsLoading(true);     
+        const response = await axios.post('/strava', { code });
+        const { hours, minutes, seconds } = response.data.movingTime;
+        console.log(response.data.date, response.data.time, response.data.movingTime,response.data.distance,response.data.elevationGained)
         setStats({
-          date: '2024-07-25', // Simulated data
-          time: '14:30',
-          targetTime: { hours: '02', minutes: '05', seconds: '00' },
-          movingTime: { hours: '02', minutes: '08', seconds: '13' },
-          distance: '10',
-          elevationGain: '150'
+          date: response.data.date,
+          time: response.data.time,
+          movingTime : { hours, minutes, seconds },
+          distance: response.data.distance,
+          elevationGain: response.data.elevationGained,
+          targetTime: { hours: '0', minutes: '0', seconds: '0' }
         });
-        setHasData(true);
-        window.history.replaceState({}, document.title, "/RunStatsPage");
-        setIsLoading(false);
-      }, 2000);
-    }
-  }, []);
+          setHasData(true);
+          window.history.replaceState({}, document.title, "/RunStatsPage");
+          setIsLoading(false);
+      }
+    };
+  fetchStravaData();
+  console.log(stats)
+  console.log(typeof stats.movingTime.minutes);
+}, []);
 
 
   // Helper function to format date from YYYY-MM-DD to DD-MM-YYYY
