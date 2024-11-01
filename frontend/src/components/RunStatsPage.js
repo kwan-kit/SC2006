@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import './RunStatsPage.css';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ const RunStatsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasData, setHasData] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
   const [stats, setStats] = useState({
     date: 'NIL',
     time: 'NIL',
@@ -53,6 +54,7 @@ const RunStatsPage = () => {
   console.log(stats)
   console.log(typeof stats.movingTime.minutes);
 }, []);
+
 
   // Helper function to format date from YYYY-MM-DD to DD-MM-YYYY
   const formatDateDisplay = (dateString) => {
@@ -119,19 +121,12 @@ const RunStatsPage = () => {
   };
 
   const retrieveData = () => {
+    const clientId = 138949;
+    const redirectUri = 'http://localhost:3000/RunStatsPage'; // Page to redirect back to after authorization
+    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=activity:read_all`;
+    
+    window.location.href = stravaAuthUrl;
     setIsLoading(true);
-    setTimeout(() => {
-      setStats({
-        date: '2024-07-25', // Stored in YYYY-MM-DD format
-        time: '14:30',
-        targetTime: { hours: '02', minutes: '05', seconds: '00' },
-        movingTime: { hours: '02', minutes: '08', seconds: '13' },
-        distance: '10',
-        elevationGain: '150'
-      });
-      setHasData(true);
-      setIsLoading(false);
-    }, 2000);
   };
 
   const startEditing = () => {
