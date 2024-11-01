@@ -1,39 +1,50 @@
+
+/* Base header styles */
 .header {
-  background: linear-gradient(to right, #000, #222); /* Gradient background */
-  color: white;
-  padding: 20px 5%; /* Padding for content inside the header */
   display: flex;
-  justify-content: space-between; /* Space between logo, nav, and profile */
-  align-items: center; /* Center items vertically */
-  font-family: Arial, sans-serif; /* Font family */
-  transition: background 0.5s ease; /* Smooth transition for background */
-  width: 100vw; /* Set to 100vw for full width of viewport */
-  overflow: hidden; /* Prevent overflow */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
-  position: relative; /* Position relative to keep it in the flow */
-  box-sizing: border-box; /* Include padding and border in element's total width */
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  color: white;
+
+}
+
+/* Transparent header for LandingPage */
+.header-transparent {
+  position: absolute; /* Make it overlay on top of the content */
+  background-color: transparent !important; /* Ensure transparency is applied */
+  box-shadow: none; /* Optional: remove shadow on transparent header */
+}
+
+/* Black header for other pages */
+.header-black {
+  background-color: black;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .header:hover {
-  background-color: #111; /* Change on hover */
+  background-color: #111;
 }
 
 .logo {
   cursor: pointer;
-  flex: 0 0 auto; /* Prevent the logo from growing or shrinking */
-  display: flex; /* Use flex to center logo text if needed */
-  align-items: center; /* Center logo content vertically */
 }
 
 .logo-text {
-  font-size: 2.5rem; /* Adjust size for visibility */
+  font-size: 2.5rem;
   font-weight: bold;
   font-style: italic;
   letter-spacing: 2px;
   color: white;
-  margin: 0;
+  margin: 10px;
   transition: color 0.3s ease, transform 0.3s ease;
   text-decoration: none; /* Ensure no underline */
+  border: none; /* Remove any border */
 }
 
 .logo-text:hover {
@@ -54,15 +65,16 @@
   color: inherit; /* Retain color on hover and active states */
 }
 
+
 .nav {
   display: flex;
-  flex-grow: 2; /* Allow the nav section to take more space */
-  justify-content: center; /* Center nav links */
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .nav-links {
   display: flex;
-  gap: 50px; /* Space between links */
+  gap: 50px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -85,7 +97,7 @@
 }
 
 .nav-links li a:hover {
-  color: #00bfff; /* Light blue highlight like footer */
+  color: #007bff;
 }
 
 .profile {
@@ -94,7 +106,6 @@
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
-  flex: 0 0 auto; /* Prevent the profile section from growing or shrinking */
 }
 
 .profile:hover {
@@ -133,7 +144,7 @@
 }
 
 .logout-button:hover {
-  color: #00bfff; /* Light blue highlight like footer */
+  color: #007bff;
 }
 
 @keyframes fadeIn {
@@ -151,23 +162,4 @@
   font-size: 1.2rem;
   color: white;
   margin-right: 10px;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-  .header {
-    padding: 20px 5%; /* More padding on smaller screens */
-  }
-
-  .nav-links {
-    gap: 20px; /* Adjust gap for smaller screens */
-  }
-
-  .nav-links li {
-    font-size: 1.2rem; /* Slightly smaller text */
-  }
-
-  .logo-text {
-    font-size: 2rem; /* Smaller logo text */
-  }
 }

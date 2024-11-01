@@ -6,7 +6,7 @@ const Verification = () => {
   return (
     <div className="verification-container">
       {/* Left-side image */}
-      <img src="/woman.png" className="side-image left" alt="left-side" />
+      <img src="/running3.png" className="side-image left" alt="left-side" />
 
       {/* White box to enclose the form */}
       <div className="verification-form-wrapper">

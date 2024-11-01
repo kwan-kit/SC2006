@@ -149,6 +149,10 @@ button:hover {
 }
 
 .recommendations h2, .gyms h2 {
-  color: #111;
+  color: white;
   text-align: left;
+}
+
+.gyms {
+  margin-top: 2rem;
 }

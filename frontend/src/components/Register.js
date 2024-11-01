@@ -1,9 +1,16 @@
+// src/components/Register.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Register.css'; // Importing your CSS styles for layout
+import { Link, useNavigate } from 'react-router-dom';
+import './Register.css';
 
 const Register = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [securityQuestion, setSecurityQuestion] = useState('');
+  const [securityAnswer, setSecurityAnswer] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -11,53 +18,106 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match. Please try again.');
+      return;
+    }
+
+    if (!securityQuestion || !securityAnswer) {
+      alert('Please select a security question and provide an answer.');
+      return;
+    }
+
     if (!isChecked) {
       alert('You must agree to the terms and conditions before registering.');
       return;
     }
-    // Submit form or other logic
+
+    alert("Successfully registered! Please login with your username and password.");
+    navigate('/'); // Redirect to login page
   };
 
   return (
     <div className="register-container">
-      {/* Left-side image */}
-      <img src="/woman.png" className="side-image left" alt="left-side" />
+      <img src="/running3.png" className="side-image left" alt="left-side" />
 
-      {/* White box around the form */}
       <div className="register-form-wrapper">
         <div className="register-form-box">
           <h2 className="lora-title">HELTH</h2>
           <form onSubmit={handleSubmit}>
             <label>Register</label>
-            <input type="email" placeholder="Enter your Email or Phone Number" required />
+            <input 
+              type="text" 
+              placeholder="Enter your Username" 
+              required 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+            />
 
             <label>Password</label>
-            <input type="password" placeholder="Enter your Password" required />
-            
-            {/* Checkbox for agreeing to terms and conditions */}
-            <label>
+            <input 
+              type="password" 
+              placeholder="Enter your Password" 
+              required 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+            />
+
+            <label>Confirm Password</label>
+            <input 
+              type="password" 
+              placeholder="Confirm Password" 
+              required 
+              value={confirmPassword} 
+              onChange={(e) => setConfirmPassword(e.target.value)} 
+            />
+
+            <label>Security Question</label>
+            <select 
+              required 
+              value={securityQuestion} 
+              onChange={(e) => setSecurityQuestion(e.target.value)}
+              className="security-question-select"
+            >
+              <option value="">Select a security question</option>
+              <option value="pet">What is your first pet's name?</option>
+              <option value="school">What is the name of your elementary school?</option>
+              <option value="city">In which city were you born?</option>
+            </select>
+
+            <label>Answer</label>
+            <input 
+              type="text" 
+              placeholder="Enter your Answer" 
+              required 
+              value={securityAnswer} 
+              onChange={(e) => setSecurityAnswer(e.target.value)} 
+            />
+
+            <label className="checkbox-label">
               <input 
                 type="checkbox" 
                 checked={isChecked} 
                 onChange={handleCheckboxChange} 
               />
-              I agree to the <a href="/terms">terms and conditions</a>
+              I agree to the&nbsp;<Link to="/terms" target="_blank">terms and conditions</Link>
             </label>
-            
+
+
             <button type="submit">Register</button>
           </form>
         </div>
 
-        {/* Divider and Back to Login text below the white box */}
         <hr className="divider" />
         <div className="back-to-login-text">
           <p style={{ color: 'white' }}>
-            Back to <Link to="/" className="back-to-login-link">Login</Link>
+            Back to <Link to="/login" className="back-to-login-link">Login</Link>
           </p>
         </div>
       </div>
 
-      {/* Right-side image */}
       <img src="/weights.jpeg" className="side-image right" alt="right-side" />
     </div>
   );
