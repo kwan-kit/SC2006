@@ -4,31 +4,10 @@ const axios = require('axios');
 
 const router = express.Router();
 
-//let accessToken = 40773adda3035aae781bfa8634c354ae65452278;
-let refreshToken = process.env.STRAVA_REFRESH_TOKEN;
 let tokenExpiry = null;
 
 const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID;
 const STRAVA_CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET;
-let accessToken = process.env.STRAVA_ACCESS_TOKEN;
-
-//Refresh token if necessary
-const refreshAccessToken = async () => {
-  if (!accessToken || Date.now() >= tokenExpiry) {
-    const response = await axios.post('https://www.strava.com/oauth/token', null, {
-      params: {
-        client_id: STRAVA_CLIENT_ID,
-        client_secret: STRAVA_CLIENT_SECRET,
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-      },
-    });
-    accessToken = response.access_token;
-    tokenExpiry = Date.now() + response.data.expires_in * 1000;
-    refreshToken = response.data.refresh_token; // update if needed
-    console.log('Access Token refreshed:', accessToken);
-  }
-};
 
 function convertSecondsToHMS(totalSeconds) {
     const hours = Math.floor(totalSeconds / 3600); // Calculate hours
@@ -36,7 +15,11 @@ function convertSecondsToHMS(totalSeconds) {
     const seconds = totalSeconds % 60; // Calculate remaining seconds
 
     // Return the formatted string
-    return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    return { 
+        hours: hours.toString(), 
+        minutes: minutes.toString(), 
+        seconds: seconds.toString() 
+      };
 }
 
 // Route to exchange the authorization code for access and refresh tokens
@@ -68,47 +51,19 @@ router.post('/', async (req, res) => {
          params: { access_token: `${accessToken}` }
         });
 
-    //     // Example: Save the first run in the database
-    //     const run = new RunReport({
-    //     name: response.data[0].name,
-    //     distance: response.data[0].distance,
-    //     movingTime: response.data[0].moving_time,
-    //     startDate: response.data[0].start_date,
-    //   });
-    //   await run.save();
-    
-        // Print the first run's details to the console
-        console.log("Strava Run Data:", {
-            movingTime: convertSecondsToHMS(activitiesResponse.data[0].moving_time),
-            distance: activitiesResponse.data[0].distance/1000,
-            date: activitiesResponse.data[0].start_date_local.substring(0,activitiesResponse.data[0].start_date_local.indexOf('T')),
-            time: activitiesResponse.data[0].start_date_local.substring(activitiesResponse.data[0].start_date_local.indexOf('T')+1,activitiesResponse.data[0].start_date_local.indexOf('Z')),
-            elevationGained: activitiesResponse.data[0].total_elevation_gain,
-          });
-
-        res.json({ message: 'Run data saved' }); 
+        const movingTime = convertSecondsToHMS(activitiesResponse.data[0].moving_time);
+        const distance = activitiesResponse.data[0].distance/1000;
+        const date = activitiesResponse.data[0].start_date_local.substring(0,activitiesResponse.data[0].start_date_local.indexOf('T'));
+        const time = activitiesResponse.data[0].start_date_local.substring(activitiesResponse.data[0].start_date_local.indexOf('T')+1,activitiesResponse.data[0].start_date_local.indexOf('Z'));
+        const elevationGained = activitiesResponse.data[0].total_elevation_gain;
+        const route = activitiesResponse.data[0].map;
+        
+        res.json({ movingTime, distance, date, time, elevationGained }); 
           
     } catch (error) {
       console.error('Error exchanging code for tokens:', error.response ? error.response.data : error.message);
       res.status(500).json({ error: 'Failed to obtain tokens' });
     }
   });
-
-// Fetch Strava data and save to DB
-// router.get('/', async (req, res) => {
-//   try {
-//     //await refreshAccessToken(); // Ensure token is valid
-//     console.log(accessToken);
-//     const activitiesResponse = await axios.get('https://www.strava.com/api/v3/athlete/activities', {
-//       params: { access_token: `${accessToken}` }
-//     });
-
-
-
-
-
-
-//  }
-// });
 
 module.exports = router;
