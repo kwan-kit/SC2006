@@ -36,7 +36,7 @@ const Register = () => {
     }
 
     alert("Successfully registered! Please login with your username and password.");
-    navigate('/'); // Redirect to login page
+    navigate('/Login');
   };
 
   return (

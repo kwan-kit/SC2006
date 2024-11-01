@@ -22,37 +22,6 @@ const RunStatsPage = () => {
     elevationGain: 'm'
   };
 
-  useEffect(() => {
-    // Check if there's a code in the URL parameters after redirect
-    const queryParams = new URLSearchParams(window.location.search);
-    const code = queryParams.get('code');
-    console.log(code);
-
-    const fetchStravaData = async () =>{
-      if (code) {
-        // API call to fetch data based on the authorization code
-        setIsLoading(true);     
-        const response = await axios.post('/strava', { code });
-        const { hours, minutes, seconds } = response.data.movingTime;
-        console.log(response.data.date, response.data.time, response.data.movingTime,response.data.distance,response.data.elevationGained)
-        setStats({
-          date: response.data.date,
-          time: response.data.time,
-          movingTime : { hours, minutes, seconds },
-          distance: response.data.distance,
-          elevationGain: response.data.elevationGained,
-          targetTime: { hours: '0', minutes: '0', seconds: '0' }
-        });
-          setHasData(true);
-          window.history.replaceState({}, document.title, "/RunStatsPage");
-          setIsLoading(false);
-      }
-    };
-  fetchStravaData();
-  console.log(stats)
-  console.log(typeof stats.movingTime.minutes);
-}, []);
-
   // Helper function to format date from YYYY-MM-DD to DD-MM-YYYY
   const formatDateDisplay = (dateString) => {
     if (!dateString || dateString === 'NIL') return 'NIL';

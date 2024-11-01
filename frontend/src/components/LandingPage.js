@@ -8,7 +8,6 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className="hero">
         <div className="spline-container">
-          <iframe src="https://my.spline.design/journey-76b4202385480fa6d0055275ac5d9d72/" title="3D Model" className="spline-model"></iframe>
         </div>
       </section>
 
