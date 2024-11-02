@@ -1,6 +1,9 @@
 const NoviceTrainingPlan = require('../trainingPlans/NoviceTrainingPlan');
 const IntermediateTrainingPlan = require('../trainingPlans/IntermediateTrainingPlan');
 const AdvancedTrainingPlan = require('../trainingPlans/AdvancedTrainingPlan');
+const NoviceHybridTrainingPlan = require('../trainingPlans/NoviceHybridTrainingPlan');
+const IntermediateHybridTrainingPlan = require('../trainingPlans/IntermediateHybridTrainingPlan');
+const AdvancedHybridTrainingPlan = require('../trainingPlans/AdvancedHybridTrainingPlan');
 
 const { TrainingPlan } = require('../model/database');
 
@@ -14,6 +17,19 @@ function createTrainingPlan(activityLevel) {
       return new AdvancedTrainingPlan();
     default:
       throw new Error("Invalid activity level.");
+  }
+}
+
+function createHybridTrainingPlan(activityLevel) {
+  switch (activityLevel.toLowerCase()) {
+    case 'novice':
+      return new NoviceHybridTrainingPlan();
+    case 'intermediate':
+      return new IntermediateHybridTrainingPlan();
+    case 'advanced':
+      return new AdvancedHybridTrainingPlan();
+    default:
+      throw new Error('Invalid activity level for hybrid plan');
   }
 }
 
@@ -33,5 +49,6 @@ async function createAndSaveTrainingPlan(username, activityLevel) {
 
 module.exports = {
   createTrainingPlan,
+  createHybridTrainingPlan,
   createAndSaveTrainingPlan
-};
+}; //checkpoint 1
