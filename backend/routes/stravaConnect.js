@@ -56,9 +56,14 @@ router.post('/', async (req, res) => {
         const date = activitiesResponse.data[0].start_date_local.substring(0,activitiesResponse.data[0].start_date_local.indexOf('T'));
         const time = activitiesResponse.data[0].start_date_local.substring(activitiesResponse.data[0].start_date_local.indexOf('T')+1,activitiesResponse.data[0].start_date_local.indexOf('Z'));
         const elevationGained = activitiesResponse.data[0].total_elevation_gain;
-        const route = activitiesResponse.data[0].map;
+        const id = activitiesResponse.data[0].id;
         
-        res.json({ movingTime, distance, date, time, elevationGained }); 
+        const selectedActivitiyResponse = await axios.get(`https://www.strava.com/api/v3/activities/${id}`, {
+          headers: { Authorization: `Bearer ${accessToken}`}
+         });
+         const map = selectedActivitiyResponse.data.map;
+        console.log(map.polyline);
+        res.json({ movingTime, distance, date, time, elevationGained, map }); 
           
     } catch (error) {
       console.error('Error exchanging code for tokens:', error.response ? error.response.data : error.message);

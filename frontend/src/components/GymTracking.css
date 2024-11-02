@@ -2,129 +2,105 @@
 .workout-tracking-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  background-color: white; /* Page background */
-  color: #111;
+  gap: 20px;
+  padding: 20px;
+  background-color: #000; /* Black background for the page */
+  color: #fff; /* White text for better contrast */
   font-family: Arial, sans-serif;
 }
 
-/* Workout card styling */
-.workout-card {
-  display: flex;
-  background-color: #111; /* Card background */
-  border-radius: 20px;
-  padding: 20px;
-  align-items: flex-start;
-  gap: 0px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+/* Back button styling (now submit button) */
+.submit-button {
+  background-color: #007bff; /* Same color as header */
+  color: white; /* White text for visibility */
+  border: none;
+  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px; /* Space below the button */
+  transition: background-color 0.3s ease;
 }
 
-/* Placeholder image styling */
-.left-section {
-  flex: 1;
-  display: flex;
-  justify-content: left;
-  align-items: center;
+.submit-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
 }
 
-.image-placeholder {
-  width: 100%; /* Image placeholder to occupy full width of left section */
-  max-width: 600px;
-  height: auto;
-  aspect-ratio: 2 / 1; /* Ensures a 800 x 400 aspect ratio */
-  background-color: #e0e0e0;
-  color: #555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  font-size: 18px;
-}
-
-/* Right section styling */
-.right-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Workout title styling */
-.workout-title {
-  color: #007bff;
-  font-size: 24px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-/* Description steps */
-.steps {
+/* Exercise list styling */
+.exercise-list {
   list-style: none;
   padding: 0;
-  margin: 10px 0;
 }
 
-.steps li {
-  margin-bottom: 5px;
-  color: #ccc;
-}
-
-/* Input field styling */
-.workout-inputs label {
-  font-weight: bold;
-  color: #e0e6ed;
-}
-
-.workout-inputs input[type="number"] {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background-color: #2c2f33;
-  color: white;
-  font-size: 14px;
+.exercise-card {
+  display: flex; /* Use flexbox to align children */
+  justify-content: space-between; /* Space out the two sections */
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  padding: 15px;
   margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 100px;
+  color: #fff;
 }
 
-/* Toggle button for completed */
-.complete-toggle .toggle-button {
-  background-color: #2c2f33;
+/* Style for exercise details (left side) */
+.exercise-details {
+  flex: 1; /* Take up the available space */
+  text-align: center; /* Center text */
+}
+
+/* Style for exercise instructions (right side) */
+.exercise-instructions {
+  flex: 1; /* Take up the available space */
+  margin-top: 10px; /* Add gap between exercise details and instructions */
+  margin-left: 20px; /* Add left margin to instructions */
+}
+
+/* Divider styling */
+.divider {
+  height: 1px; /* Height of the divider */
+  background-color: #fff; /* Color of the divider */
+  margin: 10px 0; /* Space above and below the divider */
+  width: 100%; /* Ensure the divider spans the full width */
+}
+
+/* Gap between the divider and input group */
+.input-group {
+  margin-top: 10px; /* Increased margin to create a gap */
+}
+
+/* Title styling */
+.exercise-title {
   color: #007bff;
-  border: 1px solid #007bff;
-  padding: 10px;
-  border-radius: 20px;
+}
+
+/* Sets Label and Input Styling */
+.sets-label {
+  color: #fff; /* Matches the other text color */
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  align-items: center; /* Center the inputs under each label */
+  margin-top: 10px;
+}
+
+/* Add margin to inputs for spacing */
+.sets-label input {
+  padding: 3px; /* Reduced padding for smaller input */
+  width: 60px; /* Smaller width for input boxes */
+  border-radius: 4px;
+  border: 1px solid #ccc;
   font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  color: #000; /* Input text color */
+  text-align: center; /* Center text within the input */
+  margin-top: 5px; /* Gap between label and input */
 }
 
-.complete-toggle .toggle-button.completed {
-  background-color: #007bff;
-  color: white;
+/* Error and loading messages */
+.loading, .error, .no-exercises {
+  color: #ffcc00;
 }
 
-/* End session button styling */
-.end-session-button {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 24px;
-  font-size: 16px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  align-self: center;
-  margin-top: 20px;
-}
-
-.end-session-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-3px);
-}
-
-.end-session-button:active {
-  transform: translateY(0);
+/* Group inputs in a row with larger gaps */
+.input-group {
+  display: flex;
+  justify-content: space-between; /* Space inputs evenly */
 }

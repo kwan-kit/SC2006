@@ -1,6 +1,7 @@
 // src/components/Register.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext'; // Import AuthContext
 import './Register.css';
 
 const Register = () => {
@@ -10,6 +11,7 @@ const Register = () => {
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const { setIsLoggedIn } = useContext(AuthContext); // Access setIsLoggedIn
   const navigate = useNavigate();
 
   const handleCheckboxChange = () => {
@@ -34,9 +36,9 @@ const Register = () => {
       alert('You must agree to the terms and conditions before registering.');
       return;
     }
-
-    alert("Successfully registered! Please login with your username and password.");
-    navigate('/Login');
+    
+    setIsLoggedIn(true); // Set user as logged in
+    navigate('/Dashboard'); // Navigate to the dashboard
   };
 
   return (
@@ -47,7 +49,7 @@ const Register = () => {
         <div className="register-form-box">
           <h2 className="lora-title">HELTH</h2>
           <form onSubmit={handleSubmit}>
-            <label>Register</label>
+            <label>Username</label>
             <input 
               type="text" 
               placeholder="Enter your Username" 
@@ -82,9 +84,9 @@ const Register = () => {
               className="security-question-select"
             >
               <option value="">Select a security question</option>
-              <option value="pet">What is your first pet's name?</option>
-              <option value="school">What is the name of your elementary school?</option>
-              <option value="city">In which city were you born?</option>
+              <option value="pet">1. What is your first pet's name?</option>
+              <option value="school">2. What is the name of your elementary school?</option>
+              <option value="city">3. In which city were you born?</option>
             </select>
 
             <label>Answer</label>
@@ -105,7 +107,6 @@ const Register = () => {
               I agree to the&nbsp;<Link to="/terms" target="_blank">terms and conditions</Link>
             </label>
 
-
             <button type="submit">Register</button>
           </form>
         </div>
@@ -113,7 +114,7 @@ const Register = () => {
         <hr className="divider" />
         <div className="back-to-login-text">
           <p style={{ color: 'white' }}>
-            Back to <Link to="/login" className="back-to-login-link">Login</Link>
+            Back to <Link to="/Login" className="back-to-login-link">Login</Link>
           </p>
         </div>
       </div>

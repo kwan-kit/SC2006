@@ -36,7 +36,10 @@ const Header = () => {
     location.pathname === '/LandingPage' ||
     location.pathname === '/Login' ||
     location.pathname === '/register' ||
-    location.pathname === '/verification';
+    location.pathname === '/verification' ||
+    location.pathname === '/terms' ||
+    location.pathname === '/security-question' ||
+    location.pathname === '/set-new-password' ;
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

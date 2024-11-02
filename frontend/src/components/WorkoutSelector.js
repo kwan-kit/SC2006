@@ -1,71 +1,64 @@
+// src/WorkoutSelector.js
 import React, { useState } from 'react';
 import './WorkoutSelector.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const WorkoutSelector = () => {
-  const [selectedWorkouts, setSelectedWorkouts] = useState([]);
-  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState([]);
+  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate for navigation
 
-  const toggleSelection = (type, item) => {
-    const selectedList = type === 'workout' ? selectedWorkouts : selectedMuscleGroups;
-    const setSelected = type === 'workout' ? setSelectedWorkouts : setSelectedMuscleGroups;
-
-    if (selectedList.includes(item)) {
-      setSelected(selectedList.filter((i) => i !== item));
-    } else {
-      setSelected([...selectedList, item]);
-    }
+  const toggleSelection = (muscle) => {
+    setSelectedMuscleGroup(selectedMuscleGroup === muscle ? null : muscle); // Toggle selection
   };
 
   const handleGenerateClick = () => {
-    alert(`Selected Workouts: ${selectedWorkouts.join(', ')}\nSelected Muscle Groups: ${selectedMuscleGroups.join(', ')}`);
+    if (selectedMuscleGroup) {
+      alert(`Selected Muscle Group: ${selectedMuscleGroup}`);
+      // Navigate to GymTracking with the selected muscle group
+      navigate("/GymTracking", { state: { selectedMuscleGroup } }); // Use navigate
+    } else {
+      alert("Please select a muscle group before generating.");
+    }
   };
 
   return (
     <div className="workout-selector-container">
-      <h2>Select Your Preferences</h2>
+      <h2>Select Your Preferred Muscle Group</h2>
 
-      {/* Combined Box */}
-      <div className="combined-box">
-        {/* Types of Workouts */}
-        <div className="workout-section">
-          <h3>Types of Workouts</h3>
-          <div className="checkbox-group">
-            {['Dumbbells', 'Cables', 'Bodyweight', 'Machines', 'Barbell', 'Others'].map((workout) => (
-              <label key={workout} className={`checkbox-label ${selectedWorkouts.includes(workout) ? 'selected' : ''}`}>
-                <input
-                  type="checkbox"
-                  checked={selectedWorkouts.includes(workout)}
-                  onChange={() => toggleSelection('workout', workout)}
-                />
-                {workout}
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Muscle Groups */}
-        <div className="muscle-section">
-          <h3>Muscle Groups</h3>
-          <div className="checkbox-group">
-            {['Chest', 'Back', 'Tricep', 'Quad', 'Calves', 'Bicep', 'Shoulder', 'Abs', 'Hamstrings'].map((muscle) => (
-              <label key={muscle} className={`checkbox-label ${selectedMuscleGroups.includes(muscle) ? 'selected' : ''}`}>
-                <input
-                  type="checkbox"
-                  checked={selectedMuscleGroups.includes(muscle)}
-                  onChange={() => toggleSelection('muscle', muscle)}
-                />
-                {muscle}
-              </label>
-            ))}
-          </div>
+      <div className="muscle-section">
+        <h3>Muscle Groups</h3>
+        <div className="checkbox-group">
+          {[
+            'abdominals',
+            'abductors',
+            'adductors',
+            'biceps',
+            'calves',
+            'chest',
+            'forearms',
+            'glutes',
+            'hamstrings',
+            'lats',
+            'lower_back',
+            'middle_back',
+            'neck',
+            'quadriceps',
+            'traps',
+            'triceps'
+          ].map((muscle) => (
+            <label key={muscle} className={`checkbox-label ${selectedMuscleGroup === muscle ? 'selected' : ''}`}>
+              <input
+                type="checkbox"
+                checked={selectedMuscleGroup === muscle}
+                onChange={() => toggleSelection(muscle)}
+              />
+              {muscle.replace(/_/g, ' ').toUpperCase()} {/* Format for display */}
+            </label>
+          ))}
         </div>
       </div>
 
-
-      <Link to="/GymTracking">
-            <button className="generate-button" onClick={handleGenerateClick}>Generate</button>
-          </Link>
+      <button className="generate-button" onClick={handleGenerateClick}>Generate</button>
     </div>
   );
 };

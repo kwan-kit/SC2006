@@ -20,7 +20,7 @@ const SetNewPassword = () => {
       alert("Password successfully reset, please log in with your new password!");
 
       // Redirect to the login page after success
-      navigate('/');  // Redirect to the login page (assuming '/' is the login route)
+      navigate('/Login');
 
     } else {
       // Show an error if passwords do not match
@@ -65,7 +65,7 @@ const SetNewPassword = () => {
         <hr className="divider" />
         <div className="back-to-login-text">
           Go back to{' '}
-          <Link to="/" className="back-to-login-link">
+          <Link to="/Login" className="back-to-login-link">
             Login
           </Link>
         </div>

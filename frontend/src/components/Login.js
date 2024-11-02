@@ -10,7 +10,7 @@ const Login = () => {
   const handleLogin = () => {
     // Simulate login logic, set the user as logged in
     setIsLoggedIn(true); // Update logged-in state
-    navigate('/goals'); // Navigate to the goals page
+    navigate('/Dashboard');
   };
 
   return (
@@ -23,8 +23,8 @@ const Login = () => {
         <div className="login-form-box">
           <h2 className="lora-title">HELTH</h2>
           <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}> {/* Handle form submission */}
-            <label>Login</label>
-            <input type="email" placeholder="Enter your Email or Phone Number" required />
+            <label>Username</label>
+            <input type="email" placeholder="Enter your Username" required />
 
             <label>Password</label>
             <input type="password" placeholder="Enter your Password" required />

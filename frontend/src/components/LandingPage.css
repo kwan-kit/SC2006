@@ -19,33 +19,51 @@ html, body {
 /* Hero Section */
 .hero {
   display: flex;
-  height: 80vh; /* Adjust this if necessary */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #007bff, #00d2ff);
+  text-align: center;
   position: relative;
-  overflow: hidden; /* Prevent overflow in the hero section */
-  width: 100vw; /* Ensure it takes full width of the viewport */
+  overflow: hidden;
 }
 
-/* Spline Container Styles */
-.spline-container {
-  display: flex; /* Use flex to center content if needed */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  width: 100%; 
-  height: 100%; /* Make it take full height */
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+  animation: pulse 3s infinite;
+  top: -10%;
+  left: -10%;
+  z-index: 1;
 }
 
-/* Spline Model Styles */
-.spline-model {
-  width: 100%; /* Set width to 100% of the viewport width */
-  height: 100vh; /* Set height to 100% of the viewport height */
-  border: none;
-  transform: scale(1.2); /* Scale to fit the viewport */
-  transition: transform 0.3s ease-in-out;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
-/* On Hover Effect */
-.spline-model:hover {
-  transform: scale(1.3); /* Slight zoom effect on hover */
+.hero-content {
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 /* Running Plan & Hybrid Plan Sections */
@@ -82,13 +100,26 @@ section {
 }
 
 .loading-placeholder {
-  width: 100%;
-  height: 300px;
+  width: 500px; /* Larger fixed width */
+  height: 300px; /* Larger fixed height */
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   border-radius: 15px;
   animation: loading 1.5s infinite;
+  display: flex; /* Flexbox to center image */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
+
+.loading-placeholder img {
+  max-width: 100%; /* Prevents the image from exceeding container width */
+  max-height: 100%; /* Prevents the image from exceeding container height */
+  object-fit: contain;
+}
+
+
+
 
 @keyframes loading {
   0% {
