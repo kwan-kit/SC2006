@@ -82,9 +82,9 @@ const Register = () => {
               className="security-question-select"
             >
               <option value="">Select a security question</option>
-              <option value="pet">What is your first pet's name?</option>
-              <option value="school">What is the name of your elementary school?</option>
-              <option value="city">In which city were you born?</option>
+              <option value="pet">1. What is your first pet's name?</option>
+              <option value="school">2. What is the name of your elementary school?</option>
+              <option value="city">3. In which city were you born?</option>
             </select>
 
             <label>Answer</label>
