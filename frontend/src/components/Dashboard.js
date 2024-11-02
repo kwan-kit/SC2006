@@ -1,80 +1,94 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './Dashboard.css';
 import WeeklyProgram from './WeeklyProgram';
 import RunInfoCard from './RunInfoCard';
 import Overview from './Overview';
 import YourProgress from './YourProgress';
+import GymCard from './GymCard'; // Import the GymCard component
 
 const Dashboard = () => {
+  const [runReports, setRunReports] = useState([]);
+  const [gymReports, setGymReports] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const username = 'ryan'; // Replace with the username
+        const [runResponse, gymResponse] = await Promise.all([
+          axios.get(`/save/run-report/${username}`),
+          axios.get(`/record/gym-report/${username}`),
+        ]);
+
+        console.log('Fetched run reports:', runResponse.data);
+        console.log('Fetched gym reports:', gymResponse.data);
+
+        setRunReports(runResponse.data);
+        setGymReports(gymResponse.data);
+      } catch (error) {
+        console.error('Error fetching reports:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchReports();
+  }, []);
 
   return (
     <div className="dashboard-container">
-      {/* Main content */}
       <div className="main-content">
-        <YourProgress/>
-
-        {/* This Week's and Next Week's Program - side by side */}
+        <YourProgress />
         <div className="program-section">
-          <WeeklyProgram/>
+          <WeeklyProgram />
         </div>
-
-        <Overview/>
+        <Overview />
       </div>
 
-      {/* Right column content: Your Weekly Snapshot */}
       <div className="snapshot-section">
         <h2>Your Weekly Snapshot</h2>
-          <div className="snapshot-cards-wrapper">
-            <div className="snapshot-cards">
-              <RunInfoCard 
-                week="Week 6" 
-                runNumber="2" 
-                activities="1" 
-                time="44:22" 
-                distance="5.83" 
-              />
-              <RunInfoCard 
-                week="Week 6" 
-                runNumber="1" 
-                activities="1" 
-                time="44:22" 
-                distance="5.83" 
-              />
-              <RunInfoCard 
-                week="Week 6" 
-                runNumber="2" 
-                activities="1" 
-                time="44:22" 
-                distance="5.83" 
-              />
-              <RunInfoCard 
-                week="Week 6" 
-                runNumber="1" 
-                activities="1" 
-                time="44:22" 
-                distance="5.83" 
-              />
-              <RunInfoCard 
-                week="Week 6" 
-                runNumber="2" 
-                activities="1" 
-                time="44:22" 
-                distance="5.83" 
-              />
-              <RunInfoCard 
-                week="Week 6" 
-                runNumber="1" 
-                activities="1" 
-                time="44:22" 
-                distance="5.83" 
-              />
-            </div>
+        <div className="snapshot-cards-wrapper">
+          <div className="snapshot-cards">
+            {isLoading ? (
+              <p>Loading reports...</p>
+            ) : (
+              <>
+                {runReports.length === 0 && gymReports.length === 0 ? (
+                  <p>No reports available.</p>
+                ) : (
+                  <>
+                    {runReports.map((report) => {
+                      const createdDate = new Date(report.createdAt);
+                      const formattedDate = `${String(createdDate.getDate()).padStart(2, '0')}/${String(createdDate.getMonth() + 1).padStart(2, '0')}`; // Format as dd/mm
+
+                      return (
+                        <RunInfoCard 
+                          key={report._id}
+                          week={formattedDate}
+                          runNumber={report.stars}
+                          activities={report.rating}
+                          time={`${report.targetTime.hours}:${report.targetTime.minutes}:${report.targetTime.seconds}`} 
+                          distance={report.distance} 
+                        />
+                      );
+                    })}
+                    {gymReports.map((gymReport) => (
+                      <GymCard 
+                        key={gymReport._id}
+                        workout={gymReport.workout}
+                        date={gymReport.date}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
-    
+    </div>
   );
 };
-
 
 export default Dashboard;
