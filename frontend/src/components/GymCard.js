@@ -1,23 +1,25 @@
 import React from 'react';
 import './GymCard.css';
-import { useNavigate } from 'react-router-dom';
 
-const GymCard = ({ name }) => {
-  const navigate = useNavigate(); // Hook to handle navigation
+const GymCard = ({ workout, date }) => {
+  // Format the date as dd/mm
+  const formattedDate = new Date(date).toLocaleDateString('en-GB');
 
-  const handleNavigate = () => {
-    navigate('/WorkoutGenerator'); // Navigate to the desired route
-  };
 
   return (
-    <div className="gym-card">
-      <div className="gym-image">
-        {/* Image or loading animation will be here */}
-      </div>
-      <h1 className="gym-title">{name}</h1>
-      <div className="gym-footer">
-        {/* Fix the button click handler */}
-        <button onClick={handleNavigate} className="gym-button">Start</button>
+    <div className="gym-info-card">
+      <div className="gym-info-text">
+        <h3>Workout on {formattedDate}</h3>
+        <h4>Workout Details:</h4>
+        <ul>
+          {Object.entries(workout).map(([exercise, details]) => (
+            <li key={exercise}>
+              {exercise.charAt(0).toUpperCase() + exercise.slice(1)}: 
+              {` ${details.reps} reps, ${details.sets} sets, ${details.weight} kg`} 
+              {details.completed ? ' (Completed)' : ' (Not Completed)'}
+            </li>
+          ))}
+        </ul> 
       </div>
     </div>
   );
