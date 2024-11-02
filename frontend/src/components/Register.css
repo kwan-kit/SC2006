@@ -1,8 +1,14 @@
+html, body {
+  height: 100%; /* Ensure full height for body */
+  margin: 0; /* Remove default margin */
+  font-size: 16px; /* Set a base font size */
+}
+
 .register-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* Use min-height to ensure it fills the viewport */
   padding: 0;
   background-color: black; /* Ensuring the background is black */
 }
@@ -10,12 +16,12 @@
 /* White box around the form */
 .register-form-box {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 100%;
-  width: 300px; /* Ensure the form box is responsive */
+  padding: 1.25em; /* Use relative units for padding */
+  border-radius: 0.625em; /* Use relative units for border-radius */
+  max-width: 90%; /* Allow for scaling */
+  width: 300px; /* Maintain a maximum width */
   text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0.25em 0.5em rgba(0, 0, 0, 0.1);
 }
 
 .side-image {
@@ -37,11 +43,11 @@
 form input {
   display: block;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 0.625em; /* Use relative units for padding */
+  margin: 0.625em 0; /* Use relative units for margin */
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0.25em; /* Use relative units for border-radius */
   box-sizing: border-box;
 }
 
@@ -49,13 +55,13 @@ form input {
 form button {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 0.625em; /* Use relative units for padding */
   background-color: #007BFF;
   color: white;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
-  border-radius: 20px;
+  margin-top: 0.625em; /* Use relative units for margin */
+  border-radius: 1.25em; /* Use relative units for border-radius */
 }
 
 form button:hover,
@@ -68,13 +74,13 @@ form button:hover,
   display: flex;
   align-items: center; /* Aligns text vertically with checkbox */
   font-size: 0.9rem;
-  color: black;
-  margin: 15px 0;
+  color: white;
+  margin: 0.9375em 0; /* Use relative units for margin */
   white-space: nowrap; /* Prevents line breaks */
 }
 
 .checkbox-label input[type="checkbox"] {
-  margin-right: 10px; /* Space between checkbox and text */
+  margin-right: 0.625em; /* Space between checkbox and text */
 }
 
 /* Link styles */
@@ -93,14 +99,14 @@ a:hover {
   font-family: 'Lora', serif;
   font-weight: bold;
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 1.25em; /* Use relative units for margin */
   font-style: italic; 
 }
 
 .divider {
   width: 80%; /* Adjust width relative to the form box */
   border-top: 1px solid #ccc;
-  margin: 20px auto; /* Auto margin for centering */
+  margin: 1.25em auto; /* Auto margin for centering */
   box-sizing: border-box;
 }
 
@@ -122,16 +128,15 @@ a:hover {
 
 .register-form-box label:last-of-type {
   font-size: 0.8rem; /* Adjust the font size as needed */
-  color: white; 
+  color: white; /* Ensure the text color is black */
 }
 
 .security-question-select {
   display: block;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 0.625em; /* Use relative units for padding */
+  margin: 0.625em 0; /* Use relative units for margin */
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 0.25em; /* Use relative units for border-radius */
 }

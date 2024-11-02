@@ -11,7 +11,6 @@ const RunStatsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [hasData, setHasData] = useState(false);
-  const [codeSent, setCodeSent] = useState(false);
   const [stats, setStats] = useState({
     date: 'NIL',
     time: 'NIL',

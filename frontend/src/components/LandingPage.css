@@ -8,47 +8,69 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+
 /* Prevent overflow in the body and html */
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal overflow */
 }
+
 /* Hero Section */
 .hero {
   display: flex;
-  height: 80vh; /* Adjust this if necessary */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #007bff, #00d2ff);
+  text-align: center;
   position: relative;
-  overflow: hidden; /* Prevent overflow in the hero section */
-  width: 100vw; /* Ensure it takes full width of the viewport */
+  overflow: hidden;
 }
 
-/* Spline Container Styles */
-.spline-container {
-  display: flex; /* Use flex to center content if needed */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  width: 100%; 
-  height: 100%; /* Make it take full height */
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+  animation: pulse 3s infinite;
+  top: -10%;
+  left: -10%;
+  z-index: 1;
 }
 
-/* Spline Model Styles */
-.spline-model {
-  width: 100%; /* Set width to 100% of the viewport width */
-  height: 100vh; /* Set height to 100% of the viewport height */
-  border: none;
-  transform: scale(1.2); /* Scale to fit the viewport */
-  transition: transform 0.3s ease-in-out;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
-/* On Hover Effect */
-.spline-model:hover {
-  transform: scale(1.3); /* Slight zoom effect on hover */
+.hero-content {
+  z-index: 2;
 }
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
 /* Running Plan & Hybrid Plan Sections */
 section {
   padding: 100px 0;
 }
+
 .content {
   display: flex;
   justify-content: space-between;
@@ -61,26 +83,44 @@ section {
 .text {
   flex: 1;
 }
+
 .text h2 {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
 }
+
 .text p {
   font-size: 1.2rem;
   line-height: 1.5;
   margin-bottom: 1.5rem;
 }
+
 .image {
   flex: 1;
 }
+
 .loading-placeholder {
-  width: 100%;
-  height: 300px;
+  width: 500px; /* Larger fixed width */
+  height: 300px; /* Larger fixed height */
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   border-radius: 15px;
   animation: loading 1.5s infinite;
+  display: flex; /* Flexbox to center image */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
+
+.loading-placeholder img {
+  max-width: 100%; /* Prevents the image from exceeding container width */
+  max-height: 100%; /* Prevents the image from exceeding container height */
+  object-fit: contain;
+}
+
+
+
+
 @keyframes loading {
   0% {
     background-position: 200% 0;
@@ -89,10 +129,12 @@ section {
     background-position: -200% 0;
   }
 }
+
 /* Gym Capacity and Custom Workout Plan Sections */
 .route-planner, .gym-capacity, .gym-plans {
   padding: 100px 0;
 }
+
 .route-planner .content,
 .gym-capacity .content,
 .gym-plans .content {
@@ -101,27 +143,32 @@ section {
   align-items: center;
   gap: 50px;
 }
+
 .route-planner .loading-placeholder,
 .gym-capacity .loading-placeholder,
 .gym-plans .loading-placeholder {
   height: 300px;
   border-radius: 12px;
 }
+
 .gym-capacity .text h2,
 .route-planner .text h2,
 .gym-plans .text h2 {
   color: white;
 }
+
 /* Features Section */
 .features-section {
   background-color: #161b22;
   padding: 60px 20px;
   text-align: center;
 }
+
 .features-section h2 {
   font-size: 2.5rem;
   margin-bottom: 50px;
 }
+
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -129,29 +176,35 @@ section {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .feature-card {
   background-color: #21262d;
   padding: 20px;
   border-radius: 12px;
   transition: transform 0.3s;
 }
+
 .feature-card:hover {
   transform: translateY(-5px);
 }
+
 /* Call to Action Section */
 .cta-section {
   text-align: center;
   padding: 60px 20px;
   background-color: #0d1117;
 }
+
 .cta-section h2 {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
 }
+
 .cta-section p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
+
 .cta-button {
   padding: 15px 30px;
   font-size: 1.2rem;
@@ -162,14 +215,17 @@ section {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .cta-button:hover {
   background-color: #3793f0;
 }
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .spline-container {
     display: none; /* Hide model on smaller screens for simplicity */
   }
+
   .hero {
     height: 50vh; /* Adjust height for smaller screens if necessary */
   }

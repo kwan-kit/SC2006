@@ -7,8 +7,9 @@ const LandingPage = () => {
     <div className="landing-container">
       {/* Hero Section */}
       <section className="hero">
-        <div className="spline-container">
-          <iframe src="https://my.spline.design/journey-76b4202385480fa6d0055275ac5d9d72/" title="3D Model" className="spline-model"></iframe>
+        <div className="hero-content">
+          <h1>Enhance Your Fitness Journey with Our Bespoke Running Plans</h1>
+          <p>Tailored for all fitness levels. Reach new heights with personalised goals, real-time tracking, and dynamic recommendations.</p>
         </div>
       </section>
 
@@ -21,7 +22,7 @@ const LandingPage = () => {
             <p>With personalised goals, real-time progress tracking, and dynamic recommendations, you’ll find the perfect balance between challenge and achievement.</p>
           </div>
           <div className="image">
-            <div className="loading-placeholder">Image Placeholder</div>
+            <img src="/goalsBG.jpeg" className="loading-placeholder" alt=""/>
           </div>
         </div>
       </section>
@@ -29,8 +30,8 @@ const LandingPage = () => {
       {/* Hybrid Plan Section */}
       <section className="hybrid-plan">
         <div className="content">
-          <div className="image">
-            <div className="loading-placeholder">Image Placeholder</div>
+        <div className="image">
+            <img src="/gymRopes.jpeg" className="loading-placeholder" alt=""/>
           </div>
           <div className="text">
             <h2>Elevate Your Training with the Hybrid Plan</h2>
@@ -49,7 +50,7 @@ const LandingPage = () => {
             <p>Get personalized recommendations to make your running experience enjoyable and efficient, whether you're exploring new areas or optimizing your daily route.</p>
           </div>
           <div className="image">
-            <div className="loading-placeholder">Map Placeholder</div>
+            <img src="/fitnessGoal.png" className="loading-placeholder" alt=""/>
           </div>
         </div>
       </section>
@@ -58,7 +59,7 @@ const LandingPage = () => {
       <section className="gym-capacity">
         <div className="content">
           <div className="image">
-            <div className="loading-placeholder">Gym Capacity Placeholder</div>
+            <img src="/weights.jpeg" className="loading-placeholder" alt=""/>
           </div>
           <div className="text">
             <h2>Real-time Gym Capacity Tracker</h2>
@@ -77,7 +78,7 @@ const LandingPage = () => {
             <p>Monitor your progress, adjust your goals, and stay motivated with dynamic recommendations tailored to your specific needs.</p>
           </div>
           <div className="image">
-            <div className="loading-placeholder">Workout Plan Placeholder</div>
+            <img src="/updated.jpg" className="loading-placeholder" alt=""/>
           </div>
         </div>
       </section>

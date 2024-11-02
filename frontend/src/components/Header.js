@@ -3,17 +3,16 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { AuthContext } from './AuthContext';
 import './Header.css';
+
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
-
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
   };
-
   const handleLoginLogout = () => {
     if (isLoggedIn) {
       setIsLoggedIn(false);
@@ -23,19 +22,20 @@ const Header = () => {
     }
     setDropdownVisible(false);
   };
-
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setDropdownVisible(false);
     }
   };
-
   const isLandingPage = 
     location.pathname === '/' ||
     location.pathname === '/LandingPage' ||
     location.pathname === '/Login' ||
     location.pathname === '/register' ||
-    location.pathname === '/verification';
+    location.pathname === '/verification' ||
+    location.pathname === '/terms' ||
+    location.pathname === '/security-question' ||
+    location.pathname === '/set-new-password' ;
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -43,7 +43,6 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
   return (
     <header className={`header ${isLandingPage ? 'header-black' : 'header-black'}`}>
       <div className="logo">

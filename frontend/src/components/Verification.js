@@ -13,8 +13,8 @@ const Verification = () => {
         <div className="verification-form-box">
           <h2 className="lora-title">HELTH</h2>
           <form>
-            <label>Email or phone number</label>
-            <input type="text" placeholder="Enter your Email or Phone number" required />
+            <label>Username</label>
+            <input type="text" placeholder="Enter your Username" required />
 
             {/* Button to verify email or phone number */}
             <Link to="/security-question">

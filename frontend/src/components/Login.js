@@ -10,20 +10,21 @@ const Login = () => {
   const handleLogin = () => {
     // Simulate login logic, set the user as logged in
     setIsLoggedIn(true); // Update logged-in state
-    navigate('/goals'); // Navigate to the goals page
+    navigate('/Dashboard');
   };
 
   return (
     <div className="login-container">
       {/* Left-side image */}
       <img src="/running3.png" className="side-image left" alt="left-side" />
+
       {/* White box to enclose the form */}
       <div className="login-form-wrapper">
         <div className="login-form-box">
           <h2 className="lora-title">HELTH</h2>
           <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}> {/* Handle form submission */}
-            <label>Login</label>
-            <input type="email" placeholder="Enter your Email or Phone Number" required />
+            <label>Username</label>
+            <input type="email" placeholder="Enter your Username" required />
 
             <label>Password</label>
             <input type="password" placeholder="Enter your Password" required />
@@ -37,6 +38,7 @@ const Login = () => {
             Forgot Password?
           </Link>
         </div>
+
         {/* Divider and sign-up text below the white box */}
         <hr className="divider" />
         <div className="sign-up-text">
@@ -45,7 +47,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-
+      
       {/* Right-side image */}
       <img src="/weights.jpeg" className="side-image right" alt="right-side" />
     </div>
