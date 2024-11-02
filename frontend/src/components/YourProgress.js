@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import axios from 'axios';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -23,30 +24,29 @@ const YourProgress = () => {
 
   useEffect(() => {
     const fetchTrainingPlan = async () => {
+      setLoading(true); 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/training/plan`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch training plan');
-        }
-        const data = await response.json();
-        setUsername(data.username);
-        setTrainingPlan(data);
+        const username = 'ryan'; // Replace this with the username 
+        const response = await axios.get(`/training/plan/${username}`); 
+        setTrainingPlan(response.data); 
+  
         const storedWeek = localStorage.getItem('currentWeek') || 1;
         setCurrentWeek(Number(storedWeek));
-        if (data.startDate) {
-          calculateCurrentWeek(data.startDate);
+        if (response.data.startDate) {
+          calculateCurrentWeek(response.data.startDate); 
         }
       } catch (error) {
         console.error('Error fetching training plan:', error);
-        setError(error.message);
+        setError(error.response?.data?.message || 'Error fetching training plan'); 
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     };
-
+  
     fetchTrainingPlan();
   }, []);
-
+  
+  
   useEffect(() => {
     const intervalId = setInterval(() => {
       const storedWeek = Number(localStorage.getItem('currentWeek'));
@@ -139,7 +139,7 @@ const YourProgress = () => {
 
       <div className="progress-cards">
         <div className="progress-card interactive-card">
-          <h3>Total Number of Runs</h3>
+          <h3>Total Number of Runs/Exercises</h3>
           <p className="metric-number">{completedRuns}/{totalNumberOfRuns}</p>
         </div>
 
