@@ -1,56 +1,44 @@
-/* GymCard styling */
-.gym-card {
-    background-color: #111;
-    color: white;
-    padding: 20px;
-    border-radius: 20px;
+/* Gym Card Styling */
+.gym-info-card {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 300px; /* Limit the width for a neat look */
-}
-
-/* Make the gym image wider */
-.gym-image {
-    width: 300px; /* Wider image */
-    height: 200px; /* Taller image */
+    padding: 20px;
+    background-color: #222;
     border-radius: 15px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Optional: adds spacing between cards */
 }
 
-/* Animation for gym image loading */
-.gym-image::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #ddd, #eee, #ddd);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-    border-radius: 15px;
+.gym-info-card:hover {
+    transform: translateY(-5px); /* Lift on hover */
 }
 
-@keyframes loading {
-    0% {
-        background-position: -100% 0;
-    }
-    100% {
-        background-position: 100% 0;
-    }
+.gym-info-text {
+    color: #fff;
 }
 
-/* Style for the gym title */
-.gym-title {
+.gym-info-text h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #007BFF; /* Matches RunInfoCard title color */
+}
+
+.gym-info-text h4 {
     font-size: 1.2rem;
+    margin: 10px 0;
+    color: #ccc; /* Subtle color for the subtitle */
+}
+
+.gym-info-text ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.gym-info-text li {
+    font-size: 1.1rem;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
+    margin: 5px 0;
+    color: #ddd;
 }
 
 /* Style for the buttons and percentage */
@@ -59,6 +47,11 @@
     justify-content: space-between;
     align-items: center;
     width: 100%; /* Make the footer fill the card */
+}
+
+.gym-percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .gym-button {
