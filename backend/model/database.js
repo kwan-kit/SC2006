@@ -1,6 +1,6 @@
 require('dotenv').config();
-
 const mongoose = require('mongoose');
+
 
 // Create connections
 const userCredentialsConnection = mongoose.createConnection(process.env.MONGODB_USERCREDENTIAL_URI, {
@@ -18,7 +18,7 @@ const runTrainingConnection = mongoose.createConnection(process.env.MONGODB_TRAI
   useUnifiedTopology: true,
 });
 
-const gymDataConnection = mongoose.createConnection(process.env.MONGODB_GYMDATA_URI, {
+const runReportsConnection = mongoose.createConnection(process.env.MONGODB_REPORTS_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -30,45 +30,47 @@ const userCredentialsSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  password: String,
-  securityQuestion: Number,
-  answer: String
 });
 
 const healthDataSchema = new mongoose.Schema({
   username: String,
   planType: String,
   activityLevel: String,
-  goalDistance: Number,
-  trainingPeriod: Number,
-  goalTiming: Number
+  goalDistance: String,
+  trainingPeriod: String,
+  goalTiming: String
 });
 
 const trainingPlanSchema = new mongoose.Schema({
   username: String,
   schedule: Array,
   activityLevel: String,
+  planType: String,
   createdAt: { type: Date, default: Date.now }
 });
 
-const gymSchema = new mongoose.Schema({
-  name: String,
-  postalCode: Number,
-  coordinates: {
-      latitude: mongoose.Types.Decimal128,
-      longitude: mongoose.Types.Decimal128
-  }
+const gymReportSchema = new mongoose.Schema({
+  username: {
+    type: String,
+  },  
+  date: { type: Date, required: true },
+  workout: {
+    pullUp: { weight: String, reps: String, sets: String, completed: Boolean },
+    squat: { weight: String, reps: String, sets: String, completed: Boolean },
+    benchPress: { weight: String, reps: String, sets: String, completed: Boolean },
+  },
 });
 
 // Models
 const UserCredentials = userCredentialsConnection.model('UserCredentials', userCredentialsSchema, 'UserCredentials');
 const HealthData = userInfoConnection.model('HealthData', healthDataSchema, 'HealthData');
 const TrainingPlan = runTrainingConnection.model('WeeklyTrainingPlan', trainingPlanSchema, 'WeeklyTrainingPlan');
-const GymData = gymDataConnection.model('GymData',gymSchema,'GymDetails')
+const GymReport = runReportsConnection.model('GymReports', gymReportSchema, 'GymReports');
+
 
 module.exports = {
   UserCredentials,
   HealthData,
   TrainingPlan,
-  GymData
-};
+  GymReport
+}; //checkpoint 1
