@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { UserCredentials } = require('../model/database');
 const { check, validationResult } = require('express-validator');
 const { 
     getUserCredentials, 
     createNewAccount, 
     checkPassword, 
-    checkSecurityQuestion 
+    checkSecurityQuestion,
+    resetPassword 
 } = require('../utilities/userCredentialsFunctions');
+
 
 // Route to get user information by username
 router.get('/:username', async (req, res, next) => {
@@ -15,29 +16,22 @@ router.get('/:username', async (req, res, next) => {
         const { username } = req.params;
         const userCredentials = await getUserCredentials(username);
 
-        // Check if user credentials were found
         if (!userCredentials) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Return user information (you can choose what to include)
-        res.status(200).json({
-            username: userCredentials.username,
-            securityQuestion: userCredentials.securityQuestion
-            // Exclude sensitive information like password and answer
-        });
+        res.status(200).json(userCredentials);
     } catch (error) {
-        console.error('Error retrieving user information:', error);
+        console.error('Error fetching user credentials:', error);
         next(error);
     }
 });
-
 
 // Route to register a new account
 router.post('/register', [
     check('username').notEmpty().trim().withMessage('Username is required'),
     check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-    check('securityQuestion').notEmpty().isIn(['novice', 'intermediate', 'advanced']),
+    check('securityQuestion').isInt().withMessage('Security question ID must be an integer'),
     check('answer').notEmpty().trim().withMessage('Answer to security question is required')
 ], async (req, res, next) => {
     try {
@@ -48,11 +42,14 @@ router.post('/register', [
 
         const { username, password, securityQuestion, answer } = req.body;
 
-        const existingUser = await getUserCredentials(username);
+        // Check if user exists without throwing an error if not found
+        const existingUser = await getUserCredentials(username).catch(() => null);
+
         if (existingUser) {
             return res.status(400).json({ error: 'Username already exists' });
         }
 
+        // Proceed to create a new account
         const newAccount = await createNewAccount(username, password, securityQuestion, answer);
 
         res.status(201).json({
@@ -65,7 +62,7 @@ router.post('/register', [
     }
 });
 
-// Route to check password
+
 router.post('/check-password', [
     check('username').notEmpty().trim().withMessage('Username is required'),
     check('password').notEmpty().withMessage('Password is required')
@@ -77,18 +74,20 @@ router.post('/check-password', [
         }
 
         const { username, password } = req.body;
+        
         const isPasswordCorrect = await checkPassword(username, password);
 
         if (isPasswordCorrect) {
-            res.status(200).json({ message: 'Password is correct' });
+            return res.status(200).json({ message: 'Password is correct' });
         } else {
-            res.status(401).json({ message: 'Incorrect password' });
+            return res.status(401).json({ message: 'Incorrect username or password' });
         }
     } catch (error) {
         console.error('Error checking password:', error);
-        next(error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 // Route to check security question answer
 router.post('/check-security-question', [
@@ -111,6 +110,31 @@ router.post('/check-security-question', [
         }
     } catch (error) {
         console.error('Error checking security question:', error);
+        next(error);
+    }
+});
+
+// Route to reset password
+router.post('/reset-password', [
+    check('username').notEmpty().trim().withMessage('Username is required'),
+    check('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters')
+], async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username, newPassword } = req.body;
+
+        const updatedAccount = await resetPassword(username, newPassword);
+
+        res.status(200).json({
+            message: 'Password reset successfully',
+            account: updatedAccount
+        });
+    } catch (error) {
+        console.error('Error in password reset:', error);
         next(error);
     }
 });

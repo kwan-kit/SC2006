@@ -30,11 +30,18 @@ const userCredentialsSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  password: String,
+  securityQuestion: Number,
+  answer: String
 });
 
 const healthDataSchema = new mongoose.Schema({
+  username: String,
+  planType: String,
   activityLevel: String,
-  username: String
+  goalDistance: Number,
+  trainingPeriod: Number,
+  goalTiming: Number
 });
 
 const trainingPlanSchema = new mongoose.Schema({
