@@ -5,15 +5,15 @@ async function getUserCredentials(username) {
     try {
         const userCredentials = await UserCredentials.findOne({ username });
         if (!userCredentials) {
-            throw new Error('User not found');
+            console.log(`User ${username} not found`); // Additional debug log
+            return null; // Return null if user is not found
         }
         return userCredentials;
     } catch (error) {
         console.error('Error retrieving user credentials:', error);
-        throw error;
+        throw error; // Only throw error for database-related issues
     }
 }
-
 
 
 async function createNewAccount(username, password, securityQuestion, answer) {

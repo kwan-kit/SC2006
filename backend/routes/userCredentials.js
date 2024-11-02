@@ -1,75 +1,142 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const { UserCredentials, HealthData } = require('../model/database');
-const { saveHealthData, updateHealthData } = require('../utilities/healthDataFunctions');
+const { 
+    getUserCredentials, 
+    createNewAccount, 
+    checkPassword, 
+    checkSecurityQuestion,
+    resetPassword 
+} = require('../utilities/userCredentialsFunctions');
 
-router.post('/register', [
-  check('username').notEmpty().trim(), // Validate username as well
-  check('planType').isIn(['hybrid', 'running']),
-  check('activityLevel').isIn(['novice', 'intermediate', 'advanced']),
-  check('goalDistance').notEmpty().trim(), // Validate goalDistance
-  check('trainingPeriod').notEmpty().trim(), // Validate trainingPeriod
-  check('goalTiming').optional().notEmpty().withMessage('Goal timing is required if provided')
-], async (req, res, next) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+
+// Route to get user information by username
+router.get('/:username', async (req, res, next) => {
+    try {
+        const { username } = req.params;
+        const userCredentials = await getUserCredentials(username);
+
+        if (!userCredentials) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json(userCredentials);
+    } catch (error) {
+        console.error('Error fetching user credentials:', error);
+        next(error);
     }
-
-    const { username, planType, activityLevel, goalDistance, trainingPeriod, goalTiming } = req.body;
-
-    const existingUser = await HealthData.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({ error: 'Username already exists' });
-    }
-
-    // Save health data directly using the utility function
-    const saveData = await saveHealthData(username, planType, activityLevel, goalDistance, trainingPeriod, goalTiming);
-
-    res.status(201).json({
-      message: 'User registered successfully',
-      username,
-      activityLevel,
-      saveData
-    });
-
-  } catch (error) {
-    console.error('Error in user registration:', error);
-    next(error);
-  }
 });
 
-router.put('/update-health', [
+// Route to register a new account
+router.post('/register', [
     check('username').notEmpty().trim().withMessage('Username is required'),
-    check('planType').optional().isIn(['hybrid', 'running']).withMessage('Invalid plan type'),
-    check('activityLevel').optional().isIn(['novice', 'intermediate', 'advanced']).withMessage('Invalid activity level'),
-    check('goalDistance').optional().notEmpty().withMessage('Goal distance is required if provided'),
-    check('trainingPeriod').optional().notEmpty().withMessage('Training period is required if provided'),
-    check('goalTiming').optional().notEmpty().withMessage('Goal timing is required if provided')
-  ], async (req, res, next) => {
+    check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+    check('securityQuestion').isInt().withMessage('Security question ID must be an integer'),
+    check('answer').notEmpty().trim().withMessage('Answer to security question is required')
+], async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-  
-      const { username, ...updates } = req.body;
-  
-      // Call the updateHealthData function with the username and updates
-      const updatedHealthData = await updateHealthData(username, updates);
-  
-      res.status(200).json({
-        message: 'Health data updated successfully',
-        updatedHealthData
-      });
-  
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username, password, securityQuestion, answer } = req.body;
+
+        // Check if user exists without throwing an error if not found
+        const existingUser = await getUserCredentials(username).catch(() => null);
+
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username already exists' });
+        }
+
+        // Proceed to create a new account
+        const newAccount = await createNewAccount(username, password, securityQuestion, answer);
+
+        res.status(201).json({
+            message: 'User registered successfully',
+            account: newAccount
+        });
     } catch (error) {
-      console.error('Error updating health data:', error);
-      next(error);
+        console.error('Error in user registration:', error);
+        next(error);
     }
-  });
-  
+});
+
+
+router.post('/check-password', [
+    check('username').notEmpty().trim().withMessage('Username is required'),
+    check('password').notEmpty().withMessage('Password is required')
+], async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username, password } = req.body;
+        
+        const isPasswordCorrect = await checkPassword(username, password);
+
+        if (isPasswordCorrect) {
+            return res.status(200).json({ message: 'Password is correct' });
+        } else {
+            return res.status(401).json({ message: 'Incorrect username or password' });
+        }
+    } catch (error) {
+        console.error('Error checking password:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+// Route to check security question answer
+router.post('/check-security-question', [
+    check('username').notEmpty().trim().withMessage('Username is required'),
+    check('answer').notEmpty().withMessage('Answer is required')
+], async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username, answer } = req.body;
+        const isAnswerCorrect = await checkSecurityQuestion(username, answer);
+
+        if (isAnswerCorrect) {
+            res.status(200).json({ message: 'Answer is correct' });
+        } else {
+            res.status(401).json({ message: 'Incorrect answer' });
+        }
+    } catch (error) {
+        console.error('Error checking security question:', error);
+        next(error);
+    }
+});
+
+// Route to reset password
+router.post('/reset-password', [
+    check('username').notEmpty().trim().withMessage('Username is required'),
+    check('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters')
+], async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username, newPassword } = req.body;
+
+        const updatedAccount = await resetPassword(username, newPassword);
+
+        res.status(200).json({
+            message: 'Password reset successfully',
+            account: updatedAccount
+        });
+    } catch (error) {
+        console.error('Error in password reset:', error);
+        next(error);
+    }
+});
 
 module.exports = router;

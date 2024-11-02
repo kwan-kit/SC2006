@@ -1,9 +1,20 @@
 class User {
-    constructor(username, password, securityQuestion, answer, planType, activityLevel, goalDistance, trainingPeriod, goalTiming, geoLocation) {
+    constructor({
+      username = null,
+      password = null,
+      securityQuestion = null,
+      answer = null,
+      planType = null,
+      activityLevel = null,
+      goalDistance = null,
+      trainingPeriod = null,
+      goalTiming = null,
+      geoLocation = null,
+    } = {}) {
       this._username = username;
-      this._password = password;
+      this._password = password; 
       this._securityQuestion = securityQuestion;
-      this._answer = answer;
+      this._answer = answer; 
       this._planType = planType;
       this._activityLevel = activityLevel;
       this._goalDistance = goalDistance;
@@ -12,11 +23,11 @@ class User {
       this._geoLocation = geoLocation;
     }
   
-    get username() {
+    getUsername() {
       return this._username;
     }
   
-    set username(value) {
+    setUsername(value) {
       if (typeof value === 'string' && value.length > 0) {
         this._username = value;
       } else {
@@ -24,51 +35,51 @@ class User {
       }
     }
   
-    get password() {
+    getPassword() {
       return this._password;
     }
   
-    set password(password) {
+    setPassword(password) {
       this._password = password;
     }
     
-    get securityQuestion() {
+    getSecurityQuestion() {
         return this._securityQuestion;
     }
 
-    set securityQuestion(value) {
+    setSecurityQuestion(value) {
         this._securityQuestion = value;
     }
 
-    get answer() {
+    getAnswer() {
         return this._answer;
     }
 
-    set answer(answer) {
+    setAnswer(answer) {
         this._answer = answer;
     }
 
-    get planType() {
+    getPlanType() {
         return this._planType;
     }
 
-    set planType(choice) {
+    setPlanType(choice) {
         this._planType = choice;
     }
 
-    get activityLevel() {
+    getActivityLevel() {
         return this._activityLevel;
     }
 
-    set activityLevel(level) {
+    setActivityLevel(level) {
         this._activityLevel = level;
     }
   
-    get goalDistance() {
+    getGoalDistance() {
       return this._goalDistance;
     }
   
-    set goalDistance(value) {
+    setGoalDistance(value) {
       if (typeof value === 'number' && value > 0) {
         this._goalDistance = value;
       } else {
@@ -76,27 +87,27 @@ class User {
       }
     }
   
-    get trainingPeriod() {
+    getTrainingPeriod() {
         return this._trainingPeriod;
     }
 
-    set trainingPeriod(duration) {
+    setTrainingPeriod(duration) {
         this._trainingPeriod = duration;
     }
 
-    get goalTiming() {
+    getGoalTiming() {
         return this._goalTiming;
     }
 
-    set goalTiming(time) {
+    setGoalTiming(time) {
         this._goalTiming = time;
     }
 
-    get geoLocation() {
+    getGeoLocation() {
         return this._geoLocation;
     }
 
-    set geoLocation(coordinates) {
+    setGeoLocation(coordinates) {
         this._geoLocation = coordinates;
     }
   
