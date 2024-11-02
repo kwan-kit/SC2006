@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useRef } from 'react'; 
 import './RunStatsPage.css';
 import axios from 'axios';
+import mapboxgl from "mapbox-gl";
+import polyline from '@mapbox/polyline';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const RunStatsPage = () => {
   const [rating, setRating] = useState(1);
@@ -17,12 +20,16 @@ const RunStatsPage = () => {
     distance: 'NIL',
     elevationGain: 'NIL'
   });
+  const [mapData, setMapData] = useState(null);
 
   const units = {
     distance: 'km',
     avgPace: '/ km',
     elevationGain: 'm'
   };
+
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     // Check if there's a code in the URL parameters after redirect
@@ -45,16 +52,82 @@ const RunStatsPage = () => {
           elevationGain: response.data.elevationGained,
           targetTime: { hours: '0', minutes: '0', seconds: '0' }
         });
+        const coordinates = polyline.decode(response.data.map.polyline)
+        for (let i = 0; i < coordinates.length; i++) {
+          coordinates[i] = [
+            coordinates[i][1],
+            coordinates[i][0]
+          ];
+        }
+        setMapData (coordinates);
           setHasData(true);
           window.history.replaceState({}, document.title, "/RunStatsPage");
           setIsLoading(false);
+          console.log(response.data.map);
       }
     };
   fetchStravaData();
-  console.log(stats)
-  console.log(typeof stats.movingTime.minutes);
 }, []);
 
+useEffect(() => {
+  if (!mapRef.current)
+  {
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia3dhbi1raXQiLCJhIjoiY20yejNhaWkzMDd1MTJucTNvZGhoeTU4YiJ9.FnqnzUKn39LKGYaQDcoB1Q'; // Replace with your Mapbox access token
+
+    mapRef.current = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [103.8198, 1.3521],
+      zoom: 10
+    });
+
+    mapRef.current.on('load', () => {
+      // Add the source and layer here, after the style has loaded
+      mapRef.current.addSource('route', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: []
+          }
+        }
+      });
+
+      mapRef.current.addLayer({
+        id: 'route',
+        type: 'line',
+        source: 'route',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color':'#E03C31',
+          'line-width': 6
+
+        }
+      });
+    });
+  }  else if (mapData && mapData.length) {
+    // Update the source with new coordinates, if available
+    mapRef.current.getSource('route').setData({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: mapData
+      }
+    });
+
+    // Calculate the midpoint or use the first coordinate to center the map
+    const midpoint = mapData[Math.floor(mapData.length / 2)];
+    mapRef.current.flyTo({
+      center: midpoint,   // Center to the midpoint of the route
+      zoom: 14,           // Set zoom level; adjust based on your preference
+      speed: 1.2          // Control the transition speed
+    });
+  }
+}, [mapData]);
 
   // Helper function to format date from YYYY-MM-DD to DD-MM-YYYY
   const formatDateDisplay = (dateString) => {
@@ -189,7 +262,10 @@ const RunStatsPage = () => {
   return (
     <div className="run-stats-container">
       <div className="left-side">
-        <div className="image-placeholder"></div>
+        <div className="map-container" 
+        ref={mapContainerRef} 
+        style={{ height: '400px', width: '100%' }}
+        ></div>
         <div className="rating-section">
           <div className="rating-slider">
             <label>Assess the difficulty level</label>

@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Register.css';
-
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -11,38 +10,32 @@ const Register = () => {
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Check if passwords match
     if (password !== confirmPassword) {
       alert('Passwords do not match. Please try again.');
       return;
     }
-
     if (!securityQuestion || !securityAnswer) {
       alert('Please select a security question and provide an answer.');
       return;
     }
-
     if (!isChecked) {
       alert('You must agree to the terms and conditions before registering.');
       return;
     }
 
     alert("Successfully registered! Please login with your username and password.");
-    navigate('/'); // Redirect to login page
+    navigate('/Login');
   };
 
   return (
     <div className="register-container">
       <img src="/running3.png" className="side-image left" alt="left-side" />
-
       <div className="register-form-wrapper">
         <div className="register-form-box">
           <h2 className="lora-title">HELTH</h2>
@@ -55,7 +48,6 @@ const Register = () => {
               value={username} 
               onChange={(e) => setUsername(e.target.value)} 
             />
-
             <label>Password</label>
             <input 
               type="password" 
@@ -64,7 +56,6 @@ const Register = () => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
             />
-
             <label>Confirm Password</label>
             <input 
               type="password" 
@@ -73,7 +64,6 @@ const Register = () => {
               value={confirmPassword} 
               onChange={(e) => setConfirmPassword(e.target.value)} 
             />
-
             <label>Security Question</label>
             <select 
               required 
@@ -86,7 +76,6 @@ const Register = () => {
               <option value="school">What is the name of your elementary school?</option>
               <option value="city">In which city were you born?</option>
             </select>
-
             <label>Answer</label>
             <input 
               type="text" 
@@ -95,7 +84,6 @@ const Register = () => {
               value={securityAnswer} 
               onChange={(e) => setSecurityAnswer(e.target.value)} 
             />
-
             <label className="checkbox-label">
               <input 
                 type="checkbox" 
@@ -104,12 +92,9 @@ const Register = () => {
               />
               I agree to the&nbsp;<Link to="/terms" target="_blank">terms and conditions</Link>
             </label>
-
-
             <button type="submit">Register</button>
           </form>
         </div>
-
         <hr className="divider" />
         <div className="back-to-login-text">
           <p style={{ color: 'white' }}>
@@ -117,10 +102,8 @@ const Register = () => {
           </p>
         </div>
       </div>
-
       <img src="/weights.jpeg" className="side-image right" alt="right-side" />
     </div>
   );
 };
-
 export default Register;

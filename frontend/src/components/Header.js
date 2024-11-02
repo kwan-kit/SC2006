@@ -1,17 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { AuthContext } from './AuthContext';
 import './Header.css';
-
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
+    setDropdownVisible((prev) => !prev);
   };
 
   const handleLoginLogout = () => {
@@ -24,17 +24,30 @@ const Header = () => {
     setDropdownVisible(false);
   };
 
-  // Check if the current path is either "/" or "/LandingPage"
-  const isLandingPage = location.pathname === '/' || location.pathname === '/LandingPage';
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownVisible(false);
+    }
+  };
+
+  const isLandingPage = 
+    location.pathname === '/' ||
+    location.pathname === '/LandingPage' ||
+    location.pathname === '/Login' ||
+    location.pathname === '/register' ||
+    location.pathname === '/verification';
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <header className={`header ${isLandingPage ? 'header-transparent' : 'header-black'}`}>
+    <header className={`header ${isLandingPage ? 'header-black' : 'header-black'}`}>
       <div className="logo">
-        {isLandingPage ? (
-          <h1 className="logo-text">HELTH</h1>
-        ) : (
-            <h1 className="logo-text">HELTH</h1>
-        )}
+        <h1 className="logo-text">HELTH</h1>
       </div>
       <nav className="nav">
         <ul className="nav-links">
@@ -50,12 +63,12 @@ const Header = () => {
           )}
         </ul>
       </nav>
-      <div className="profile" onClick={toggleDropdown}>
+      <div className="profile" onClick={toggleDropdown} ref={dropdownRef}>
         <img className="profile-icon" src="https://via.placeholder.com/40" alt="User Profile" />
         <span className="username">{isLoggedIn ? 'John Smith' : 'Guest'}</span>
         {dropdownVisible && (
           <div className="profile-dropdown">
-            <button onClick={handleLoginLogout} className="login-logout-button">
+            <button onClick={handleLoginLogout} className="header-button">
               {isLoggedIn ? 'Log Out' : 'Log In'}
             </button>
           </div>

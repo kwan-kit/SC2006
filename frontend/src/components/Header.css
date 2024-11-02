@@ -1,105 +1,69 @@
-
 /* Base header styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  position: relative; /* Important for dropdown positioning */
+  max-width: 100%;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1000; /* Ensure header is above content */
   transition: background-color 0.3s ease;
-  color: white;
-
 }
 
-/* Transparent header for LandingPage */
-.header-transparent {
-  position: absolute; /* Make it overlay on top of the content */
-  background-color: transparent !important; /* Ensure transparency is applied */
-  box-shadow: none; /* Optional: remove shadow on transparent header */
-}
-
-/* Black header for other pages */
+/* Ensure consistent style for all pages */
 .header-black {
   background-color: black;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .header:hover {
-  background-color: #111;
+  background-color: #111; /* Darker shade on hover */
 }
 
-.logo {
-  cursor: pointer;
-}
-
-.logo-text {
-  font-size: 2.5rem;
+/* Logo styling */
+.logo h1 {
+  font-size: 2rem;
   font-weight: bold;
   font-style: italic;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   color: white;
-  margin: 10px;
-  transition: color 0.3s ease, transform 0.3s ease;
-  text-decoration: none; /* Ensure no underline */
-  border: none; /* Remove any border */
 }
 
-.logo-text:hover {
-  color: #007bff; /* Change the hover color */
-  transform: scale(1.1);
-}
-
-/* Reset default link styles */
-.logo a {
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Ensure text color is inherited */
-}
-
-.logo a:visited,
-.logo a:hover,
-.logo a:active {
-  text-decoration: none; /* Ensure underline is removed on all link states */
-  color: inherit; /* Retain color on hover and active states */
-}
-
-
+/* Navigation styling */
 .nav {
   display: flex;
-  flex-grow: 1;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .nav-links {
+  list-style-type: none;
   display: flex;
-  gap: 50px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 2rem;
 }
 
 .nav-links li {
-  font-size: 1.5rem;
-  font-weight: bold;
-  transition: transform 0.3s ease;
+  display: inline;
 }
 
-.nav-links li:hover {
-  transform: scale(1.1);
-}
-
-.nav-links li a {
-  color: white;
+.nav-links a {
   text-decoration: none;
+  color: white;
+  font-size: 1.5rem; /* Match Key Features font size to Settings */
+  font-weight: 500;
   transition: color 0.3s ease;
 }
 
-.nav-links li a:hover {
-  color: #007bff;
+.nav-links a:hover {
+  color: #007AFF;
 }
 
+/* Profile section */
 .profile {
   position: relative;
   display: flex;
@@ -107,33 +71,33 @@
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .profile:hover {
   transform: scale(1.05);
 }
-
 .profile-icon {
   border-radius: 50%;
   margin-right: 10px;
   transition: border 0.3s ease;
 }
-
 .profile:hover .profile-icon {
   border: 2px solid #007bff;
 }
 
+/* Dropdown Menu */
 .profile-dropdown {
   position: absolute;
-  top: 100%;
+  top: 100%; /* Positioning right below the profile */
   right: 0;
   background-color: #222;
   border-radius: 10px;
   padding: 10px;
-  z-index: 1000;
+  z-index: 9999; /* Ensure dropdown is on top */
   animation: fadeIn 0.3s ease forwards;
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
 }
 
-.logout-button {
+.header-button {
   color: white;
   background: none;
   border: none;
@@ -141,12 +105,14 @@
   padding: 10px 20px;
   font-size: 1rem;
   transition: color 0.3s ease;
+  text-align: left; /* Align text to the left */
 }
 
-.logout-button:hover {
+.header-button:hover {
   color: #007bff;
 }
 
+/* Keyframes for dropdown animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -157,7 +123,6 @@
     transform: translateY(0);
   }
 }
-
 .username {
   font-size: 1.2rem;
   color: white;
