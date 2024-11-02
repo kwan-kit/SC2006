@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './WeeklyProgram.css';
+import axios from 'axios';
 
 const WeeklyProgram = () => {
   const [trainingPlan, setTrainingPlan] = useState(null);
@@ -16,15 +17,13 @@ const WeeklyProgram = () => {
 
   useEffect(() => {
     const fetchTrainingPlan = async () => {
+      setLoading(true); 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/training/plan`); //rmb to change this
-        if (!response.ok) {
-          throw new Error('Failed to fetch training plan');
-        }
-        const data = await response.json();
-        setTrainingPlan(data);
+        const username = 'ryan'; // Replace with the username
+        const response = await axios.get(`/training/plan/${username}`); 
+        setTrainingPlan(response.data); 
       } catch (error) {
-        setError(error.message);
+        setError(error.response ? error.response.data : 'Error fetching training plan');
       } finally {
         setLoading(false);
       }
@@ -32,6 +31,7 @@ const WeeklyProgram = () => {
 
     fetchTrainingPlan();
   }, []);
+
 
   useEffect(() => {
     // Save current week and completed tasks to localStorage whenever they change
@@ -115,9 +115,10 @@ const WeeklyProgram = () => {
         <span>{thisWeekProgress}% Completed</span>
       </div>
 
-      {nextWeek ? renderWeekSchedule(nextWeek, `Next Week's Program (Week ${currentWeek + 1})`) : <p>No data for next week</p>}
+      {nextWeek ? renderWeekSchedule(nextWeek, `Next Week's Program (Week ${currentWeek + 1})`) : <p>Congratulations! Please select a new plan.</p>}
     </div>
   );
 };
 
 export default WeeklyProgram;
+
