@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
         // Sort gyms by distance and get the 10 closest
         const closestGyms = gymsWithDistance
             .sort((a, b) => a.distance - b.distance)
-            .slice(0, 10)
+            .slice(0, 7)
             .map(gym => ({
                 name: gym.name,
                 coordinates: gym.coordinates // Only return name and coordinates

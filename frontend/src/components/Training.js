@@ -9,6 +9,7 @@ const Training = () => {
   const [filterType, setFilterType] = useState('all'); // Default state is to show all
   const [gymData, setGymData] = useState([]); // State for gym data
   const [routeData, setRouteData] = useState([]); // State for park data
+  const [userLocation, setUserLocation] = useState(null); //State for user geolocation
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
@@ -40,14 +41,15 @@ const Training = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userLocation = await getUserLocation(); // Get user location
+        const location = await getUserLocation(); // Get user location
+        setUserLocation(location);
 
         // Fetch parks using user location
-        const routeResponse = await axios.post('/park', userLocation);
+        const routeResponse = await axios.post('/park', location);
         setRouteData(routeResponse.data.closestParks);
 
         // Fetch gyms using user location
-        const gymResponse = await axios.post('/gym', userLocation);
+        const gymResponse = await axios.post('/gym', location);
         setGymData(gymResponse.data);
       } catch (err) {
         console.error('Fetch error:', err);
@@ -122,7 +124,12 @@ const Training = () => {
               <h2>Recommended Routes</h2>
               <div className="route-cards">
                 {filteredRoutes.map((route, index) => (
-                  <RouteCard key={index} name={route.name} parkLink={route.googleMapsLink} />
+                  <RouteCard 
+                  key={index} 
+                  name={route.name} 
+                  parkLink={route.googleMapsLink}
+                  parkCoordinates = {route.firstCoordinate.slice(0,2)}
+                  userCoordinates = {userLocation} />
                 ))}
               </div>
             </div>
@@ -134,7 +141,11 @@ const Training = () => {
               <h2>Nearby Gyms</h2>
               <div className="gym-cards">
                 {filteredGyms.map((gym, index) => (
-                  <GymCard key={index} name={gym.name} progress={gym.progress} />
+                  <GymCard 
+                  key={index} 
+                  name={gym.name}
+                  gymCoordinates= {gym.coordinates}
+                  userCoordinates = {userLocation} />
                 ))}
               </div>
             </div>
