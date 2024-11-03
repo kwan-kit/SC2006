@@ -7,6 +7,7 @@ const SetNewPassword = () => {
   // States to hold password inputs
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const[error, setError] = useState('');
   const navigate = useNavigate();
 
   // Handle form submission
@@ -18,6 +19,12 @@ const SetNewPassword = () => {
       alert("Passwords do not match. Please try again.");
       return;
     }
+
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match. Please try again.");
+      return;
+    }
+
 
     try {
       // Send the new password to the backend for resetting
@@ -32,13 +39,13 @@ const SetNewPassword = () => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         // Handle validation errors
-        alert('Password must be at least 6 characters.');
+        setError('Password must be at least 6 characters.');
       } else if (error.response && error.response.status === 500) {
         // Handle server errors
-        alert('Failed to reset password. Please try again later.');
+        setError('Failed to reset password. Please try again later.');
       } else {
         console.error('Error in password reset:', error);
-        alert('An error occurred. Please try again.');
+        setError('An error occurred. Please try again.');
       }
     }
   };
