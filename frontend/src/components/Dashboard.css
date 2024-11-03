@@ -1,6 +1,16 @@
+/* General Styles for HTML and Body */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Hiragino Kaku Gothic Std', sans-serif;
+  overflow: auto; /* Allow scrolling on the body */
+}
+
 /* App Container to Ensure Full Height and Scrollability */
 .app-container {
   display: flex;
+  flex-direction: column;
   min-height: 100vh; /* Full height of the viewport */
   overflow-y: auto; /* Allow vertical scrolling */
 }
@@ -11,29 +21,17 @@
   justify-content: space-between;
   gap: 10px;
   padding: 20px;
-  flex-wrap: nowrap; /* Prevent items from wrapping */
+  flex-wrap: nowrap; /* Prevent wrapping to maintain alignment */
   height: auto; /* Allow height to adapt to content */
 }
 
-/* Main Content Layout - Takes up 70% of the width */
+/* Main Content Layout */
 .main-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 70vw; /* Occupies 70% of the viewport width */
-  flex: 1; /* Allows it to grow within its assigned width */
-}
-
-/* Snapshot Section - Takes up 30% of the width */
-.snapshot-section {
-  width: 30vw; /* Occupies 30% of the viewport width */
-  background-color: #111;
-  color: white;
-  padding: 10px;
-  border-radius: 20px;
-  height: 100%; /* Fill the height of the viewport */
-  text-align: center;
-  overflow-y: auto; /* Enable vertical scrolling */
+  width: 70%; /* Adjust this width based on your layout needs */
+  flex: 1; /* Allow it to grow */
 }
 
 /* Progress Section Cards */
@@ -44,7 +42,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Add margin below progress sections */
 }
 
 .progress-section h2,
@@ -55,44 +53,43 @@
   padding: 0;
 }
 
-/* Progress Cards Styling */
-.progress-cards {
-  display: flex;
-  justify-content: space-around; /* Space evenly */
-  align-items: center;
-  width: 100%; /* Let it fill the available space */
-  gap: 20px; /* Space between each card */
-  padding-top: 20px;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+/* Snapshot Section */
+.snapshot-section {
+  background-color: #111;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  height: 100%; /* Make it span the full height of the parent */
+  text-align: center;
 }
 
-/* Snapshot Cards */
+/* Ensure Snapshot Cards Wrapper */
 .snapshot-cards-wrapper {
-  max-height: 100%; /* Allow it to fill available height */
+  max-height: 300px; /* Example height, adjust to fit your design */
   overflow-y: auto; /* Allow vertical scrolling */
   overflow-x: hidden; /* Disable horizontal scrolling */
   padding-right: 10px; /* Add padding to avoid cutting off the scrollbar */
 }
 
-/* Individual Progress Card Styling */
-.progress-card {
+/* Snapshot Cards */
+.snapshot-cards {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 10px; /* Adjusted margin for better layout */
-  background-color: #1c1c1c; /* Consistent background color */
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  gap: 10px;
 }
 
-/* Snapshot Card Details */
 .snapshot-card {
   display: flex;
   align-items: center;
   padding: 20px;
   background-color: #303030;
   border-radius: 20px;
-  width: 100%; /* Adjust to take full width */
+  width: 400px; /* Adjust width as needed */
   margin-bottom: 10px; /* Add spacing between cards */
+}
+
+/* Additional Styles */
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
