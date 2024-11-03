@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { UserCredentials, HealthData } = require('../model/database');
+const User = require('../model/User');
 const { saveHealthData, updateHealthData } = require('../utilities/healthDataFunctions');
 
+
+
+
 router.post('/register', [
-  check('username').notEmpty().trim(), // Validate username as well
-  check('planType').isIn(['hybrid', 'running']),
+  check('planType').isIn(['running', 'hybrid']),
   check('activityLevel').isIn(['novice', 'intermediate', 'advanced']),
   check('goalDistance').notEmpty().trim(), // Validate goalDistance
   check('trainingPeriod').notEmpty().trim(), // Validate trainingPeriod
@@ -18,7 +21,8 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, planType, activityLevel, goalDistance, trainingPeriod, goalTiming } = req.body;
+    const username = req.session.userTemp.username;
+    const { planType, activityLevel, goalDistance, trainingPeriod, goalTiming } = req.body;
 
     const existingUser = await HealthData.findOne({ username });
     if (existingUser) {
@@ -27,12 +31,19 @@ router.post('/register', [
 
     // Save health data directly using the utility function
     const saveData = await saveHealthData(username, planType, activityLevel, goalDistance, trainingPeriod, goalTiming);
+    // Destroy the session after saving health data
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ error: 'Could not complete registration.' });
+      }
 
-    res.status(201).json({
-      message: 'User registered successfully',
-      username,
-      activityLevel,
-      saveData
+      res.status(201).json({
+        message: 'User registered successfully',
+        username,
+        activityLevel,
+        saveData
+      });
     });
 
   } catch (error) {

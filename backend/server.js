@@ -13,6 +13,7 @@ const userRoutes = require('./routes/userRoutes');
 const userCredentialsRouter = require('./routes/userCredentials');
 const runReportRouter = require('./routes/saveRunReports');
 const gymReportRouter = require('./routes/saveGymReport');
+const healthDataRouter = require('./routes/editHealthData');
 
 const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
@@ -59,6 +60,7 @@ app.use('/record', gymReportRouter);
 app.use('/gym',gymList);
 app.use('/park',parkList);
 app.use('/strava',strava);
+app.use('/healthdata', healthDataRouter);
 app.use('/user', userCredentialsRouter);
 
 app.listen(process.env.PORT, () => {
