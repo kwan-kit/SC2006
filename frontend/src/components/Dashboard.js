@@ -5,7 +5,7 @@ import WeeklyProgram from './WeeklyProgram';
 import RunInfoCard from './RunInfoCard';
 import Overview from './Overview';
 import YourProgress from './YourProgress';
-import GymCard from './GymCard'; // Import the GymCard component
+import GymInfoCard from './GymInfoCard';
 
 const Dashboard = () => {
   const [runReports, setRunReports] = useState([]);
@@ -74,7 +74,7 @@ const Dashboard = () => {
                       );
                     })}
                     {gymReports.map((gymReport) => (
-                      <GymCard 
+                      <GymInfoCard 
                         key={gymReport._id}
                         workout={gymReport.workout}
                         date={gymReport.date}
