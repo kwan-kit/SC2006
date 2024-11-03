@@ -1,16 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { AuthContext } from './AuthContext'; // Import AuthContext
+import axios from 'axios';
 import './Login.css'; 
 
 const Login = () => {
-  const { setIsLoggedIn } = useContext(AuthContext); // Access setIsLoggedIn
+  const { setIsLoggedIn, setProfileName } = useContext(AuthContext); // Access setIsLoggedIn
   const navigate = useNavigate();
+  const [username, setUsername] = useState(''); // State for username
+  const [password, setPassword] = useState(''); // State for password
+  const [error, setError] = useState(''); // State for error messages
 
-  const handleLogin = () => {
+  const handleLogin = async (e) => {
     // Simulate login logic, set the user as logged in
-    setIsLoggedIn(true); // Update logged-in state
-    navigate('/Dashboard');
+    e.preventDefault();
+    try {
+      //send POST req to backend check-pw route
+      const response = await axios.post('/user/check-password', { username, password });
+      console.log(response.data);
+      setIsLoggedIn(true); // Update logged-in state
+      setProfileName(username); // set profile name to entered username
+      navigate('/Dashboard');
+    }
+    catch (err) {
+      if (err.response) {
+        setError(err.response.data.message); // Set error message from server response
+      } else {
+        setError('An error occurred. Please try again.'); // Fallback error message
+      }
+    }
+    
   };
 
   return (
@@ -22,12 +41,28 @@ const Login = () => {
       <div className="login-form-wrapper">
         <div className="login-form-box">
           <h2 className="lora-title">HELTH</h2>
-          <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}> {/* Handle form submission */}
-            <label>Username</label>
-            <input placeholder="Enter your Username" required />
+          
+          {/* Display error message if exists */}
+          {error && <div className="error-message">{error}</div>} {/* Error message section */}
+
+          <form onSubmit={ handleLogin }> {/* Handle form submission */}
+          <label>Username</label>
+            <input 
+              type="text" 
+              placeholder="Enter your Username" 
+              required 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} // Update username state
+            />
 
             <label>Password</label>
-            <input type="password" placeholder="Enter your Password" required />
+            <input 
+              type="password" 
+              placeholder="Enter your Password" 
+              required 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} // Update password state
+            />
 
             {/* Replace button with onClick handler */}
             <button type="submit">Login</button>

@@ -79,8 +79,6 @@ router.post('/register', [
 
         // Proceed to create a new account
         const newAccount = await createNewAccount(username, password, securityQuestion, answer);
-        req.session.userTemp = new User();
-        req.session.userTemp.username = username;
 
         res.status(201).json({
             message: 'User registered successfully',

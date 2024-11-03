@@ -4,10 +4,10 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [profileName] = useState("John Smith"); // Keep profileName as read-only
+  const [profileName, setProfileName] = useState(''); // allow it to be set
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, profileName }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, profileName, setProfileName }}>
       {children}
     </AuthContext.Provider>
   );
