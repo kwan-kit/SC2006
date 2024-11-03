@@ -30,7 +30,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 70%; /* Adjust this width based on your layout needs */
+  width: 60%; /* Adjust this width based on your layout needs */
   flex: 1; /* Allow it to grow */
 }
 

@@ -41,7 +41,6 @@ const WeeklyProgram = () => {
       }
     };
     
-
     fetchTrainingPlan(); // Fetch the training plan when the component mounts
   }, []);
 
@@ -98,18 +97,24 @@ const WeeklyProgram = () => {
   const thisWeek = trainingPlan.schedule.find((week) => week.weekNumber === currentWeek);
   const nextWeek = trainingPlan.schedule.find((week) => week.weekNumber === currentWeek + 1);
 
-  const renderWeekSchedule = (week, title) => (
+  const renderWeekSchedule = (week, title, showCheckboxes = true) => (
     <div className="week-section">
       <h2>{title}</h2>
       <ul className="program-list">
         {week.daySchedules.map((day, index) => (
           <li key={index} className="program-item">
-            <input
-              type="checkbox"
-              checked={!!completedTasks[`${week.weekNumber}-${index}`]}
-              onChange={() => toggleTaskCompletion(week.weekNumber, index)}
-            />
-            {`Day ${index + 1}: ${day.runTitle} - ${day.distance} km`}
+            {showCheckboxes ? (
+              <>
+                <input
+                  type="checkbox"
+                  checked={!!completedTasks[`${week.weekNumber}-${index}`]}
+                  onChange={() => toggleTaskCompletion(week.weekNumber, index)}
+                />
+                {`Day ${index + 1}: ${day.runTitle} - ${day.distance} km`}
+              </>
+            ) : (
+              <span>{`Day ${index + 1}: ${day.runTitle} - ${day.distance} km`}</span>
+            )}
           </li>
         ))}
       </ul>
@@ -120,14 +125,14 @@ const WeeklyProgram = () => {
 
   return (
     <div className="weekly-program">
-      {thisWeek ? renderWeekSchedule(thisWeek, `This Week's Program (Week ${currentWeek})`) : <p>No data for this week</p>}
+      {thisWeek ? renderWeekSchedule(thisWeek, `This Week's Program (Week ${currentWeek}`) : <p>No data for this week</p>}
 
       <div className="progress-box">
         <div className="progress-fill" style={{ height: `${thisWeekProgress}%` }}></div>
-        <span>{thisWeekProgress}% Completed</span>
+        <span className="progress-percentage">{thisWeekProgress}%</span>
       </div>
 
-      {nextWeek ? renderWeekSchedule(nextWeek, `Next Week's Program (Week ${currentWeek + 1})`) : <p>Congratulations! Please select a new plan.</p>}
+      {nextWeek ? renderWeekSchedule(nextWeek, `Next Week's Program (Week ${currentWeek + 1})`, false) : <p>Congratulations! Please select a new plan.</p>}
     </div>
   );
 };
