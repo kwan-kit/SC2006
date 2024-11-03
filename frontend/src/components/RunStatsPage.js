@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './RunStatsPage.css';
 import axios from 'axios';
 import mapboxgl from "mapbox-gl";
@@ -7,7 +6,6 @@ import polyline from '@mapbox/polyline';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const RunStatsPage = () => {
-  const navigate = useNavigate();
   const [rating, setRating] = useState(1);
   const [stars, setStars] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -127,11 +125,6 @@ useEffect(() => {
       zoom: 14,           // Set zoom level; adjust based on your preference
       speed: 1.2          // Control the transition speed
     });
-
-    console.log(stats.date);
-    console.log(typeof stats.date);
-    console.log(stats.time);
-    console.log(typeof stats.time);
   }
 }, [mapData]);
 
@@ -209,13 +202,21 @@ useEffect(() => {
   };
 
   const saveRunStats = async () => {
-    console.log(stats.date);
-    console.log(typeof stats.date);
-    console.log(stats.time);
-    console.log(typeof stats.time);
     try {
+      const fetchUsername = async () => {
+        const response = await axios.get('/session/username');
+        return response.data.username; 
+      };
+  
+      const userName = await fetchUsername(); 
+  
+      if (!userName) {
+        console.error('User not logged in. Cannot save run stats.');
+        return; 
+      }
+  
       const runData = {
-        userName: "ryan", //replace username
+        userName: userName, // Use the fetched username
         date: stats.date,
         time: stats.time,
         targetTime: stats.targetTime,
@@ -224,17 +225,18 @@ useEffect(() => {
         elevationGain: stats.elevationGain,
         rating: rating,
         stars: stars,
-        mapData: mapData,
-        createdAt: new Date().toISOString(), // Adding a timestamp
+        mapData: stats.mapData,
+        createdAt: new Date().toISOString(), 
       };
   
+      // Save the run data
       const response = await axios.post('/save/run-report', runData);
       console.log('Data saved successfully:', response.data);
-      navigate('/Dashboard');
     } catch (error) {
       console.error('Error saving run stats:', error);
     }
-  };  
+  };
+  
 
   const startEditing = () => {
     setIsEditing(true);

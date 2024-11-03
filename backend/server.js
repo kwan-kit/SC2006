@@ -31,6 +31,15 @@ mongoose.connect(process.env.MONGODB_URI, {
 //   res.json({ message: 'Training Plan API is running' });
 // });
 
+app.use(sessionMiddleware);
+
+app.get('/session/username', (req, res) => {
+  if (req.session.userTemp && req.session.userTemp.username) {
+    return res.json({ username: req.session.userTemp.username });
+  } else {
+    return res.status(401).json({ message: 'User not authenticated' });
+  }
+});
 
 app.use('/training', createTrainingPlan);
 app.use('/save', runReportRouter);

@@ -16,44 +16,56 @@ import axios from 'axios';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const YourProgress = () => {
-  const [username, setUsername] = useState(null);
   const [trainingPlan, setTrainingPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(() => Number(localStorage.getItem('currentWeek')) || 1);
 
+  // Fetch username from backend
+  const fetchUsername = async () => {
+    try {
+        const response = await axios.get('/session/username'); 
+        return response.data.username; 
+    } catch (error) {
+        console.error('Error fetching username:', error);
+        setError(error.response?.data?.message || 'Could not fetch username');
+        return null;
+    }
+};    
+
   useEffect(() => {
     const fetchTrainingPlan = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
-        const username = 'ryan'; // Replace this with the username 
-        const response = await axios.get(`/training/plan/${username}`); 
-        setTrainingPlan(response.data); 
-  
-        const storedWeek = localStorage.getItem('currentWeek') || 1;
-        setCurrentWeek(Number(storedWeek));
-        if (response.data.startDate) {
-          calculateCurrentWeek(response.data.startDate); 
-        }
+          const username = await fetchUsername(); // Fetch the username
+          if (!username) return;
+
+          const response = await axios.get(`/training/plan/${username}`);
+          setTrainingPlan(response.data);
+
+          const storedWeek = localStorage.getItem('currentWeek') || 1;
+          setCurrentWeek(Number(storedWeek));
+          if (response.data.startDate) {
+              calculateCurrentWeek(response.data.startDate); 
+          }
       } catch (error) {
-        console.error('Error fetching training plan:', error);
-        setError(error.response?.data?.message || 'Error fetching training plan'); 
+          console.error('Error fetching training plan:', error);
+          setError(error.response?.data?.message || 'Error fetching training plan'); 
       } finally {
-        setLoading(false); 
+          setLoading(false);
       }
-    };
-  
+  };
+
     fetchTrainingPlan();
   }, []);
-  
-  
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const storedWeek = Number(localStorage.getItem('currentWeek'));
       if (storedWeek !== currentWeek) {
         setCurrentWeek(storedWeek);
       }
-    }, 500); // Check every 0.5 seconds
+    }, 500);
 
     return () => clearInterval(intervalId);
   }, [currentWeek]);
