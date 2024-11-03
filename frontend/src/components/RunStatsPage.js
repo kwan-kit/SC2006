@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RunStatsPage.css';
 import axios from 'axios';
 import mapboxgl from "mapbox-gl";
@@ -6,6 +7,7 @@ import polyline from '@mapbox/polyline';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const RunStatsPage = () => {
+  const navigate = useNavigate();
   const [rating, setRating] = useState(1);
   const [stars, setStars] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -219,6 +221,7 @@ useEffect(() => {
   
       const response = await axios.post('/save/run-report', runData);
       console.log('Data saved successfully:', response.data);
+      navigate('/Dashboard');
     } catch (error) {
       console.error('Error saving run stats:', error);
     }

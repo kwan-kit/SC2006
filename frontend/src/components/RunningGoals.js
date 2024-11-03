@@ -67,8 +67,8 @@ const RunningGoals = () => {
     // Log the training plan for debugging (optional)
     console.log('Training Plan Submitted:', trainingPlan);
 
-    // Navigate to the Dashboard
-    navigate('/Dashboard');
+    // Navigate to the Login
+    navigate('/Login');
   };
 
   return (
@@ -141,7 +141,7 @@ const RunningGoals = () => {
             </select>
           </div>
 
-          <button type="submit" className="submit-button">Done, Let’s Go!</button>
+          <button type="submit" className="submit-button">Done, Back to Login!</button>
         </form>
       </div>
     </div>

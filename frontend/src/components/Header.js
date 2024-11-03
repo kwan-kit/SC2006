@@ -6,13 +6,15 @@ import './Header.css';
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, profileName } = useContext(AuthContext); // Access profileName
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
+
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
   };
+
   const handleLoginLogout = () => {
     if (isLoggedIn) {
       setIsLoggedIn(false);
@@ -22,11 +24,13 @@ const Header = () => {
     }
     setDropdownVisible(false);
   };
+
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setDropdownVisible(false);
     }
   };
+
   const isLandingPage = 
     location.pathname === '/' ||
     location.pathname === '/LandingPage' ||
@@ -35,7 +39,10 @@ const Header = () => {
     location.pathname === '/verification' ||
     location.pathname === '/terms' ||
     location.pathname === '/security-question' ||
-    location.pathname === '/set-new-password' ;
+    location.pathname === '/goals' ||
+    location.pathname === '/running' ||
+    location.pathname === '/hybrid' ||
+    location.pathname === '/set-new-password';
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -43,6 +50,7 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   return (
     <header className={`header ${isLandingPage ? 'header-black' : 'header-black'}`}>
       <div className="logo">
@@ -64,7 +72,7 @@ const Header = () => {
       </nav>
       <div className="profile" onClick={toggleDropdown} ref={dropdownRef}>
         <img className="profile-icon" src="https://via.placeholder.com/40" alt="User Profile" />
-        <span className="username">{isLoggedIn ? 'John Smith' : 'Guest'}</span>
+        <span className="username">{isLoggedIn ? profileName : 'Guest'}</span>
         {dropdownVisible && (
           <div className="profile-dropdown">
             <button onClick={handleLoginLogout} className="header-button">
