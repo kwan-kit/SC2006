@@ -1,55 +1,56 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './styleRunning.css';
 
 const RunningGoals = () => {
   const navigate = useNavigate();
   const [activityLevel, setActivityLevel] = useState('Select');
-  const [goalDistance, setGoalDistance] = useState('Select');
-  const [trainingPeriod, setTrainingPeriod] = useState('Select');
-  const [goalTiming, setGoalTiming] = useState('Select');
+  const [goalDistance, setGoalDistance] = useState(null);
+  const [trainingPeriod, setTrainingPeriod] = useState(null);
+  const [goalTiming, setGoalTiming] = useState(null);
 
   // Memoized options for Goal Timing based on the provided data
   const timingOptions = useMemo(() => ({
     Novice: {
-      '5 km': ['35 mins', '30 mins'],
-      '8 km': ['55 mins', '50 mins'],
-      '10 km': ['70 mins', '65 mins'],
+      '5': [35, 30],
+      '8': [55, 50],
+      '10': [70, 65],
     },
     Intermediate: {
-      '5 km': ['30 mins', '25 mins'],
-      '8 km': ['50 mins', '45 mins'],
-      '10 km': ['65 mins', '60 mins'],
+      '5': [30, 25],
+      '8': [50, 45],
+      '10': [65, 60],
     },
     Advanced: {
-      '5 km': ['25 mins', '20 mins'],
-      '8 km': ['45 mins', '40 mins'],
-      '10 km': ['60 mins', '55 mins'],
+      '5': [25, 20],
+      '8': [45, 40],
+      '10': [60, 55],
     },
   }), []); // No dependencies, will remain constant
 
   const [availableTimingOptions, setAvailableTimingOptions] = useState([]);
 
   useEffect(() => {
-    if (activityLevel !== 'Select' && goalDistance !== 'Select') {
+    if (activityLevel !== 'Select' && goalDistance) {
       const timings = timingOptions[activityLevel][goalDistance];
       setAvailableTimingOptions(timings || []);
-      setGoalTiming('Select'); // Reset goal timing when changing selections
+      setGoalTiming(null); // Reset goal timing when changing selections
     } else {
       setAvailableTimingOptions([]);
-      setGoalTiming('Select'); // Reset goal timing if selections are not valid
+      setGoalTiming(null); // Reset goal timing if selections are not valid
     }
-  }, [activityLevel, goalDistance, timingOptions]); // No longer causes a warning
+  }, [activityLevel, goalDistance, timingOptions]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Check for valid selections
     if (
       activityLevel === 'Select' ||
-      goalDistance === 'Select' ||
-      trainingPeriod === 'Select' ||
-      goalTiming === 'Select'
+      !goalDistance ||
+      !trainingPeriod ||
+      goalTiming === null // Change to null check for goalTiming
     ) {
       alert('Please fill in all the fields before submitting the form.');
       return;
@@ -57,18 +58,23 @@ const RunningGoals = () => {
 
     // Create the training plan object
     const trainingPlan = {
-      activityLevel,
-      goalDistance,
-      trainingPeriod,
-      goalTiming,
+      planType: 'running',
+      activityLevel: activityLevel.toLowerCase(),
+      goalDistance: Number(goalDistance), // Ensure it's a number
+      trainingPeriod: Number(trainingPeriod), // Ensure it's a number
+      goalTiming: goalTiming, 
       createdAt: new Date(),
     };
 
-    // Log the training plan for debugging (optional)
-    console.log('Training Plan Submitted:', trainingPlan);
-
-    // Navigate to the Login
-    navigate('/Login');
+    try {
+      // Send the training plan to the server
+      const response = await axios.post('/healthdata/register', trainingPlan);
+      console.log('Response from server:', response.data);
+      navigate('/Login');
+    } catch (error) {
+      console.error('Error submitting the training plan:', error);
+      alert('There was an error submitting your goals. Please try again.');
+    }    
   };
 
   return (
@@ -101,13 +107,13 @@ const RunningGoals = () => {
             <select
               id="goal-distance"
               className="select"
-              value={goalDistance}
+              value={goalDistance || ''}
               onChange={(e) => setGoalDistance(e.target.value)}
             >
-              <option>Select</option>
-              <option>5 km</option>
-              <option>8 km</option>
-              <option>10 km</option>
+              <option value="">Select</option>
+              <option value="5">5 km</option>
+              <option value="8">8 km</option>
+              <option value="10">10 km</option>
             </select>
           </div>
           <div className="form-group">
@@ -115,13 +121,13 @@ const RunningGoals = () => {
             <select
               id="training-period"
               className="select"
-              value={trainingPeriod}
+              value={trainingPeriod || ''}
               onChange={(e) => setTrainingPeriod(e.target.value)}
             >
-              <option>Select</option>
-              <option>8 weeks</option>
-              <option>10 weeks</option>
-              <option>12 weeks</option>
+              <option value="">Select</option>
+              <option value="8">8 weeks</option>
+              <option value="10">10 weeks</option>
+              <option value="12">12 weeks</option>
             </select>
           </div>
           <div className="form-group">
@@ -129,13 +135,13 @@ const RunningGoals = () => {
             <select
               id="goal-timing"
               className="select"
-              value={goalTiming}
-              onChange={(e) => setGoalTiming(e.target.value)}
+              value={goalTiming || ''}
+              onChange={(e) => setGoalTiming(Number(e.target.value))} // Save as number
             >
-              <option>Select</option>
+              <option value="">Select</option>
               {availableTimingOptions.map((timing) => (
                 <option key={timing} value={timing}>
-                  {timing}
+                  {timing} mins
                 </option>
               ))}
             </select>
