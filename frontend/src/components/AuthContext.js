@@ -1,14 +1,13 @@
-// AuthContext.js
 import React, { createContext, useState } from 'react';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [profileName, setProfileName] = useState("John Smith"); // Initialize with default name
+  const [profileName] = useState("John Smith"); // Keep profileName as read-only
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, profileName, setProfileName }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, profileName }}>
       {children}
     </AuthContext.Provider>
   );

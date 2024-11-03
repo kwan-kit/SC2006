@@ -1,28 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './Settings.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 
 const Settings = () => {
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const { profileName, setProfileName } = useContext(AuthContext); // Access setProfileName from context
-  const [profile, setProfile] = useState({ name: profileName }); // Initialize with profileName from context
+  const { profileName } = useContext(AuthContext); // Access profileName from context
   const [selectedPlan, setSelectedPlan] = useState("Hybrid Plan");
   const navigate = useNavigate();
-
-  const handleProfileEdit = () => setIsEditingProfile((prev) => !prev);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const saveProfileChanges = () => {
-    setProfileName(profile.name); // Update profileName in context
-    setIsEditingProfile(false); // Exit edit mode
-  };
 
   const handlePlanChange = (plan) => setSelectedPlan(plan);
 
@@ -47,30 +31,7 @@ const Settings = () => {
             <img src="https://via.placeholder.com/120" alt="Profile" />
           </div>
           <div className="profile-info">
-            {isEditingProfile ? (
-              <>
-                <div className="profile-field">
-                  <label>Username:</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={profile.name}
-                    onChange={handleInputChange}
-                    className="editable-input"
-                  />
-                </div>
-                <button className="confirm-button" onClick={saveProfileChanges}>
-                  <FontAwesomeIcon icon={faCheckCircle} /> Save Changes
-                </button>
-              </>
-            ) : (
-              <>
-                <h3 className="profile-name">{profile.name}</h3>
-                <button className="edit-button" onClick={handleProfileEdit}>
-                  <FontAwesomeIcon icon={faEdit} /> Edit Profile
-                </button>
-              </>
-            )}
+            <h3 className="profile-name">{profileName}</h3> {/* Display profile name without edit */}
           </div>
         </div>
       </div>
