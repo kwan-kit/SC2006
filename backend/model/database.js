@@ -23,6 +23,11 @@ const runReportsConnection = mongoose.createConnection(process.env.MONGODB_REPOR
   useUnifiedTopology: true,
 });
 
+const gymDataConnection = mongoose.createConnection(process.env.MONGODB_GYMDATA_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 // Schemas
 const userCredentialsSchema = new mongoose.Schema({
   username: { 
@@ -30,22 +35,24 @@ const userCredentialsSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  password: String,
+  securityQuestion: Number,
+  answer: String
 });
 
 const healthDataSchema = new mongoose.Schema({
   username: String,
   planType: String,
   activityLevel: String,
-  goalDistance: String,
-  trainingPeriod: String,
-  goalTiming: String
+  goalDistance: Number,
+  trainingPeriod: Number,
+  goalTiming: Number
 });
 
 const trainingPlanSchema = new mongoose.Schema({
   username: String,
   schedule: Array,
   activityLevel: String,
-  planType: String,
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -61,16 +68,28 @@ const gymReportSchema = new mongoose.Schema({
   },
 });
 
+const gymSchema = new mongoose.Schema({
+  name: String,
+  postalCode: Number,
+  coordinates: {
+      latitude: mongoose.Types.Decimal128,
+      longitude: mongoose.Types.Decimal128
+  }
+});
+
 // Models
 const UserCredentials = userCredentialsConnection.model('UserCredentials', userCredentialsSchema, 'UserCredentials');
 const HealthData = userInfoConnection.model('HealthData', healthDataSchema, 'HealthData');
 const TrainingPlan = runTrainingConnection.model('WeeklyTrainingPlan', trainingPlanSchema, 'WeeklyTrainingPlan');
 const GymReport = runReportsConnection.model('GymReports', gymReportSchema, 'GymReports');
+const GymData = gymDataConnection.model('GymData',gymSchema,'GymDetails')
+
 
 
 module.exports = {
   UserCredentials,
   HealthData,
   TrainingPlan,
-  GymReport
-}; //checkpoint 1
+  GymReport,
+  GymData
+}; 
