@@ -63,6 +63,13 @@ const RouteCard = ({ name, parkLink, parkCoordinates, userCoordinates }) => {
               },
             });
 
+            const midpoint = route[Math.floor(route.length / 2)];
+            map.flyTo({
+              center: midpoint,
+              zoom: 14,
+              speed: 1.2,
+            });
+
             // Add a marker for the starting point
             new mapboxgl.Marker()
               .setLngLat([userCoords[0], userCoords[1]])

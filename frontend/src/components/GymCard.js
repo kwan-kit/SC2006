@@ -61,6 +61,13 @@ const GymCard = ({ name, gymCoordinates, userCoordinates }) => {
               },
             });
 
+            const midpoint = route[Math.floor(route.length / 2)];
+            map.flyTo({
+              center: midpoint,
+              zoom: 12,
+              speed: 1.2,
+            });
+
             // Add a marker for the starting point
             new mapboxgl.Marker()
               .setLngLat([userCoords[0], userCoords[1]])
