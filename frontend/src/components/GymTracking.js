@@ -1,4 +1,4 @@
-// src/GymTracking.js
+
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import $ from 'jquery';
@@ -76,11 +76,7 @@ const handleSubmit = async () => {
 
     console.log("Completed exercises data:", completedExercises);
     const reportData = {
-<<<<<<< Updated upstream
-        username: "John Smith", //replace with username
-=======
       username: username, // Use the fetched username
->>>>>>> Stashed changes
         workout: completedExercises,
     };
 
