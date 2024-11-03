@@ -64,10 +64,15 @@ const loadParkConnectors = () => {
         });
 
         // Convert the Map to an array of objects
-        parkConnectors = Array.from(uniqueParks.values()).map(({ parkName, firstCoordinate }) => ({
-            parkName,
-            firstCoordinate,
-        }));
+        parkConnectors = Array.from(uniqueParks.values()).map(({ parkName, firstCoordinate }) => {
+            const truncatedParkName = parkName.length > 30 ? `${parkName.substring(0, 30)}...` : parkName;
+            
+            return {
+                parkName: truncatedParkName,
+                firstCoordinate,
+            };
+
+        });
     } catch (error) {
         console.error('Error reading GeoJSON file:', error);
     }
