@@ -26,6 +26,14 @@
   color: black;
 }
 
+.error-message {
+  color: red; /* Color for the error message */
+  margin: 10px 0; /* Space above and below */
+  font-size: 0.9rem; /* Font size */
+  font-weight: bold; /* Make it bold */
+  text-align: center; /* Center align the text */
+}
+
 .side-image {
   width: 20%;
   height: 100%;

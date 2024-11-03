@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { AuthContext } from './AuthContext'; // Import AuthContext
 import axios from 'axios';
 import './Login.css'; 
 
 const Login = () => {
-  const { setIsLoggedIn } = useContext(AuthContext); // Access setIsLoggedIn
+  const { setIsLoggedIn, setProfileName } = useContext(AuthContext); // Access setIsLoggedIn
   const navigate = useNavigate();
   const [username, setUsername] = useState(''); // State for username
   const [password, setPassword] = useState(''); // State for password
@@ -19,6 +19,7 @@ const Login = () => {
       const response = await axios.post('/user/check-password', { username, password });
       console.log(response.data);
       setIsLoggedIn(true); // Update logged-in state
+      setProfileName(username); // set profile name to entered username
       navigate('/Dashboard');
     }
     catch (err) {
@@ -40,9 +41,19 @@ const Login = () => {
       <div className="login-form-wrapper">
         <div className="login-form-box">
           <h2 className="lora-title">HELTH</h2>
+          
+          {/* Display error message if exists */}
+          {error && <div className="error-message">{error}</div>} {/* Error message section */}
+
           <form onSubmit={ handleLogin }> {/* Handle form submission */}
-            <label>Username</label>
-            <input placeholder="Enter your Username" required />
+          <label>Username</label>
+            <input 
+              type="text" 
+              placeholder="Enter your Username" 
+              required 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} // Update username state
+            />
 
             <label>Password</label>
             <input 
