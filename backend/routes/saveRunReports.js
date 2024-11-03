@@ -6,6 +6,8 @@ const router = express.Router();
 router.post('/run-report', async (req, res) => {
     const {
         userName, 
+        date,
+        time,
         targetTime, 
         movingTime, 
         timeDifference, 
@@ -23,6 +25,8 @@ router.post('/run-report', async (req, res) => {
     try {
         const report = {
             userName,
+            date,
+            time,
             targetTime,
             movingTime,
             timeDifference,

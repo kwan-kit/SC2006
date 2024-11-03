@@ -127,6 +127,11 @@ useEffect(() => {
       zoom: 14,           // Set zoom level; adjust based on your preference
       speed: 1.2          // Control the transition speed
     });
+
+    console.log(stats.date);
+    console.log(typeof stats.date);
+    console.log(stats.time);
+    console.log(typeof stats.time);
   }
 }, [mapData]);
 
@@ -204,6 +209,10 @@ useEffect(() => {
   };
 
   const saveRunStats = async () => {
+    console.log(stats.date);
+    console.log(typeof stats.date);
+    console.log(stats.time);
+    console.log(typeof stats.time);
     try {
       const runData = {
         userName: "ryan", //replace username
@@ -215,7 +224,7 @@ useEffect(() => {
         elevationGain: stats.elevationGain,
         rating: rating,
         stars: stars,
-        mapData: stats.mapData,
+        mapData: mapData,
         createdAt: new Date().toISOString(), // Adding a timestamp
       };
   
