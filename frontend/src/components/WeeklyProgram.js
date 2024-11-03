@@ -16,10 +16,22 @@ const WeeklyProgram = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTrainingPlan = async () => {
-      setLoading(true); 
+    const fetchUsername = async () => {
       try {
-        const username = 'ryan'; // Replace with the username
+        const response = await axios.get('/session/username');
+        return response.data.username; 
+      } catch (error) {
+        console.error('Error fetching username:', error);
+        setError(error.response?.data?.message || 'Could not fetch username');
+        return null; 
+      }
+    };
+    
+    const fetchTrainingPlan = async () => {
+      setLoading(true);
+      const username = await fetchUsername();
+      if (!username) return; // Prevent fetching training plan if username is not found
+      try {
         const response = await axios.get(`/training/plan/${username}`); 
         setTrainingPlan(response.data); 
       } catch (error) {
@@ -28,10 +40,10 @@ const WeeklyProgram = () => {
         setLoading(false);
       }
     };
+    
 
-    fetchTrainingPlan();
+    fetchTrainingPlan(); // Fetch the training plan when the component mounts
   }, []);
-
 
   useEffect(() => {
     // Save current week and completed tasks to localStorage whenever they change
@@ -121,4 +133,3 @@ const WeeklyProgram = () => {
 };
 
 export default WeeklyProgram;
-

@@ -13,27 +13,30 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchReports = async () => {
+    const fetchUsernameAndReports = async () => {
       try {
-        const username = 'ryan'; // Replace with the username
-        const [runResponse, gymResponse] = await Promise.all([
-          axios.get(`/save/run-report/${username}`),
-          axios.get(`/record/gym-report/${username}`),
-        ]);
+          const usernameResponse = await axios.get('/api/session-username');
+          const username = usernameResponse.data.username;
 
-        console.log('Fetched run reports:', runResponse.data);
-        console.log('Fetched gym reports:', gymResponse.data);
+          const [runResponse, gymResponse] = await Promise.all([
+              axios.get(`/save/run-report/${username}`),
+              axios.get(`/record/gym-report/${username}`),
+          ]);
 
-        setRunReports(runResponse.data);
-        setGymReports(gymResponse.data);
+          console.log('Fetched run reports:', runResponse.data);
+          console.log('Fetched gym reports:', gymResponse.data);
+
+          setRunReports(runResponse.data);
+          setGymReports(gymResponse.data);
       } catch (error) {
-        console.error('Error fetching reports:', error);
+          console.error('Error fetching reports:', error);
       } finally {
-        setIsLoading(false);
+          setIsLoading(false);
       }
-    };
+  };
 
-    fetchReports();
+  fetchUsernameAndReports();
+
   }, []);
 
   return (
