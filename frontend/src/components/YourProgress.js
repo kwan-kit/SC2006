@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import './YourProgress.css';
-import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -31,7 +30,7 @@ const YourProgress = () => {
         setError(error.response?.data?.message || 'Could not fetch username');
         return null;
     }
-};    
+  };    
 
   useEffect(() => {
     const fetchTrainingPlan = async () => {
@@ -99,33 +98,6 @@ const YourProgress = () => {
     return (currentWeek / trainingPlan.schedule.length) * 100;
   }, [currentWeek, trainingPlan]);
 
-  const paceData = useMemo(() => ({
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Pace Trends (km/min)',
-        data: [6.2, 6.1, 5.8, 6.0, 5.7, 6.1, 5.9],
-        borderColor: '#007BFF',
-        borderWidth: 2,
-        fill: false,
-        pointBackgroundColor: '#007BFF',
-        pointBorderColor: '#007BFF',
-      },
-    ],
-  }), []);
-
-  const paceOptions = useMemo(() => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-    },
-    scales: {
-      x: { ticks: { color: 'white' } },
-      y: { ticks: { color: 'white' }, beginAtZero: false },
-    },
-  }), []);
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!trainingPlan) return <p>No training plan found</p>;
@@ -153,18 +125,6 @@ const YourProgress = () => {
         <div className="progress-card interactive-card">
           <h3>Total Number of Runs/Exercises</h3>
           <p className="metric-number">{completedRuns}/{totalNumberOfRuns}</p>
-        </div>
-
-        <div className="progress-card interactive-card">
-          <h3>Pace Trends (km/min)</h3>
-          <div className="chart-container">
-            <Line data={paceData} options={paceOptions} />
-          </div>
-        </div>
-
-        <div className="progress-card interactive-card">
-          <h3>Calories Burned this Week</h3>
-          <p className="metric-number">3000 kcal</p>
         </div>
 
         <div className="progress-card interactive-card">
