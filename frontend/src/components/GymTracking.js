@@ -55,7 +55,7 @@ const GymTracking = () => {
 const handleSubmit = async () => {
     console.log("Completed exercises data:", completedExercises);
     const reportData = {
-        username: 'ryan', //replace with username
+        username: "John Smith", //replace with username
         workout: completedExercises,
     };
 
