@@ -21,11 +21,14 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
     // Check if passwords match
     if (password !== confirmPassword) {
       alert('Passwords do not match. Please try again.');
       return;
     }
+
+  
 
     if (!securityQuestion || !securityAnswer) {
       alert('Please select a security question and provide an answer.');
@@ -58,9 +61,14 @@ const Register = () => {
       navigate('/goals');
     } catch (error) {
       if (error.response) {
-        setError(error.response.data.error || 'Registration failed'); // Set error message from server response
+        // Set error message from server response
+        const serverErrors = error.response.data.errors || [];
+        const errorMessage = serverErrors.map(err => err.msg).join('\n'); // Show all error messages
+        setError(errorMessage); // Set the error state
+        alert(errorMessage); // Show the error messages in an alert
       } else {
         setError('An error occurred. Please try again.'); // Fallback error message
+        alert('An error occurred. Please try again.'); // Show fallback error message
       }
     }
   };

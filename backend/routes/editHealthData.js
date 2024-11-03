@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { UserCredentials, HealthData } = require('../model/database');
 const User = require('../model/User');
-const { saveHealthData, updateHealthData } = require('../utilities/healthDataFunctions');
+const { saveHealthData, updateHealthData, getPlanType } = require('../utilities/healthDataFunctions');
 
 
 
@@ -82,6 +82,30 @@ router.put('/update-health', [
       next(error);
     }
   });
+
+  // Get plan type route
+router.get('/get-plan-type', async (req, res, next) => {
+  try {
+    const username = req.session.userTemp.username; // Retrieve username from session
+    if (!username) {
+      return res.status(400).json({ error: 'Username is required' });
+    }
+
+    const planType = await getPlanType(username);
+    if (planType === null) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({
+      message: 'Plan type retrieved successfully',
+      planType
+    });
+
+  } catch (error) {
+    console.error('Error retrieving plan type:', error);
+    next(error);
+  }
+});
   
 
 module.exports = router;

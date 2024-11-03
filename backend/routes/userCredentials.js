@@ -58,7 +58,9 @@ router.get('/getSecurityQuestion/:username', async (req, res, next) => {
 // Route to register a new account
 router.post('/register', [
     check('username').notEmpty().trim().withMessage('Username is required'),
-    check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+    check('password')
+        .isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+        .matches(/^\S*$/).withMessage('Password must not contain whitespace'),
     check('securityQuestion').isInt().withMessage('Security question ID must be an integer'),
     check('answer').notEmpty().trim().withMessage('Answer to security question is required')
 ], async (req, res, next) => {
@@ -150,7 +152,9 @@ router.post('/check-security-question', [
 
 // Route to reset password
 router.post('/reset-password', [
-    check('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters')
+    check('newPassword')
+        .isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+        .matches(/^\S*$/).withMessage('Password must not contain whitespace'),
 ], async (req, res, next) => {
     try {
         const errors = validationResult(req);
