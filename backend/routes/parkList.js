@@ -112,8 +112,9 @@ router.post('/', (req, res) => {
     });
 
     // Sort by distance and get the top 10 closest parks
-    const closestParks = distances.sort((a, b) => a.distance - b.distance).slice(0, 10);
+    const closestParks = distances.sort((a, b) => a.distance - b.distance).slice(0, 7);
 
+    console.log(closestParks);
     // Send the response as JSON
     res.json({ closestParks });
 });

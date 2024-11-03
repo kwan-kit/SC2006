@@ -35,10 +35,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/training', createTrainingPlan);
 app.use('/save', runReportRouter);
 app.use('/record', gymReportRouter);
- app.use('/gym',gymList);
- app.use('/park',parkList);
- app.use('/strava',strava);
- app.use('/user', userCredentialsRouter);
+app.use('/gym',gymList);
+app.use('/park',parkList);
+app.use('/strava',strava);
+app.use('/user', userCredentialsRouter);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);

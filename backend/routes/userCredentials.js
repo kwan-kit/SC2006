@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const { User } = require('../model/User');
 const { check, validationResult } = require('express-validator');
 const { 
     getUserCredentials, 
     createNewAccount, 
     checkPassword, 
     checkSecurityQuestion,
-    resetPassword 
+    resetPassword, 
+    getSecurityQuestion
 } = require('../utilities/userCredentialsFunctions');
 
 
@@ -18,6 +20,32 @@ router.get('/:username', async (req, res, next) => {
 
         if (!userCredentials) {
             return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json(userCredentials);
+    } catch (error) {
+        console.error('Error fetching user credentials:', error);
+        next(error);
+    }
+});
+
+
+// Route to get user security question by username
+router.get('/getSecurityQuestion/:username', async (req, res, next) => {
+    try {
+        const { username } = req.params;
+        const userCredentials = await getSecurityQuestion(username);
+
+
+        if (!userCredentials) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        else {
+            req.session.userTemp = new User();
+            req.session.userTemp.username = userCredentials.username;
+            req.session.userTemp.password = userCredentials.password;
+            req.session.userTemp.securityQuestion = userCredentials.securityQuestion;
+            req.session.userTemp.answer = userCredentials.answer;
         }
 
         res.status(200).json(userCredentials);
@@ -51,6 +79,8 @@ router.post('/register', [
 
         // Proceed to create a new account
         const newAccount = await createNewAccount(username, password, securityQuestion, answer);
+        req.session.userTemp = new User();
+        req.session.userTemp.username = username;
 
         res.status(201).json({
             message: 'User registered successfully',
@@ -78,6 +108,8 @@ router.post('/check-password', [
         const isPasswordCorrect = await checkPassword(username, password);
 
         if (isPasswordCorrect) {
+            req.session.userTemp = new User();
+            req.session.userTemp.username = username;
             return res.status(200).json({ message: 'Password is correct' });
         } else {
             return res.status(401).json({ message: 'Incorrect username or password' });
@@ -89,9 +121,9 @@ router.post('/check-password', [
 });
 
 
+
 // Route to check security question answer
 router.post('/check-security-question', [
-    check('username').notEmpty().trim().withMessage('Username is required'),
     check('answer').notEmpty().withMessage('Answer is required')
 ], async (req, res, next) => {
     try {
@@ -100,7 +132,9 @@ router.post('/check-security-question', [
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { username, answer } = req.body;
+        // get username from session
+        const username = req.session.userTemp.username;
+        const { answer } = req.body;
         const isAnswerCorrect = await checkSecurityQuestion(username, answer);
 
         if (isAnswerCorrect) {
@@ -116,7 +150,6 @@ router.post('/check-security-question', [
 
 // Route to reset password
 router.post('/reset-password', [
-    check('username').notEmpty().trim().withMessage('Username is required'),
     check('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters')
 ], async (req, res, next) => {
     try {
@@ -125,13 +158,21 @@ router.post('/reset-password', [
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { username, newPassword } = req.body;
+        const username  = req.session.userTemp.username;
+        const { newPassword } = req.body;
 
         const updatedAccount = await resetPassword(username, newPassword);
 
-        res.status(200).json({
-            message: 'Password reset successfully',
-            account: updatedAccount
+        req.session.destroy(err => {
+            if (err) {
+                console.error('Error destroying session:', err);
+                return res.status(500).json({ error: 'Failed to end session' });
+            }
+
+            res.status(200).json({
+                message: 'Password reset successfully. Session ended.',
+                account: updatedAccount
+            });
         });
     } catch (error) {
         console.error('Error in password reset:', error);
