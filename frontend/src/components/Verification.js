@@ -1,8 +1,34 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Verification.css'; // Import CSS for the verification page styling
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Verification.css';
 
 const Verification = () => {
+  const [username, setUsername] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const fetchSecurityQuestion = async () => {
+    try {
+      const response = await axios.get(`/user/getSecurityQuestion/${username}`);
+      const userCredentials = response.data;
+
+      // Redirect to the security question page, passing the security question
+      navigate('/security-question', { state: { securityQuestion: userCredentials.securityQuestion } });
+    } catch (err) {
+      setError(err.response?.data?.error || 'User not found');
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (username) {
+      fetchSecurityQuestion();
+    } else {
+      setError('Please enter a username.');
+    }
+  };
+
   return (
     <div className="verification-container">
       {/* Left-side image */}
@@ -12,14 +38,19 @@ const Verification = () => {
       <div className="verification-form-wrapper">
         <div className="verification-form-box">
           <h2 className="lora-title">HELTH</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label>Username</label>
-            <input type="text" placeholder="Enter your Username" required />
+            <input
+              type="text"
+              placeholder="Enter your Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            {error && <p className="error-message">{error}</p>}
 
             {/* Button to verify email or phone number */}
-            <Link to="/security-question">
-              <button type="button">Answer Security Question</button>
-            </Link>
+            <button type="submit">Answer Security Question</button>
           </form>
         </div>
       </div>
