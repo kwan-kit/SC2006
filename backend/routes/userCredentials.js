@@ -195,4 +195,15 @@ router.post('/logout', (req, res) => {
     });
   });
 
+  router.post('/set-username', (req, res) => {
+    const { username } = req.body;
+    if (username) {
+        req.session.userTemp = new User();
+        req.session.userTemp.username = newAccount.username;
+      res.json({ message: 'Session updated successfully' });
+    } else {
+      res.status(400).json({ message: 'Username is required' });
+    }
+  });
+
 module.exports = router;

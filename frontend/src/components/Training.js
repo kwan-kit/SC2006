@@ -19,7 +19,7 @@ const Training = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const { latitude, longitude } = position.coords;
+            const { latitude, longitude } = position.coords //{ latitude: 1.346910, longitude: 103.682484 };
             resolve({ latitude, longitude });
           },
           (error) => {

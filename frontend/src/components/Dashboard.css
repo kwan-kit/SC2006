@@ -59,13 +59,13 @@ html, body {
   color: white;
   padding: 10px;
   border-radius: 20px;
-  height: 100%; /* Make it span the full height of the parent */
+  height: auto; /* Make it span the full height of the parent */
   text-align: center;
 }
 
 /* Ensure Snapshot Cards Wrapper */
 .snapshot-cards-wrapper {
-  max-height: 300px; /* Example height, adjust to fit your design */
+  max-height: auto; /* Example height, adjust to fit your design */
   overflow-y: auto; /* Allow vertical scrolling */
   overflow-x: hidden; /* Disable horizontal scrolling */
   padding-right: 10px; /* Add padding to avoid cutting off the scrollbar */
@@ -84,7 +84,7 @@ html, body {
   padding: 20px;
   background-color: #303030;
   border-radius: 20px;
-  width: 400px; /* Adjust width as needed */
+  width: 1200px; /* Adjust width as needed */
   margin-bottom: 10px; /* Add spacing between cards */
 }
 

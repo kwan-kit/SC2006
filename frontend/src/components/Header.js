@@ -3,10 +3,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { AuthContext } from './AuthContext';
 import './Header.css';
+import axios from 'axios';
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isLoggedIn, setIsLoggedIn, profileName } = useContext(AuthContext); // Access profileName
+  const { isLoggedIn, setIsLoggedIn, profileName, setProfileName } = useContext(AuthContext); // Access profileName
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
@@ -50,6 +51,26 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  // Function to check if the user is logged in
+  const checkUserLoggedIn = async () => {
+    try {
+      const response = await axios.get('/session/username'); //change path
+      if (response.data.username) {
+        setIsLoggedIn(true);
+        setProfileName(response.data.username);
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+      setIsLoggedIn(false);
+    }
+  };  
+
+    // Call checkUserLoggedIn when the component mounts
+    useEffect(() => {
+      checkUserLoggedIn();
+    }, []);
 
   return (
     <header className={`header ${isLandingPage ? 'header-black' : 'header-black'}`}>

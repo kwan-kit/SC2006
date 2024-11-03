@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import './RunStatsPage.css';
 import axios from 'axios';
 import mapboxgl from "mapbox-gl";
 import polyline from '@mapbox/polyline';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { AuthContext } from './AuthContext';
 
 const RunStatsPage = () => {
   const [rating, setRating] = useState(1);
@@ -20,6 +21,7 @@ const RunStatsPage = () => {
     elevationGain: 'NIL'
   });
   const [mapData, setMapData] = useState(null);
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const units = {
     distance: 'km',
@@ -128,6 +130,38 @@ useEffect(() => {
   }
 }, [mapData]);
 
+useEffect(() => {
+  const storedUsername = localStorage.getItem('username');
+  console.log(storedUsername);
+  if (storedUsername){
+    axios.get('/session/username').then((response) =>{
+      console.log("Session active for user:", response.data.username);
+    }).catch((error) => {
+      if (error.response && error.response.status === 401) {
+        console.log("No active session, initializing new session for:", storedUsername);
+
+        // Initialize session with the stored username
+        axios
+        .post('/user/set-username', { storedUsername })
+        .then((res) => {
+          console.log("User session initialized:", res.data);
+        })
+        .catch((err) => console.error("Error initializing session:", err));
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    setIsLoggedIn(true);
+  }
+    );
+  }
+
+  // if (username) {
+  //   // Send the username to backend to update session
+  //   axios.post('/user/set-username', { username })
+  //     
+  // }
+}, []);
+
   // Helper function to format date from YYYY-MM-DD to DD-MM-YYYY
   const formatDateDisplay = (dateString) => {
     if (!dateString || dateString === 'NIL') return 'NIL';
@@ -192,7 +226,11 @@ useEffect(() => {
     e.target.style.background = `linear-gradient(to right, #007bff 0%, #007bff ${value * 10}%, #ffffff ${value * 10}%, #ffffff 100%)`;
   };
 
-  const retrieveData = () => {
+  const retrieveData = async () => {
+    const response = await axios.get('/session/username');
+    if (response.data.username) {
+      localStorage.setItem('username', response.data.username);
+    }
     const clientId = 138949;
     const redirectUri = 'http://localhost:3000/RunStatsPage'; // Page to redirect back to after authorization
     const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=activity:read_all`;

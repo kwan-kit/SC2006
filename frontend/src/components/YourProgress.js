@@ -123,12 +123,12 @@ const YourProgress = () => {
 
       <div className="progress-cards">
         <div className="progress-card interactive-card">
-          <h3>Total Number of Runs/Exercises</h3>
+          <h3>Total Number of Activities</h3>
           <p className="metric-number">{completedRuns}/{totalNumberOfRuns}</p>
         </div>
 
         <div className="progress-card interactive-card">
-          <h3>Total Distance Ran this Week (km)</h3>
+          <h3>Total Distance for the Week (km)</h3>
           <p className="metric-number distance-number">
             {trainingPlan.schedule[currentWeek - 1]?.weeklyDistance || 0} km
           </p>

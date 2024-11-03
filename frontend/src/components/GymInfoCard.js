@@ -18,7 +18,6 @@ const GymInfoCard = ({ workout, date }) => {
               <li key={exercise}>
                 {exercise.charAt(0).toUpperCase() + exercise.slice(1)}: 
                 {` ${details.reps} reps, ${details.sets} sets, ${details.weight} kg`} 
-                {details.completed ? ' (Completed)' : ' (Not Completed)'}
               </li>
             ))
           ) : (

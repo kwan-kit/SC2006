@@ -49,7 +49,7 @@ const Dashboard = () => {
       </div>
 
       <div className="snapshot-section">
-        <h2>Your Weekly Snapshot</h2>
+        <h2>Completed Activities</h2>
         <div className="snapshot-cards-wrapper">
           <div className="snapshot-cards">
             {isLoading ? (
@@ -67,11 +67,12 @@ const Dashboard = () => {
                       return (
                         <RunInfoCard 
                           key={report._id}
-                          week={formattedDate}
+                          date={report.date}
                           runNumber={report.stars}
-                          activities={report.rating}
-                          time={`${report.targetTime.hours}:${report.targetTime.minutes}:${report.targetTime.seconds}`} 
+                          ratings={report.rating}
+                          time={`${report.movingTime.hours}:${report.movingTime.minutes}:${report.movingTime.seconds}`} 
                           distance={report.distance} 
+                          mapData = {report.mapData}
                         />
                       );
                     })}
