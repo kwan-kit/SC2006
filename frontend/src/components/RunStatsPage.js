@@ -214,8 +214,20 @@ useEffect(() => {
     console.log(stats.time);
     console.log(typeof stats.time);
     try {
+      const fetchUsername = async () => {
+        const response = await axios.get('/session/username');
+        return response.data.username; 
+      };
+  
+      const userName = await fetchUsername(); 
+  
+      if (!userName) {
+        console.error('User not logged in. Cannot save run stats.');
+        return; 
+      }
+  
       const runData = {
-        userName: "ryan", //replace username
+        userName: userName, // Use the fetched username
         date: stats.date,
         time: stats.time,
         targetTime: stats.targetTime,
@@ -224,17 +236,24 @@ useEffect(() => {
         elevationGain: stats.elevationGain,
         rating: rating,
         stars: stars,
+<<<<<<< Updated upstream
         mapData: mapData,
         createdAt: new Date().toISOString(), // Adding a timestamp
+=======
+        mapData: stats.mapData,
+        createdAt: new Date().toISOString(), 
+>>>>>>> Stashed changes
       };
   
+      // Save the run data
       const response = await axios.post('/save/run-report', runData);
       console.log('Data saved successfully:', response.data);
       navigate('/Dashboard');
     } catch (error) {
       console.error('Error saving run stats:', error);
     }
-  };  
+  };
+  
 
   const startEditing = () => {
     setIsEditing(true);

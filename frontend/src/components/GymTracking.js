@@ -13,6 +13,20 @@ const GymTracking = () => {
   const [completedExercises, setCompletedExercises] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [username, setUsername] = useState(null); // State for username
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await axios.get('/api/session-username');
+        setUsername(response.data.username);
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
+
+    fetchUsername();
+  }, []);
 
   useEffect(() => {
     const fetchExercises = () => {
@@ -39,7 +53,9 @@ const GymTracking = () => {
     });
   };
 
+    if (selectedMuscleGroup) {
     fetchExercises();
+    }
   }, [selectedMuscleGroup]);
 
   const handleExerciseChange = (exerciseName, field, value) => {
@@ -53,9 +69,18 @@ const GymTracking = () => {
   };
 
 const handleSubmit = async () => {
+    if (!username) {
+      alert('User is not logged in. Unable to submit report.');
+      return;
+    }
+
     console.log("Completed exercises data:", completedExercises);
     const reportData = {
+<<<<<<< Updated upstream
         username: "John Smith", //replace with username
+=======
+      username: username, // Use the fetched username
+>>>>>>> Stashed changes
         workout: completedExercises,
     };
 
