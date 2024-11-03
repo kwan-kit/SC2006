@@ -225,7 +225,7 @@ useEffect(() => {
         elevationGain: stats.elevationGain,
         rating: rating,
         stars: stars,
-        mapData: stats.mapData,
+        mapData: mapData,
         createdAt: new Date().toISOString(), 
       };
   
