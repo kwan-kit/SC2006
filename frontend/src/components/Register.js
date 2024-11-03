@@ -1,6 +1,7 @@
 // src/components/Register.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Register.css';
 
 const Register = () => {
@@ -10,13 +11,14 @@ const Register = () => {
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if passwords match
@@ -34,9 +36,35 @@ const Register = () => {
       alert('You must agree to the terms and conditions before registering.');
       return;
     }
-  
-    navigate('/goals'); 
+    
+    const securityQuestionNumber = Number(securityQuestion);
+    // Prepare registration data
+    const registrationData = {
+      username,
+      password,
+      securityQuestion: securityQuestionNumber, // Assuming this needs to be sent as an integer
+      answer: securityAnswer,
+    };
+
+    console.log(registrationData);
+
+
+    try {
+      // Send POST request 
+      const response = await axios.post('/user/register', registrationData);
+      console.log(response.data);
+
+      // Navigate to goals page after successful registration
+      navigate('/goals');
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.error || 'Registration failed'); // Set error message from server response
+      } else {
+        setError('An error occurred. Please try again.'); // Fallback error message
+      }
+    }
   };
+  
 
   return (
     <div className="register-container">
@@ -81,9 +109,9 @@ const Register = () => {
               className="security-question-select"
             >
               <option value="">Select a security question</option>
-              <option value="pet">1. What is your first pet's name?</option>
-              <option value="school">2. What is the name of your elementary school?</option>
-              <option value="city">3. In which city were you born?</option>
+              <option value="1">1. What is your first pet's name?</option>
+              <option value="2">2. What is the name of your elementary school?</option>
+              <option value="3">3. In which city were you born?</option>
             </select>
 
             <label>Answer</label>
