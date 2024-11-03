@@ -4,13 +4,14 @@ const session = require('express-session');
 const cors = require('cors');
 const sessionMiddleware = require('./utilities/sessionConfig'); 
 const bodyParser = require('body-parser');
-const saveTrainingPlan = require('./routes/saveTrainingPlan');
 const createTrainingPlan = require('./routes/createTrainingPlan');
 const gymList = require('./routes/gymList');
 const parkList = require('./routes/parkList');
 const strava = require('./routes/stravaConnect');
 const userRoutes = require('./routes/userRoutes');
 const userCredentialsRouter = require('./routes/userCredentials');
+const runReportRouter = require('./routes/saveRunReports');
+const gymReportRouter = require('./routes/saveGymReport');
 
 const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
@@ -32,11 +33,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 app.use('/training', createTrainingPlan);
-app.use('/save', saveTrainingPlan)
+app.use('/save', runReportRouter);
+app.use('/record', gymReportRouter);
 app.use('/gym',gymList);
 app.use('/park',parkList);
 app.use('/strava',strava);
 app.use('/user', userCredentialsRouter);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import './GymTracking.css';
+import axios from 'axios';
 
 const GymTracking = () => {
   const location = useLocation();
@@ -35,8 +36,8 @@ const GymTracking = () => {
         complete: function() {
           setLoading(false);
         }
-      });
-    };
+    });
+  };
 
     fetchExercises();
   }, [selectedMuscleGroup]);
@@ -51,17 +52,35 @@ const GymTracking = () => {
     }));
   };
 
-  const handleSubmit = () => {
+const handleSubmit = async () => {
     console.log("Completed exercises data:", completedExercises);
-    navigate('/Dashboard');
-  };
+    const reportData = {
+        username: 'ryan', //replace with username
+        workout: completedExercises,
+    };
+
+    try {
+        const response = await axios.post('/record/gym-report', reportData);
+        if (response.status === 200) {
+            alert('Workout session completed! Report saved.');
+            console.log('Report saved successfully:', response.data);
+            navigate('/Dashboard');
+        } else {
+            console.error('Failed to save report:', response);
+            alert('Failed to save report.');
+        }
+    } catch (error) {
+        console.error('Error saving report:', error);
+        alert('Failed to save report.');
+    }
+};
 
   const renderContent = () => {
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">Error: {error}</div>;
     if (exercises.length === 0) return <div className="no-exercises">No exercises found for the selected muscle group.</div>;
 
-    return (
+  return (
       <ul className="exercise-list">
         {exercises.map((exercise, index) => (
           <li key={index} className="exercise-card">
@@ -78,24 +97,24 @@ const GymTracking = () => {
               <div className="input-group">
                 <label className="sets-label">
                   Sets Completed:
-                  <input
-                    type="number"
+            <input
+              type="number"
                     value={completedExercises[exercise.name]?.sets || ''}
                     onChange={(e) => handleExerciseChange(exercise.name, 'sets', e.target.value)}
-                  />
+            />
                 </label>
                 <label className="sets-label">
                   Weight (0 if weights not used):
-                  <input
-                    type="number"
+            <input
+              type="number"
                     value={completedExercises[exercise.name]?.weight || ''}
                     onChange={(e) => handleExerciseChange(exercise.name, 'weight', e.target.value)}
-                  />
+            />
                 </label>
                 <label className="sets-label">
                   No. of Reps Completed:
-                  <input
-                    type="number"
+            <input
+              type="number"
                     value={completedExercises[exercise.name]?.reps || ''}
                     onChange={(e) => handleExerciseChange(exercise.name, 'reps', e.target.value)}
                   />
@@ -104,7 +123,7 @@ const GymTracking = () => {
             </div>
             <div className="exercise-instructions">
               <p><strong>Instructions:</strong> {exercise.instructions}</p>
-            </div>
+      </div>
           </li>
         ))}
       </ul>

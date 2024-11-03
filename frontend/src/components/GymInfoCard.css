@@ -1,0 +1,79 @@
+/* Gym Card Styling */
+.gym-info-card {
+    display: flex;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Optional: adds spacing between cards */
+}
+
+.gym-info-card:hover {
+    transform: translateY(-5px); /* Lift on hover */
+}
+
+.gym-info-text {
+    color: #fff;
+}
+
+.gym-info-text h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #007BFF; /* Matches RunInfoCard title color */
+}
+
+.gym-info-text h4 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #ccc; /* Subtle color for the subtitle */
+}
+
+.gym-info-text ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.gym-info-text li {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #ddd;
+}
+
+/* Style for the buttons and percentage */
+.gym-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Make the footer fill the card */
+}
+
+.gym-percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.gym-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100px;
+    text-align: center; /* Center the text inside buttons */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.gym-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Hover effect for the gym card */
+.gym-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 123, 255, 0.5);
+}

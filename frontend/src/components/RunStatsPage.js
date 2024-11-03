@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'; 
+import React, { useState, useRef, useEffect } from 'react';
 import './RunStatsPage.css';
 import axios from 'axios';
 import mapboxgl from "mapbox-gl";
@@ -200,6 +200,29 @@ useEffect(() => {
     window.location.href = stravaAuthUrl;
     setIsLoading(true);
   };
+
+  const saveRunStats = async () => {
+    try {
+      const runData = {
+        userName: "ryan", //replace username
+        date: stats.date,
+        time: stats.time,
+        targetTime: stats.targetTime,
+        movingTime: stats.movingTime,
+        distance: stats.distance,
+        elevationGain: stats.elevationGain,
+        rating: rating,
+        stars: stars,
+        mapData: stats.mapData,
+        createdAt: new Date().toISOString(), // Adding a timestamp
+      };
+  
+      const response = await axios.post('/save/run-report', runData);
+      console.log('Data saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving run stats:', error);
+    }
+  };  
 
   const startEditing = () => {
     setIsEditing(true);
@@ -485,6 +508,9 @@ useEffect(() => {
               </button>
               <button className="action-button" onClick={startEditing}>
                 Manual Edit
+              </button>
+              <button className="save-button" onClick={saveRunStats}>
+                Save Stats
               </button>
             </>
           )}
