@@ -22,6 +22,7 @@ router.post('/register', [
     }
 
     const username = req.session.userTemp.username;
+    console.log('Session data:', req.session.userTemp.username); 
     const { planType, activityLevel, goalDistance, trainingPeriod, goalTiming } = req.body;
 
     const existingUser = await HealthData.findOne({ username });

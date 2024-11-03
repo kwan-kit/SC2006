@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios for making HTTP requests
 import './styleHybrid.css'; 
 
 const HybridGoals = () => {
-  const navigate = useNavigate(); // Use useNavigate for redirecting
+  const navigate = useNavigate();
   const [activityLevel, setActivityLevel] = useState('Select');
   const [goalDistance, setGoalDistance] = useState('Select');
   const [trainingPeriod, setTrainingPeriod] = useState('Select');
 
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
     // Check if all fields are filled
@@ -23,15 +24,22 @@ const HybridGoals = () => {
     }
 
     const trainingPlan = {
-      activityLevel,
-      goalDistance,
-      trainingPeriod,
+      planType: "hybrid",
+      activityLevel: activityLevel.toLowerCase(), // Convert to lowercase for consistency
+      goalDistance: Number(goalDistance),
+      trainingPeriod: Number(trainingPeriod),
       createdAt: new Date(),
     };
 
-    // Log the training plan for debugging (optional)
-    console.log('Training Plan Submitted:', trainingPlan);
-    navigate('/Login');
+    try {
+      // Send the training plan to the server
+      const response = await axios.post('/healthdata/register', trainingPlan);
+      console.log('Response from server:', response.data);
+      navigate('/Login'); // Redirect to login page on success
+    } catch (error) {
+      console.error('Error submitting the training plan:', error);
+      alert('There was an error submitting your goals. Please try again.');
+    }
   };
 
   return (
@@ -45,7 +53,7 @@ const HybridGoals = () => {
       {/* Goal Form */}
       <div className="container">
         <form className="goal-form" onSubmit={handleSubmit}>
-          <h2 className="form-title">Set Your Running Goals</h2>
+          <h2 className="form-title">Set Your Hybrid Goals</h2> {/* Updated title */}
           
           <div className="form-group">
             <label htmlFor="activity-level">Level of Activity</label>
@@ -71,9 +79,9 @@ const HybridGoals = () => {
               onChange={(e) => setGoalDistance(e.target.value)}
             >
               <option>Select</option>
-              <option>5 km</option>
-              <option>8 km</option>
-              <option>10 km</option>
+              <option value="5">5 km</option>
+              <option value="8">8 km</option>
+              <option value="10">10 km</option>
             </select>
           </div>
           
@@ -86,9 +94,9 @@ const HybridGoals = () => {
               onChange={(e) => setTrainingPeriod(e.target.value)}
             >
               <option>Select</option>
-              <option>8 weeks</option>
-              <option>10 weeks</option>
-              <option>12 weeks</option>
+              <option value="8">8 weeks</option>
+              <option value="10">10 weeks</option>
+              <option value="12">12 weeks</option>
             </select>
           </div>
 

@@ -180,4 +180,15 @@ router.post('/reset-password', [
     }
 });
 
+router.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ error: 'Could not log out, please try again.' });
+      }
+  
+      res.status(200).json({ message: 'Logged out successfully.' });
+    });
+  });
+
 module.exports = router;
