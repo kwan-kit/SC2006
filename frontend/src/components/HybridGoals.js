@@ -31,7 +31,7 @@ const HybridGoals = () => {
 
     // Log the training plan for debugging (optional)
     console.log('Training Plan Submitted:', trainingPlan);
-    navigate('/Dashboard');
+    navigate('/Login');
   };
 
   return (
@@ -92,7 +92,7 @@ const HybridGoals = () => {
             </select>
           </div>
 
-          <button type="submit" className="submit-button">Done, Let’s Go!</button>
+          <button type="submit" className="submit-button">Done, Back to Login</button>
         </form>
       </div>
     </div>

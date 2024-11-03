@@ -1,7 +1,6 @@
 // src/components/Register.js
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext'; // Import AuthContext
 import './Register.css';
 
 const Register = () => {
@@ -11,7 +10,6 @@ const Register = () => {
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [isChecked, setIsChecked] = useState(false);
-  const { setIsLoggedIn } = useContext(AuthContext); // Access setIsLoggedIn
   const navigate = useNavigate();
 
   const handleCheckboxChange = () => {
@@ -36,9 +34,8 @@ const Register = () => {
       alert('You must agree to the terms and conditions before registering.');
       return;
     }
-    
-    setIsLoggedIn(true); // Set user as logged in
-    navigate('/Dashboard'); // Navigate to the dashboard
+  
+    navigate('/goals'); 
   };
 
   return (

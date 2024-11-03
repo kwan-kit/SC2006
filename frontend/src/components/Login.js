@@ -24,7 +24,7 @@ const Login = () => {
           <h2 className="lora-title">HELTH</h2>
           <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}> {/* Handle form submission */}
             <label>Username</label>
-            <input type="email" placeholder="Enter your Username" required />
+            <input placeholder="Enter your Username" required />
 
             <label>Password</label>
             <input type="password" placeholder="Enter your Password" required />
