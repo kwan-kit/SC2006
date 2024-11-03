@@ -42,6 +42,7 @@ const Login = () => {
           <h2 className="lora-title">HELTH</h2>
           <form onSubmit={ handleLogin }> {/* Handle form submission */}
             <label>Username</label>
+<<<<<<< HEAD
             <input 
               type="text" 
               placeholder="Enter your Username" 
@@ -49,6 +50,9 @@ const Login = () => {
               value={username} 
               onChange={(e) => setUsername(e.target.value)} // Update username state
             />
+=======
+            <input placeholder="Enter your Username" required />
+>>>>>>> d300386cfa0daa6bb731ebca1c20bcec1d8dc93d
 
             <label>Password</label>
             <input 

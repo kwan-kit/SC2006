@@ -43,10 +43,10 @@ h2 {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Checkbox Group: Aligns checkboxes in three columns */
 .checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
   gap: 10px;
 }
 
@@ -58,6 +58,7 @@ h2 {
   padding: 10px 15px;
   border-radius: 5px;
   transition: all 0.3s ease;
+  text-align: left;
 }
 
 .checkbox-label:hover {
