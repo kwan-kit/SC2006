@@ -57,15 +57,9 @@ const trainingPlanSchema = new mongoose.Schema({
 });
 
 const gymReportSchema = new mongoose.Schema({
-  username: {
-    type: String,
-  },  
-  date: { type: Date, required: true },
-  workout: {
-    pullUp: { weight: String, reps: String, sets: String, completed: Boolean },
-    squat: { weight: String, reps: String, sets: String, completed: Boolean },
-    benchPress: { weight: String, reps: String, sets: String, completed: Boolean },
-  },
+  username: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+  workout: { type: Object, required: true }, 
 });
 
 const gymSchema = new mongoose.Schema({

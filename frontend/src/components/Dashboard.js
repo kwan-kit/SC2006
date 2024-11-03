@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUsernameAndReports = async () => {
       try {
-          const usernameResponse = await axios.get('/api/session-username');
+          const usernameResponse = await axios.get('/session/username');
           const username = usernameResponse.data.username;
 
           const [runResponse, gymResponse] = await Promise.all([

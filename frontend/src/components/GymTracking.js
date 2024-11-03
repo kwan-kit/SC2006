@@ -18,7 +18,7 @@ const GymTracking = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const response = await axios.get('/api/session-username');
+        const response = await axios.get('/session/username');
         setUsername(response.data.username);
       } catch (error) {
         console.error('Error fetching username:', error);
@@ -77,12 +77,12 @@ const handleSubmit = async () => {
     console.log("Completed exercises data:", completedExercises);
     const reportData = {
       username: username, // Use the fetched username
-        workout: completedExercises,
+      workout: completedExercises,
     };
 
     try {
         const response = await axios.post('/record/gym-report', reportData);
-        if (response.status === 200) {
+        if (response.status === 201) {
             alert('Workout session completed! Report saved.');
             console.log('Report saved successfully:', response.data);
             navigate('/Dashboard');
