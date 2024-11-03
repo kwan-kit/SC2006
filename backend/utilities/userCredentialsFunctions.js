@@ -15,6 +15,21 @@ async function getUserCredentials(username) {
     }
 }
 
+async function getSecurityQuestion(username) {
+    console.log('Searching for user:', username); // Debug log
+    try {
+        const userCredentials = await UserCredentials.findOne({ username });
+        if (!userCredentials) {
+            console.log(`User ${username} not found`); // Additional debug log
+            return null; 
+        }
+        return userCredentials;
+    } catch (error) {
+        console.error('Error retrieving security question:', error);
+        throw error; // Only throw error for database-related issues
+    }
+}
+
 
 async function createNewAccount(username, password, securityQuestion, answer) {
     try {
@@ -78,6 +93,7 @@ async function resetPassword(username, newPassword) {
 
 module.exports = {
     getUserCredentials,
+    getSecurityQuestion,
     createNewAccount,
     checkPassword,
     checkSecurityQuestion,
