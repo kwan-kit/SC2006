@@ -1,30 +1,45 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import { Link, useNavigate } from 'react-router-dom';  
+import axios from 'axios';
 import './SetNewPassword.css';
 
 const SetNewPassword = () => {
   // States to hold password inputs
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  // Initialize useNavigate hook
   const navigate = useNavigate();
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if passwords match
-    if (newPassword === confirmPassword) {
-      // Show the success message in a pop-up
-      alert("Password successfully reset, please log in with your new password!");
-
-      // Redirect to the login page after success
-      navigate('/Login');  // Redirect to the login page (assuming '/' is the login route)
-
-    } else {
-      // Show an error if passwords do not match
+    if (newPassword !== confirmPassword) {
       alert("Passwords do not match. Please try again.");
+      return;
+    }
+
+    try {
+      // Send the new password to the backend for resetting
+      const response = await axios.post('/user/reset-password', { newPassword });
+
+      if (response.status === 200) {
+        alert("Password successfully reset, please log in with your new password!");
+        
+        // Redirect to the login page after success
+        navigate('/Login');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Handle validation errors
+        alert('Password must be at least 6 characters.');
+      } else if (error.response && error.response.status === 500) {
+        // Handle server errors
+        alert('Failed to reset password. Please try again later.');
+      } else {
+        console.error('Error in password reset:', error);
+        alert('An error occurred. Please try again.');
+      }
     }
   };
 
