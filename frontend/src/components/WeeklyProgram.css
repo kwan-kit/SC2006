@@ -53,8 +53,8 @@ h2 {
   border-radius: 12px;
   overflow: hidden;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Center contents horizontally */
+  align-items: center; /* Center contents vertically */
   color: white;
   font-size: 24px;
   font-weight: bold;
@@ -82,9 +82,10 @@ h2 {
 }
 
 /* Progress Percentage Text */
-.progress-box span {
+.progress-percentage {
   z-index: 2;
   position: relative;
   font-size: 28px; /* Larger font size for percentage */
   font-weight: bold;
+  text-align: center; /* Center text within the span */
 }

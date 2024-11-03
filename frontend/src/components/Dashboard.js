@@ -46,7 +46,6 @@ const Dashboard = () => {
         <div className="program-section">
           <WeeklyProgram />
         </div>
-        <Overview />
       </div>
 
       <div className="snapshot-section">
