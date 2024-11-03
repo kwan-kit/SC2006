@@ -51,12 +51,13 @@ router.post('/', async (req, res) => {
          params: { access_token: `${accessToken}` }
         });
 
-        const movingTime = convertSecondsToHMS(activitiesResponse.data[0].moving_time);
+        const movingTime = convertSecondsToHMS(activitiesResponse.data[15].moving_time);
         const distance = activitiesResponse.data[0].distance/1000;
         const date = activitiesResponse.data[0].start_date_local.substring(0,activitiesResponse.data[0].start_date_local.indexOf('T'));
         const time = activitiesResponse.data[0].start_date_local.substring(activitiesResponse.data[0].start_date_local.indexOf('T')+1,activitiesResponse.data[0].start_date_local.indexOf('Z'));
         const elevationGained = activitiesResponse.data[0].total_elevation_gain;
         const id = activitiesResponse.data[0].id;
+        
         
         const selectedActivitiyResponse = await axios.get(`https://www.strava.com/api/v3/activities/${id}`, {
           headers: { Authorization: `Bearer ${accessToken}`}
