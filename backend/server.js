@@ -32,17 +32,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
 
 app.use(session({
-  secret: 'password123', 
+  secret: process.env.SESSION_TOKEN, 
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false } 
 }));
 
 
-
-// app.get('/', (req, res) => {
-//   res.json({ message: 'Training Plan API is running' });
-// });
 
 app.use(sessionMiddleware);
 

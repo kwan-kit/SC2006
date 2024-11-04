@@ -69,7 +69,7 @@ const Settings = () => {
         <div className="plan-options">
           <div
             className={`plan-card ${selectedPlan === "Hybrid" ? "selected-hybrid" : ""}`}
-            onClick={() => handlePlanChange("Hybrid")}
+            // onClick={() => handlePlanChange("Hybrid")}
           >
             <h3>Hybrid Plan</h3>
             <p>Running + Gymming</p>
@@ -77,16 +77,16 @@ const Settings = () => {
           </div>
           <div
             className={`plan-card ${selectedPlan === "Running" ? "selected-run" : ""}`}
-            onClick={() => handlePlanChange("Running")}
+            // onClick={() => handlePlanChange("Running")}
           >
             <h3>Run Plan</h3>
             <p>Running only</p>
             <p>For those who enjoy cardio</p>
           </div>
         </div>
-        <button className="confirm-plan-button" onClick={confirmPlanChange}>
+        {/* <button className="confirm-plan-button" onClick={confirmPlanChange}>
           Confirm Plan Change
-        </button>
+        </button> */}
       </div>
     </div>
   );

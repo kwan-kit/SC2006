@@ -5,6 +5,7 @@ import mapboxgl from "mapbox-gl";
 import polyline from '@mapbox/polyline';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { AuthContext } from './AuthContext';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const RunStatsPage = () => {
   const [rating, setRating] = useState(1);
@@ -31,6 +32,7 @@ const RunStatsPage = () => {
 
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+  const navigate = useNavigate(); // Initialize navigate for navigation
 
   useEffect(() => {
     // Check if there's a code in the URL parameters after redirect
@@ -73,7 +75,7 @@ const RunStatsPage = () => {
 useEffect(() => {
   if (!mapRef.current)
   {
-    mapboxgl.accessToken = 'pk.eyJ1Ijoia3dhbi1raXQiLCJhIjoiY20yejNhaWkzMDd1MTJucTNvZGhoeTU4YiJ9.FnqnzUKn39LKGYaQDcoB1Q'; // Replace with your Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia3dhbi1raXQiLCJhIjoiY20yejNhaWkzMDd1MTJucTNvZGhoeTU4YiJ9.FnqnzUKn39LKGYaQDcoB1Q'; 
 
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -273,6 +275,7 @@ useEffect(() => {
     } catch (error) {
       console.error('Error saving run stats:', error);
     }
+    navigate('/Dashboard');
   };
   
 

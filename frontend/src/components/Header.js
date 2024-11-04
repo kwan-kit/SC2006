@@ -16,13 +16,21 @@ const Header = () => {
     setDropdownVisible((prev) => !prev);
   };
 
-  const handleLoginLogout = () => {
+  const handleLoginLogout = async () => {
     if (isLoggedIn) {
-      setIsLoggedIn(false);
-      navigate('/');
+      try {
+        const response = await axios.post('/user/logout');
+        if (response.status === 200) {
+          setIsLoggedIn(false);
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('logout failed: ', error)
+      }
     } else {
-      navigate('/Login');
-    }
+        navigate('/Login');
+      }
+
     setDropdownVisible(false);
   };
 
